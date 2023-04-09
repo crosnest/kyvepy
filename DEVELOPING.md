@@ -27,7 +27,7 @@
 3. Define an `upstream` remote pointing back to the main CosmPy repository:
 
    ``` shell
-   git remote add upstream https://github.com/fetchai/cosmpy.git
+   git remote add upstream https://github.com/crosnest/c4epy.git
    ```
 
 ## <a name="setup"></a> Setting up a New Development Environment
@@ -250,6 +250,6 @@ For instructions on how to contribute to the project (e.g. creating Pull Request
 [mkdocs]: https://www.mkdocs.org
 [material]: https://squidfunk.github.io/mkdocs-material/
 [poetry]: https://python-poetry.org
-[contributing guide]: https://github.com/fetchai/cosmpy/blob/master/CONTRIBUTING.md
-[release process]: https://github.com/fetchai/cosmpy/blob/master/scripts/RELEASE_PROCESS.md
-[repo]: https://github.com/fetchai/cosmpy
+[contributing guide]: https://github.com/crosnest/c4epy/blob/master/CONTRIBUTING.md
+[release process]: https://github.com/crosnest/c4epy/blob/master/scripts/RELEASE_PROCESS.md
+[repo]: https://github.com/crosnest/c4epy

@@ -88,7 +88,7 @@ exclude = "whitelist.py"
 
 [[tool.mypy.overrides]]
 module = [
-    "cosmpy.protos.*",
+    "c4epy.protos.*",
 ]
 ignore_errors = true
 
@@ -122,10 +122,10 @@ order_by_type = false
 case_sensitive = true
 lines_after_imports = 2
 skip = [
-    "cosmpy/protos",
+    "c4epy/protos",
     ]
 skip_glob = "**/*_pb2.py"
-known_first_party = "cosmpy"
+known_first_party = "c4epy"
 known_local_folder = "tests"
 sections = ["FUTURE",'STDLIB',"THIRDPARTY","FIRSTPARTY","LOCALFOLDER"]
 
@@ -162,7 +162,7 @@ omit = [
     "*/.local/*",
     "tests/*",
     "*/.tox/*",
-    "cosmpy/protos/*",
+    "c4epy/protos/*",
 ]
 
 [tool.coverage.html]
