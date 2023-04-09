@@ -40,11 +40,6 @@ from c4epy.protos.cosmos.tx.v1beta1.service_pb2 import (
     SimulateRequest,
     SimulateResponse,
 )
-from c4epy.protos.cosmwasm.wasm.v1.tx_pb2 import (  # noqa: F401  # pylint: disable=unused-import
-    MsgExecuteContract,
-    MsgInstantiateContract,
-    MsgStoreCode,
-)
 from c4epy.tx.interface import TxInterface
 
 

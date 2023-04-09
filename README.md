@@ -81,7 +81,7 @@ Read our [development guidelines][developing] to learn about the development pro
 
 ### Issues, Questions and Discussions
 
-We use [GitHub Issues][issues] for tracking requests and bugs, and [GitHub Discussions][discussion] for general questions and discussion.
+We use [GitHub Issues][issues] for tracking requests and bugs.
 
 ## License
 
@@ -90,6 +90,5 @@ The C4ePy and CosmPy projects are licensed under [Apache License 2.0][license].
 [contributing]: https://github.com/crosnest/c4epy/blob/master/CONTRIBUTING.md
 [developing]: https://github.com/crosnest/c4epy/blob/master/DEVELOPING.md
 [coc]: https://github.com/crosnest/c4epy/blob/master/CODE_OF_CONDUCT.md
-[discussion]: https://github.com/crosnest/c4epy/discussions
 [issues]: https://github.com/crosnest/c4epy/issues
 [license]: https://github.com/crosnest/c4epy/blob/master/LICENSE
