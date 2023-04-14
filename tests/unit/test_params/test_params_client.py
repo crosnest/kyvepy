@@ -21,14 +21,9 @@
 
 from unittest import TestCase
 
-from google.protobuf.json_format import ParseDict
-
 from c4epy.common.utils import json_encode
 from c4epy.params.rest_client import ParamsRestClient
-from c4epy.protos.cosmos.params.v1beta1 import (
-    QueryParamsRequest,
-    QueryParamsResponse,
-)
+from c4epy.protos.cosmos.params.v1beta1 import QueryParamsRequest, QueryParamsResponse
 
 from tests.helpers import MockRestClient
 

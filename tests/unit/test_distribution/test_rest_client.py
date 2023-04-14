@@ -21,8 +21,6 @@
 
 from unittest import TestCase
 
-from google.protobuf.json_format import ParseDict
-
 from c4epy.common.utils import json_encode
 from c4epy.distribution.rest_client import DistributionRestClient
 from c4epy.protos.cosmos.distribution.v1beta1 import (
@@ -215,8 +213,8 @@ class DistributionRestClientTestCase(TestCase):
         content = {"rewards": {"rewards": [{"denom": "string", "amount": "1234"}]}}
         mock_client = MockRestClient(json_encode(content))
 
-        expected_response = ParseDict(
-            content, QueryValidatorOutstandingRewardsResponse()
+        expected_response = QueryValidatorOutstandingRewardsResponse().from_dict(
+            content
         )
 
         distribution = DistributionRestClient(mock_client)

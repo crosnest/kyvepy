@@ -21,8 +21,6 @@
 
 from unittest import TestCase
 
-from google.protobuf.json_format import ParseDict
-
 from c4epy.common.utils import json_encode
 from c4epy.protos.cosmos.staking.v1beta1 import (
     QueryDelegationRequest,
@@ -196,8 +194,8 @@ class StakingRestClientTestCase(TestCase):
         }
         mock_client = MockRestClient(json_encode(content))
 
-        expected_response = ParseDict(
-            content, QueryValidatorUnbondingDelegationsResponse()
+        expected_response = QueryValidatorUnbondingDelegationsResponse().from_dict(
+            content
         )
 
         staking = StakingRestClient(mock_client)
@@ -339,8 +337,8 @@ class StakingRestClientTestCase(TestCase):
 
         mock_client = MockRestClient(json_encode(content))
 
-        expected_response = ParseDict(
-            content, QueryDelegatorUnbondingDelegationsResponse()
+        expected_response = QueryDelegatorUnbondingDelegationsResponse().from_dict(
+            content
         )
 
         staking = StakingRestClient(mock_client)

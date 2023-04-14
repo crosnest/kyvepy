@@ -21,7 +21,7 @@
 
 from abc import ABC, abstractmethod
 
-from c4epy.protos.c4echain.cfevesting import (
+from c4epy.protos.chain4energy.c4echain.cfevesting import (
     QueryGenesisVestingsSummaryRequest,
     QueryGenesisVestingsSummaryResponse,
     QueryParamsRequest,

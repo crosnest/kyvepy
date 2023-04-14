@@ -19,8 +19,6 @@
 
 """Implementation of Staking interface using REST."""
 
-from google.protobuf.json_format import Parse
-
 from c4epy.common.rest_client import RestClient
 from c4epy.protos.cosmos.staking.v1beta1 import (
     QueryDelegationRequest,

@@ -20,9 +20,6 @@
 from typing import Dict, Tuple
 from unittest import TestCase
 
-from google.protobuf.json_format import ParseDict
-from google.protobuf import Int32Value  # noqa # needed for protobuf decode
-
 from c4epy.common.utils import json_encode
 from c4epy.ibc.core.connection.rest_client import (  # type: ignore
     IBCCoreConnectionRestClient,
@@ -39,6 +36,7 @@ from c4epy.protos.ibc.core.connection.v1 import (
     QueryConnectionsRequest,
     QueryConnectionsResponse,
 )
+from google.protobuf import Int32Value  # noqa # needed for protobuf decode
 
 from tests.helpers import MockRestClient
 

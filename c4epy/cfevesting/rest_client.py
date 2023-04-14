@@ -19,11 +19,10 @@
 
 """Implementation of cfedistributor interface using REST."""
 
-from google.protobuf.json_format import Parse
 
 from c4epy.cfevesting.interface import CfeVesting
 from c4epy.common.rest_client import RestClient
-from c4epy.protos.c4echain.cfevesting import (
+from c4epy.protos.chain4energy.c4echain.cfevesting import (
     QueryGenesisVestingsSummaryRequest,
     QueryGenesisVestingsSummaryResponse,
     QueryParamsRequest,

@@ -23,8 +23,9 @@ import unittest
 
 from c4epy.bank.rest_client import BankRestClient
 from c4epy.common.utils import json_encode
-from c4epy.protos.cosmos.bank.v1beta1 import Metadata, Params
 from c4epy.protos.cosmos.bank.v1beta1 import (
+    Metadata,
+    Params,
     QueryAllBalancesRequest,
     QueryAllBalancesResponse,
     QueryBalanceRequest,

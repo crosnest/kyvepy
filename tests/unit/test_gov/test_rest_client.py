@@ -20,8 +20,6 @@
 from typing import Dict, Tuple
 from unittest import TestCase
 
-from google.protobuf.json_format import ParseDict
-
 from c4epy.common.utils import json_encode
 from c4epy.gov.rest_client import GovRestClient
 from c4epy.protos.cosmos.gov.v1beta1 import (

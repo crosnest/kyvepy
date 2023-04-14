@@ -21,7 +21,7 @@
 
 from abc import ABC, abstractmethod
 
-from c4epy.protos.c4echain.cfesignature import (
+from c4epy.protos.chain4energy.c4echain.cfesignature import (
     QueryCreateReferenceIdRequest,
     QueryCreateReferenceIdResponse,
     QueryCreateReferencePayloadLinkRequest,

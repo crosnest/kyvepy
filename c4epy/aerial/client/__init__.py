@@ -55,42 +55,33 @@ from c4epy.common.rest_client import RestClient
 from c4epy.crypto.address import Address
 from c4epy.distribution.rest_client import DistributionRestClient
 from c4epy.params.rest_client import ParamsRestClient
-from c4epy.protos.cosmos.auth.v1beta1 import BaseAccount
-from c4epy.protos.cosmos.auth.v1beta1 import QueryAccountRequest
-from c4epy.protos.cosmos.auth.v1beta1.query_pb2_grpc import QueryStub as AuthGrpcClient
+from c4epy.protos.cosmos.auth.v1beta1 import BaseAccount, QueryAccountRequest
+from c4epy.protos.cosmos.auth.v1beta1 import QueryStub as AuthGrpcClient
 from c4epy.protos.cosmos.bank.v1beta1 import (
     QueryAllBalancesRequest,
     QueryBalanceRequest,
 )
-from c4epy.protos.cosmos.bank.v1beta1.query_pb2_grpc import QueryStub as BankGrpcClient
+from c4epy.protos.cosmos.bank.v1beta1 import QueryStub as BankGrpcClient
 from c4epy.protos.cosmos.crypto.ed25519 import (  # noqa # pylint: disable=unused-import
     PubKey,
 )
-from c4epy.protos.cosmos.distribution.v1beta1 import (
-    QueryDelegationRewardsRequest,
-)
-from c4epy.protos.cosmos.distribution.v1beta1.query_pb2_grpc import (
-    QueryStub as DistributionGrpcClient,
-)
+from c4epy.protos.cosmos.distribution.v1beta1 import QueryDelegationRewardsRequest
+from c4epy.protos.cosmos.distribution.v1beta1 import QueryStub as DistributionGrpcClient
 from c4epy.protos.cosmos.params.v1beta1 import QueryParamsRequest
-from c4epy.protos.cosmos.params.v1beta1.query_pb2_grpc import (
-    QueryStub as QueryParamsGrpcClient,
-)
+from c4epy.protos.cosmos.params.v1beta1 import QueryStub as QueryParamsGrpcClient
 from c4epy.protos.cosmos.staking.v1beta1 import (
     QueryDelegatorDelegationsRequest,
     QueryDelegatorUnbondingDelegationsRequest,
-    QueryValidatorsRequest,
 )
-from c4epy.protos.cosmos.staking.v1beta1.query_pb2_grpc import (
-    QueryStub as StakingGrpcClient,
-)
+from c4epy.protos.cosmos.staking.v1beta1 import QueryStub as StakingGrpcClient
+from c4epy.protos.cosmos.staking.v1beta1 import QueryValidatorsRequest
 from c4epy.protos.cosmos.tx.v1beta1 import (
     BroadcastMode,
     BroadcastTxRequest,
     GetTxRequest,
-    SimulateRequest,
 )
-from c4epy.protos.cosmos.tx.v1beta1.service_pb2_grpc import ServiceStub as TxGrpcClient
+from c4epy.protos.cosmos.tx.v1beta1 import ServiceStub as TxGrpcClient
+from c4epy.protos.cosmos.tx.v1beta1 import SimulateRequest
 from c4epy.staking.rest_client import StakingRestClient
 from c4epy.tx.rest_client import TxRestClient
 
@@ -255,7 +246,7 @@ class LedgerClient:
         response = self.auth.Account(request)
 
         account = BaseAccount()
-        if not response.account.Is(BaseAccount.DESCRIPTOR):
+        if not response.account.Is(BaseAccount):
             raise RuntimeError("Unexpected account type returned from query")
         response.account.Unpack(account)
 
@@ -371,18 +362,18 @@ class LedgerClient:
         """
         current_positions: List[StakingPosition] = []
 
-        req = QueryDelegatorDelegationsRequest(delegator_addr=str(address))
+        deleg_req = QueryDelegatorDelegationsRequest(delegator_addr=str(address))
 
         for resp in get_paginated(
-            req, self.staking.DelegatorDelegations, per_page_limit=1
+            deleg_req, self.staking.DelegatorDelegations, per_page_limit=1
         ):
             for item in resp.delegation_responses:
 
-                req = QueryDelegationRewardsRequest(
+                rewad_req = QueryDelegationRewardsRequest(
                     delegator_address=str(address),
                     validator_address=str(item.delegation.validator_address),
                 )
-                rewards_resp = self.distribution.DelegationRewards(req)
+                rewards_resp = self.distribution.DelegationRewards(rewad_req)
 
                 stake_reward = 0
                 for reward in rewards_resp.rewards:
@@ -401,9 +392,13 @@ class LedgerClient:
                 )
 
         unbonding_summary: Dict[str, int] = {}
-        req = QueryDelegatorUnbondingDelegationsRequest(delegator_addr=str(address))
+        unbond_deleg_req = QueryDelegatorUnbondingDelegationsRequest(
+            delegator_addr=str(address)
+        )
 
-        for resp in get_paginated(req, self.staking.DelegatorUnbondingDelegations):
+        for resp in get_paginated(
+            unbond_deleg_req, self.staking.DelegatorUnbondingDelegations
+        ):
             for item in resp.unbonding_responses:
                 validator = str(item.validator_address)
                 total_unbonding = unbonding_summary.get(validator, 0)

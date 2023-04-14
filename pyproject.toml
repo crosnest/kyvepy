@@ -124,9 +124,8 @@ order_by_type = false
 case_sensitive = true
 lines_after_imports = 2
 skip = [
-    "c4epy/protos",
+    "c4epy/protos/",
     ]
-skip_glob = "**/*_pb2.py"
 known_first_party = "c4epy"
 known_local_folder = "tests"
 sections = ["FUTURE",'STDLIB',"THIRDPARTY","FIRSTPARTY","LOCALFOLDER"]

@@ -22,11 +22,10 @@
 import unittest
 
 import pytest
-from google.protobuf.json_format import ParseDict
 
 from c4epy.cfeminter.rest_client import CfeMinterRestClient
 from c4epy.common.utils import json_encode
-from c4epy.protos.c4echain.cfeminter import (
+from c4epy.protos.chain4energy.c4echain.cfeminter import (
     QueryInflationRequest,
     QueryInflationResponse,
     QueryParamsRequest,

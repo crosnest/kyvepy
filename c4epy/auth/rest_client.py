@@ -19,7 +19,6 @@
 
 """Implementation of Auth interface using REST."""
 
-from google.protobuf.json_format import Parse
 
 from c4epy.auth.interface import Auth
 from c4epy.common.rest_client import RestClient

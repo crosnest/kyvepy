@@ -22,7 +22,6 @@
 import unittest
 
 import pytest
-from google.protobuf.json_format import ParseDict
 
 from c4epy.auth.rest_client import AuthRestClient
 from c4epy.common.utils import json_encode
@@ -59,12 +58,17 @@ class AuthRestClientTestCase(unittest.TestCase):
             }
         }
 
-        expected_response = QueryAccountResponse().from_dict(content) # ParseDict(content, QueryAccountResponse())
+        expected_response = QueryAccountResponse().from_dict(
+            content
+        )  # ParseDict(content, QueryAccountResponse())
 
         mock_client = MockRestClient(json_encode(content))
         auth = AuthRestClient(mock_client)
 
-        assert auth.Account(request=QueryAccountRequest(address="address")) == expected_response
+        assert (
+            auth.Account(request=QueryAccountRequest(address="address"))
+            == expected_response
+        )
         assert mock_client.last_base_url == "/cosmos/auth/v1beta1/accounts/address"
 
     @staticmethod

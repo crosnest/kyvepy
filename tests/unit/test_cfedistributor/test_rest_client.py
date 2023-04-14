@@ -22,7 +22,6 @@
 import unittest
 
 import pytest
-from google.protobuf.json_format import ParseDict
 
 from c4epy.cfedistributor.rest_client import CfeDistributorRestClient
 from c4epy.common.utils import json_encode

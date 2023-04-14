@@ -20,8 +20,6 @@
 from typing import Dict, Tuple
 from unittest import TestCase
 
-from google.protobuf.json_format import ParseDict
-
 from c4epy.common.utils import json_encode
 from c4epy.ibc.applications.transfer.rest_client import (  # type: ignore
     IBCApplicationsTransferRestClient,

@@ -23,7 +23,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Any, List, Optional, Union
 
-from google.protobuf import Any as ProtoAny
+from google.protobuf.any_pb2 import Any as ProtoAny
 
 from c4epy.aerial.coins import parse_coins
 from c4epy.crypto.interface import Signer
@@ -34,6 +34,7 @@ from c4epy.protos.cosmos.tx.v1beta1 import (
     AuthInfo,
     Fee,
     ModeInfo,
+    ModeInfoSingle,
     SignDoc,
     SignerInfo,
     Tx,
@@ -201,7 +202,7 @@ class Transaction:
                 SignerInfo(
                     public_key=_create_proto_public_key(signing_cfg.public_key),
                     mode_info=ModeInfo(
-                        single=ModeInfo.Single(mode=SignMode.SIGN_MODE_DIRECT)
+                        single=ModeInfoSingle(mode=SignMode.SIGN_MODE_DIRECT)
                     ),
                     sequence=signing_cfg.sequence_num,
                 )

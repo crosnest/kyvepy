@@ -21,8 +21,6 @@
 import argparse
 import time
 
-from google.protobuf import any_pb2
-
 from c4epy.aerial.client import LedgerClient, NetworkConfig
 from c4epy.aerial.client.utils import prepare_and_broadcast_basic_transaction
 from c4epy.aerial.faucet import FaucetApi
@@ -31,6 +29,7 @@ from c4epy.aerial.wallet import LocalWallet
 from c4epy.protos.cosmos.authz.v1beta1 import MsgExec
 from c4epy.protos.cosmos.bank.v1beta1 import MsgSend
 from c4epy.protos.cosmos.base.v1beta1 import Coin
+from google.protobuf import any_pb2
 
 
 def _parse_commandline():

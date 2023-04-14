@@ -19,14 +19,10 @@
 
 """Implementation of Params interface using REST."""
 
-from google.protobuf.json_format import Parse
 
 from c4epy.common.rest_client import RestClient
 from c4epy.params.interface import Params
-from c4epy.protos.cosmos.params.v1beta1 import (
-    QueryParamsRequest,
-    QueryParamsResponse,
-)
+from c4epy.protos.cosmos.params.v1beta1 import QueryParamsRequest, QueryParamsResponse
 
 
 class ParamsRestClient(Params):

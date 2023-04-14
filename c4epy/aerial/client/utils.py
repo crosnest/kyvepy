@@ -90,14 +90,14 @@ def ensure_timedelta(interval: Union[int, float, timedelta]) -> timedelta:
     return interval if isinstance(interval, timedelta) else timedelta(seconds=interval)
 
 
-DEFAULT_PER_PAGE_LIMIT = None
+DEFAULT_PER_PAGE_LIMIT = 100
 
 
 def get_paginated(
     initial_request: Any,
     request_method: Callable,
     pages_limit: int = 0,
-    per_page_limit: Optional[int] = DEFAULT_PER_PAGE_LIMIT,
+    per_page_limit: int = DEFAULT_PER_PAGE_LIMIT,
 ) -> List[Any]:
     """
     Get pages for specific request.
@@ -121,7 +121,7 @@ def get_paginated(
 
         pages.append(resp)
 
-        pagination = None
+        pagination = PageRequest()
 
         if resp.pagination.next_key:
             pagination = PageRequest(limit=per_page_limit, key=resp.pagination.next_key)

@@ -23,8 +23,6 @@ import base64
 import json
 from typing import Any, Dict, List
 
-from google.protobuf.json_format import Parse, ParseDict
-
 from c4epy.common.rest_client import RestClient
 from c4epy.common.utils import json_encode
 from c4epy.protos.cosmos.crypto.secp256k1 import (  # noqa: F401  # pylint: disable=unused-import
@@ -41,9 +39,6 @@ from c4epy.protos.cosmos.tx.v1beta1 import (
     SimulateResponse,
 )
 from c4epy.tx.interface import TxInterface
-
-
-# Unused imports are required to make sure that related types get generated - Parse and ParseDict fail without them
 
 
 class TxRestClient(TxInterface):
@@ -70,7 +65,7 @@ class TxRestClient(TxInterface):
             f"{self.API_URL}/simulate",
             request,
         )
-        return SimulateResponse().from_json(json_response)
+        return SimulateResponse().from_json(response)
 
     def GetTx(self, request: GetTxRequest) -> GetTxResponse:
         """
@@ -86,7 +81,7 @@ class TxRestClient(TxInterface):
         self._fix_messages(dict_response["tx"]["body"]["messages"])
         self._fix_messages(dict_response["tx_response"]["tx"]["body"]["messages"])
 
-        return ParseDict(dict_response, GetTxResponse())
+        return GetTxResponse().from_dict(dict_response)
 
     def BroadcastTx(self, request: BroadcastTxRequest) -> BroadcastTxResponse:
         """
@@ -96,7 +91,7 @@ class TxRestClient(TxInterface):
         :return: BroadcastTxResponse
         """
         response = self.rest_client.post(f"{self.API_URL}/txs", request)
-        return BroadcastTxResponse().from_json(json_response)
+        return BroadcastTxResponse().from_json(response)
 
     def GetTxsEvent(self, request: GetTxsEventRequest) -> GetTxsEventResponse:
         """
@@ -115,7 +110,7 @@ class TxRestClient(TxInterface):
         for tx_response in dict_response["tx_responses"]:
             self._fix_messages(tx_response["tx"]["body"]["messages"])
 
-        return ParseDict(dict_response, GetTxsEventResponse())
+        return GetTxsEventResponse().from_dict(dict_response)
 
     @staticmethod
     def _fix_messages(messages: List[Dict[str, Any]]):

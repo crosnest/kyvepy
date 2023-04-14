@@ -17,7 +17,7 @@
 #
 # ------------------------------------------------------------------------------
 """Implementation of IBC Applications Transfer  interface using REST."""
-from google.protobuf.json_format import Parse
+
 
 from c4epy.common.rest_client import RestClient
 from c4epy.ibc.core.connection.interface import IBCCoreConnection  # type: ignore

@@ -20,12 +20,10 @@
 """Implementation of cfedistributor interface using REST."""
 import json
 
-from google.protobuf.json_format import Parse
-
 from c4epy.cfeminter.interface import CfeMinter
 from c4epy.common.rest_client import RestClient
 from c4epy.common.utils import json_encode
-from c4epy.protos.c4echain.cfeminter import (
+from c4epy.protos.chain4energy.c4echain.cfeminter import (
     QueryInflationRequest,
     QueryInflationResponse,
     QueryParamsRequest,

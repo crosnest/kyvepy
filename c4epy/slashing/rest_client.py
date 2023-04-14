@@ -18,7 +18,6 @@
 # ------------------------------------------------------------------------------
 """Implementation of Slashing interface using REST."""
 
-from google.protobuf.json_format import Parse
 
 from c4epy.common.rest_client import RestClient
 from c4epy.protos.cosmos.slashing.v1beta1 import (
