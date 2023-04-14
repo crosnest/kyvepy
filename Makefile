@@ -283,8 +283,8 @@ fetch_proto_schema_source: $(COSMOS_SDK_DIR) $(WASMD_DIR) $(IBCGO_DIR) $(C4E_DIR
 
 .PHONY: generate_init_py_files
 generate_init_py_files: generate_proto_types
-	echo "now empty step"
-#	find $(C4EPY_PROTOS_DIR)/ -type d -exec touch {}/__init__.py \;
+    # restore __init__.py files if missing
+	find $(C4EPY_PROTOS_DIR)/ -type d -exec sh -c 'test -e "'{}'/__init__.py" || touch "'{}'/__init__.py"' \;
 # restore root __init__.py as it contains code to have the proto files module available
 #	git restore $(C4EPY_PROTOS_DIR)/__init__.py
 

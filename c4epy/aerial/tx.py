@@ -197,14 +197,11 @@ class Transaction:
         signer_infos = []
         for signing_cfg in input_signing_cfgs:
             assert signing_cfg.mode == SigningMode.Direct
-            # Create an instance of SignMode
-            mode = SignMode.SIGN_MODE_DIRECT
-            # Create an instance of ModeInfo_Single and set the sign mode
-            mode_info_single = ModeInfoSingle(mode=mode)
+
             signer_infos.append(
                 SignerInfo(
                     public_key=_create_proto_public_key(signing_cfg.public_key),
-                    mode_info=ModeInfo(single=mode_info_single),
+                    mode_info=ModeInfo(single=ModeInfoSingle(SignMode.SIGN_MODE_DIRECT)),  # type: ignore
                     sequence=signing_cfg.sequence_num,
                 )
             )

@@ -36,7 +36,6 @@ from c4epy.protos.cosmos.base.tendermint.v1beta1 import (
     GetValidatorSetByHeightResponse,
 )
 from c4epy.tendermint.rest_client import CosmosBaseTendermintRestClient
-from google.protobuf import Int32Value  # noqa # needed for protobuf decode
 
 from tests.helpers import MockRestClient
 

@@ -243,7 +243,7 @@ class LedgerClient:
         :return: account details
         """
         request = QueryAccountRequest(address=str(address))
-        response = self.auth.Account(request)
+        response = self.auth.Account(request)  # type: ignore
 
         account = BaseAccount()
         if not response.account.Is(BaseAccount):
@@ -264,7 +264,7 @@ class LedgerClient:
         :return: Query params
         """
         req = QueryParamsRequest(subspace=subspace, key=key)
-        resp = self.params.Params(req)
+        resp = self.params.Params(req)  # type: ignore
         return json.loads(resp.param.value)
 
     def query_bank_balance(self, address: Address, denom: Optional[str] = None) -> int:
@@ -281,7 +281,7 @@ class LedgerClient:
             denom=denom,
         )
 
-        resp = self.bank.Balance(req)
+        resp = self.bank.Balance(req)  # type: ignore
         assert resp.balance.denom == denom  # sanity check
 
         return int(float(resp.balance.amount))
@@ -293,7 +293,7 @@ class LedgerClient:
         :return: bank all balances
         """
         req = QueryAllBalancesRequest(address=str(address))
-        resp = self.bank.AllBalances(req)
+        resp = self.bank.AllBalances(req)  # type: ignore
 
         return [Coin(amount=coin.amount, denom=coin.denom) for coin in resp.balances]
 
@@ -340,7 +340,7 @@ class LedgerClient:
         if filtered_status != ValidatorStatus.UNSPECIFIED:
             req.status = filtered_status.value
 
-        resp = self.staking.Validators(req)
+        resp = self.staking.Validators(req)  # type: ignore
 
         validators: List[Validator] = []
         for validator in resp.validators:
@@ -365,7 +365,7 @@ class LedgerClient:
         deleg_req = QueryDelegatorDelegationsRequest(delegator_addr=str(address))
 
         for resp in get_paginated(
-            deleg_req, self.staking.DelegatorDelegations, per_page_limit=1
+            deleg_req, self.staking.DelegatorDelegations, per_page_limit=1  # type: ignore
         ):
             for item in resp.delegation_responses:
 
@@ -373,7 +373,7 @@ class LedgerClient:
                     delegator_address=str(address),
                     validator_address=str(item.delegation.validator_address),
                 )
-                rewards_resp = self.distribution.DelegationRewards(rewad_req)
+                rewards_resp = self.distribution.DelegationRewards(rewad_req)  # type: ignore
 
                 stake_reward = 0
                 for reward in rewards_resp.rewards:
@@ -397,7 +397,7 @@ class LedgerClient:
         )
 
         for resp in get_paginated(
-            unbond_deleg_req, self.staking.DelegatorUnbondingDelegations
+            unbond_deleg_req, self.staking.DelegatorUnbondingDelegations  # type: ignore
         ):
             for item in resp.unbonding_responses:
                 validator = str(item.validator_address)
@@ -617,7 +617,7 @@ class LedgerClient:
         """
         req = GetTxRequest(hash=tx_hash)
         try:
-            resp = self.txs.GetTx(req)
+            resp = self.txs.GetTx(req)  # type: ignore
         except grpc.RpcError as e:
             details = e.details()
             if "not found" in details:
@@ -675,7 +675,7 @@ class LedgerClient:
             raise RuntimeError("Unable to simulate non final transaction")
 
         req = SimulateRequest(tx=tx.tx)
-        resp = self.txs.Simulate(req)
+        resp = self.txs.Simulate(req)  # type: ignore
 
         return int(resp.gas_info.gas_used)
 
@@ -685,14 +685,13 @@ class LedgerClient:
         :param tx: transaction
         :return: Submitted transaction
         """
-        mode = BroadcastMode.BROADCAST_MODE_SYNC
         # create the broadcast request
         broadcast_req = BroadcastTxRequest(
-            tx_bytes=tx.tx.SerializeToString(), mode=mode
+            tx_bytes=tx.tx.SerializeToString(), mode=BroadcastMode.BROADCAST_MODE_SYNC  # type: ignore
         )
 
         # broadcast the transaction
-        resp = self.txs.BroadcastTx(broadcast_req)
+        resp = self.txs.BroadcastTx(broadcast_req)  # type: ignore
         tx_digest = resp.tx_response.txhash
 
         # check that the response is successful

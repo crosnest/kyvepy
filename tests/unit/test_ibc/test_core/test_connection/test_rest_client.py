@@ -23,7 +23,9 @@ from typing import Dict, Tuple
 from unittest import TestCase
 
 from c4epy.common.utils import json_encode
-from c4epy.ibc.core.connection.rest_client import IBCCoreConnectionRestClient
+from c4epy.ibc.core.connection.rest_client import (
+    IBCCoreConnectionRestClient,  # type: ignore
+)
 from c4epy.protos.ibc.core.connection.v1 import (
     QueryClientConnectionsRequest,
     QueryClientConnectionsResponse,
@@ -42,7 +44,7 @@ from tests.helpers import MockRestClient
 
 TYPE = {
     "@type": "type.googleapis.com/google.protobuf.Int32Value",
-    "value": "42",
+    "value": "NDI=",
 }
 
 
@@ -74,11 +76,11 @@ class IBCCoreConnectionRestClientTestCase(TestCase):
                 "counterparty": {
                     "client_id": "1",
                     "connection_id": "1",
-                    "prefix": {"key_prefix": "string"},
+                    "prefix": {"key_prefix": "c3RyaW5n"},
                 },
                 "delay_period": "1",
             },
-            "proof": "string",
+            "proof": "c3RyaW5n",
             "proof_height": {"revision_number": "1", "revision_height": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
@@ -107,12 +109,12 @@ class IBCCoreConnectionRestClientTestCase(TestCase):
                     "counterparty": {
                         "client_id": "1",
                         "connection_id": "1",
-                        "prefix": {"key_prefix": "string"},
+                        "prefix": {"key_prefix": "c3RyaW5n"},
                     },
                     "delay_period": "1",
                 }
             ],
-            "pagination": {"next_key": "string", "total": "1"},
+            "pagination": {"next_key": "c3RyaW5n", "total": "1"},
             "height": {"revision_number": "1", "revision_height": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
@@ -125,7 +127,7 @@ class IBCCoreConnectionRestClientTestCase(TestCase):
         """Test ClientConnections method."""
         content = {
             "connection_paths": ["string"],
-            "proof": "string",
+            "proof": "c3RyaW5n",
             "proof_height": {"revision_number": "1", "revision_height": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
@@ -148,8 +150,8 @@ class IBCCoreConnectionRestClientTestCase(TestCase):
                 "client_id": "string",
                 "client_state": TYPE,
             },
-            "proof": "string",
-            "proof_height": {"revision_number": "1", "revision_height": "1"},
+            "proof": "c3RyaW5n",
+            "proof_height": {"revision_number": 1, "revision_height": 1},
         }
         mock_client, rest_client = self.make_clients(content)
         expected_response = QueryConnectionClientStateResponse().from_dict(content)
@@ -168,10 +170,10 @@ class IBCCoreConnectionRestClientTestCase(TestCase):
     def test_ConnectionConsensusState(self):
         """Test ConnectionConsensusState method."""
         content = {
-            "consensus_state": TYPE,
-            "client_id": "string",
-            "proof": "string",
-            "proof_height": {"revision_number": "1", "revision_height": "1"},
+            "client_id": "07-tendermint-0",
+            "consensus_state": {"@type": "string"},
+            "proof": "c3RyaW5n",
+            "proof_height": {"revision_height": "1", "revision_number": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
         expected_response = QueryConnectionConsensusStateResponse().from_dict(content)
