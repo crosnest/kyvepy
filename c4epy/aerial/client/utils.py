@@ -22,7 +22,7 @@ from typing import Any, Callable, List, Optional, Union
 
 from c4epy.aerial.tx import SigningCfg
 from c4epy.aerial.tx_helpers import SubmittedTx
-from c4epy.protos.cosmos.base.query.v1beta1.pagination_pb2 import PageRequest
+from c4epy.protos.cosmos.base.query.v1beta1 import PageRequest
 
 
 def prepare_and_broadcast_basic_transaction(

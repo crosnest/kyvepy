@@ -37,16 +37,16 @@
 # from c4epy.cosmwasm.rest_client import CosmWasmRestClient
 # from c4epy.crypto.address import Address
 # from c4epy.crypto.keypairs import PrivateKey
-# from c4epy.protos.cosmos.auth.v1beta1.auth_pb2 import BaseAccount
-# from c4epy.protos.cosmos.auth.v1beta1.query_pb2 import (
+# from c4epy.protos.cosmos.auth.v1beta1 import BaseAccount
+# from c4epy.protos.cosmos.auth.v1beta1 import (
 #     QueryAccountRequest,
 #     QueryAccountResponse,
 #     QueryParamsRequest,
 #     QueryParamsResponse,
 # )
-# from c4epy.protos.cosmos.base.abci.v1beta1.abci_pb2 import TxResponse
-# from c4epy.protos.cosmos.base.v1beta1.coin_pb2 import Coin
-# from c4epy.protos.cosmos.tx.v1beta1.service_pb2 import (
+# from c4epy.protos.cosmos.base.abci.v1beta1 import TxResponse
+# from c4epy.protos.cosmos.base.v1beta1 import Coin
+# from c4epy.protos.cosmos.tx.v1beta1 import (
 #     BroadcastTxRequest,
 #     BroadcastTxResponse,
 #     GetTxRequest,
@@ -56,7 +56,7 @@
 #     SimulateRequest,
 #     SimulateResponse,
 # )
-# from c4epy.protos.cosmos.tx.v1beta1.tx_pb2 import Tx
+# from c4epy.protos.cosmos.tx.v1beta1 import Tx
 # from c4epy.tx.interface import TxInterface
 # from tests.helpers import MockRestClient
 #
@@ -545,7 +545,7 @@
 #                 "sequence": "1",
 #             }
 #         }
-#         account_response = ParseDict(content, QueryAccountResponse())
+#         account_response = QueryAccountResponse().from_dict(content)
 #
 #         account = BaseAccount()
 #         if account_response.account.Is(BaseAccount.DESCRIPTOR):

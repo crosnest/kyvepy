@@ -26,7 +26,7 @@ from c4epy.common.utils import json_encode
 from c4epy.ibc.applications.transfer.rest_client import (  # type: ignore
     IBCApplicationsTransferRestClient,
 )
-from c4epy.protos.ibc.applications.transfer.v1.query_pb2 import (
+from c4epy.protos.ibc.applications.transfer.v1 import (
     QueryDenomTraceRequest,
     QueryDenomTraceResponse,
     QueryDenomTracesRequest,
@@ -60,7 +60,7 @@ class IBCApplicationsTransferRestClientTestCase(TestCase):
         """Test DenomTrace method."""
         content = {"denom_trace": {"path": "string", "base_denom": "string"}}
         mock_client, rest_client = self.make_clients(content)
-        expected_response = ParseDict(content, QueryDenomTraceResponse())
+        expected_response = QueryDenomTraceResponse().from_dict(content)
 
         assert (
             rest_client.DenomTrace(QueryDenomTraceRequest(hash="hash"))
@@ -78,7 +78,7 @@ class IBCApplicationsTransferRestClientTestCase(TestCase):
             "pagination": {"next_key": "string", "total": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
-        expected_response = ParseDict(content, QueryDenomTracesResponse())
+        expected_response = QueryDenomTracesResponse().from_dict(content)
 
         assert rest_client.DenomTraces(QueryDenomTracesRequest()) == expected_response
         assert (
@@ -90,7 +90,7 @@ class IBCApplicationsTransferRestClientTestCase(TestCase):
         """Test Params method."""
         content = {}
         mock_client, rest_client = self.make_clients(content)
-        expected_response = ParseDict(content, QueryParamsResponse())
+        expected_response = QueryParamsResponse().from_dict(content)
 
         assert rest_client.Params(QueryParamsRequest()) == expected_response
         assert mock_client.last_base_url == "/ibc/applications/transfer/v1beta1/params"

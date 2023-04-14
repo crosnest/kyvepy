@@ -23,7 +23,7 @@ from google.protobuf.json_format import Parse
 
 from c4epy.cfevesting.interface import CfeVesting
 from c4epy.common.rest_client import RestClient
-from c4epy.protos.c4echain.cfevesting.query_pb2 import (
+from c4epy.protos.c4echain.cfevesting import (
     QueryGenesisVestingsSummaryRequest,
     QueryGenesisVestingsSummaryResponse,
     QueryParamsRequest,
@@ -59,7 +59,7 @@ class CfeVestingRestClient(CfeVesting):
         :return: QueryParamsResponse
         """
         json_response = self._rest_api.get(f"{self.API_URL}/params")
-        return Parse(json_response, QueryParamsResponse())
+        return QueryParamsResponse().from_json(json_response)
 
     def VestingType(self, request: QueryVestingTypeRequest) -> QueryVestingTypeResponse:
         """
@@ -70,7 +70,7 @@ class CfeVestingRestClient(CfeVesting):
         :return: QueryStatesResponse
         """
         json_response = self._rest_api.get(f"{self.API_URL}/vesting_type")
-        return Parse(json_response, QueryVestingTypeResponse())
+        return QueryVestingTypeResponse().from_json(json_response)
 
     def VestingPools(
         self, request: QueryVestingPoolsRequest
@@ -85,7 +85,7 @@ class CfeVestingRestClient(CfeVesting):
         json_response = self._rest_api.get(
             f"{self.API_URL}/vesting_pools/{request.owner}"
         )
-        return Parse(json_response, QueryVestingPoolsResponse())
+        return QueryVestingPoolsResponse().from_json(json_response)
 
     def VestingsSummary(
         self, request: QueryVestingsSummaryRequest
@@ -98,7 +98,7 @@ class CfeVestingRestClient(CfeVesting):
         :return: QueryParamsResponse
         """
         json_response = self._rest_api.get(f"{self.API_URL}/summary")
-        return Parse(json_response, QueryVestingsSummaryResponse())
+        return QueryVestingsSummaryResponse().from_json(json_response)
 
     def GenesisVestingsSummary(
         self, request: QueryGenesisVestingsSummaryRequest
@@ -111,4 +111,4 @@ class CfeVestingRestClient(CfeVesting):
         :return: QueryParamsResponse
         """
         json_response = self._rest_api.get(f"{self.API_URL}/genesis_summary")
-        return Parse(json_response, QueryGenesisVestingsSummaryResponse())
+        return QueryGenesisVestingsSummaryResponse().from_json(json_response)

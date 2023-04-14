@@ -25,7 +25,7 @@ from google.protobuf.json_format import Parse
 from c4epy.cfeminter.interface import CfeMinter
 from c4epy.common.rest_client import RestClient
 from c4epy.common.utils import json_encode
-from c4epy.protos.c4echain.cfeminter.query_pb2 import (
+from c4epy.protos.c4echain.cfeminter import (
     QueryInflationRequest,
     QueryInflationResponse,
     QueryParamsRequest,
@@ -57,7 +57,7 @@ class CfeMinterRestClient(CfeMinter):
         :return: QueryInflationResponse
         """
         json_response = self._rest_api.get(f"{self.API_URL}/inflation")
-        return Parse(json_response, QueryInflationResponse())
+        return QueryInflationResponse().from_json(json_response)
 
     def Params(self, request: QueryParamsRequest) -> QueryParamsResponse:
         """
@@ -68,7 +68,7 @@ class CfeMinterRestClient(CfeMinter):
         :return: QueryParamsResponse
         """
         json_response = self._rest_api.get(f"{self.API_URL}/params")
-        return Parse(json_response, QueryParamsResponse())
+        return QueryParamsResponse().from_json(json_response)
 
     def State(self, request: QueryStateRequest) -> QueryStateResponse:
         """
@@ -89,4 +89,4 @@ class CfeMinterRestClient(CfeMinter):
             "remainder_from_previous_minter"
         ] = remainder_from_previous_period
         json_response = json_encode(j).encode("utf-8")
-        return Parse(json_response, QueryStateResponse())
+        return QueryStateResponse().from_json(json_response)

@@ -21,11 +21,11 @@ from typing import Dict, Tuple
 from unittest import TestCase
 
 from google.protobuf.json_format import ParseDict
-from google.protobuf.wrappers_pb2 import Int32Value  # noqa # needed for protobuf decode
+from google.protobuf import Int32Value  # noqa # needed for protobuf decode
 
 from c4epy.common.utils import json_encode
 from c4epy.ibc.core.channel.rest_client import IBCCoreChannelRestClient  # type: ignore
-from c4epy.protos.ibc.core.channel.v1.query_pb2 import (
+from c4epy.protos.ibc.core.channel.v1 import (
     QueryChannelClientStateRequest,
     QueryChannelClientStateResponse,
     QueryChannelConsensusStateRequest,
@@ -95,7 +95,7 @@ class IBCCoreChannelRestClientTestCase(TestCase):
             "proof_height": {"revision_number": "1", "revision_height": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
-        expected_response = ParseDict(content, QueryChannelResponse())
+        expected_response = QueryChannelResponse().from_dict(content)
 
         assert (
             rest_client.Channel(
@@ -126,7 +126,7 @@ class IBCCoreChannelRestClientTestCase(TestCase):
             "height": {"revision_number": "1", "revision_height": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
-        expected_response = ParseDict(content, QueryChannelsResponse())
+        expected_response = QueryChannelsResponse().from_dict(content)
 
         assert rest_client.Channels(QueryChannelsRequest()) == expected_response
         assert mock_client.last_base_url == "/ibc/core/channel/v1beta1/channels"
@@ -149,7 +149,7 @@ class IBCCoreChannelRestClientTestCase(TestCase):
             "height": {"revision_number": "1", "revision_height": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
-        expected_response = ParseDict(content, QueryConnectionChannelsResponse())
+        expected_response = QueryConnectionChannelsResponse().from_dict(content)
 
         assert (
             rest_client.ConnectionChannels(
@@ -170,7 +170,7 @@ class IBCCoreChannelRestClientTestCase(TestCase):
             "proof_height": {"revision_number": "1", "revision_height": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
-        expected_response = ParseDict(content, QueryChannelClientStateResponse())
+        expected_response = QueryChannelClientStateResponse().from_dict(content)
 
         assert (
             rest_client.ChannelClientState(
@@ -194,7 +194,7 @@ class IBCCoreChannelRestClientTestCase(TestCase):
             },
         }
         mock_client, rest_client = self.make_clients(content)
-        expected_response = ParseDict(content, QueryChannelConsensusStateResponse())
+        expected_response = QueryChannelConsensusStateResponse().from_dict(content)
 
         assert (
             rest_client.ChannelConsensusState(
@@ -217,7 +217,7 @@ class IBCCoreChannelRestClientTestCase(TestCase):
             "proof_height": {"revision_number": "1", "revision_height": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
-        expected_response = ParseDict(content, QueryPacketCommitmentResponse())
+        expected_response = QueryPacketCommitmentResponse().from_dict(content)
 
         assert (
             rest_client.PacketCommitment(
@@ -245,7 +245,7 @@ class IBCCoreChannelRestClientTestCase(TestCase):
             "height": {"revision_number": "1", "revision_height": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
-        expected_response = ParseDict(content, QueryPacketCommitmentsResponse())
+        expected_response = QueryPacketCommitmentsResponse().from_dict(content)
 
         assert (
             rest_client.PacketCommitments(
@@ -266,7 +266,7 @@ class IBCCoreChannelRestClientTestCase(TestCase):
             "proof_height": {"revision_number": "1", "revision_height": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
-        expected_response = ParseDict(content, QueryPacketReceiptResponse())
+        expected_response = QueryPacketReceiptResponse().from_dict(content)
 
         assert (
             rest_client.PacketReceipt(
@@ -287,7 +287,7 @@ class IBCCoreChannelRestClientTestCase(TestCase):
             "proof_height": {"revision_number": "1", "revision_height": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
-        expected_response = ParseDict(content, QueryPacketAcknowledgementResponse())
+        expected_response = QueryPacketAcknowledgementResponse().from_dict(content)
 
         assert (
             rest_client.PacketAcknowledgement(
@@ -312,7 +312,7 @@ class IBCCoreChannelRestClientTestCase(TestCase):
             "height": {"revision_number": "1", "revision_height": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
-        expected_response = ParseDict(content, QueryPacketAcknowledgementsResponse())
+        expected_response = QueryPacketAcknowledgementsResponse().from_dict(content)
 
         assert (
             rest_client.PacketAcknowledgements(
@@ -332,7 +332,7 @@ class IBCCoreChannelRestClientTestCase(TestCase):
             "height": {"revision_number": "1", "revision_height": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
-        expected_response = ParseDict(content, QueryUnreceivedPacketsResponse())
+        expected_response = QueryUnreceivedPacketsResponse().from_dict(content)
 
         assert (
             rest_client.UnreceivedPackets(
@@ -354,7 +354,7 @@ class IBCCoreChannelRestClientTestCase(TestCase):
             "height": {"revision_number": "1", "revision_height": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
-        expected_response = ParseDict(content, QueryUnreceivedAcksResponse())
+        expected_response = QueryUnreceivedAcksResponse().from_dict(content)
 
         assert (
             rest_client.UnreceivedAcks(
@@ -377,7 +377,7 @@ class IBCCoreChannelRestClientTestCase(TestCase):
             "proof_height": {"revision_number": "1", "revision_height": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
-        expected_response = ParseDict(content, QueryNextSequenceReceiveResponse())
+        expected_response = QueryNextSequenceReceiveResponse().from_dict(content)
 
         assert (
             rest_client.NextSequenceReceive(

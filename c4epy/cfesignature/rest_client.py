@@ -23,7 +23,7 @@ from google.protobuf.json_format import Parse
 
 from c4epy.cfesignature.interface import CfeSignature
 from c4epy.common.rest_client import RestClient
-from c4epy.protos.c4echain.cfesignature.query_pb2 import (
+from c4epy.protos.c4echain.cfesignature import (
     QueryCreateReferenceIdRequest,
     QueryCreateReferenceIdResponse,
     QueryCreateReferencePayloadLinkRequest,
@@ -65,7 +65,7 @@ class CfeSignatureRestClient(CfeSignature):
         :return: QueryParamsResponse
         """
         json_response = self._rest_api.get(f"{self.API_URL}/params")
-        return Parse(json_response, QueryParamsResponse())
+        return QueryParamsResponse().from_json(json_response)
 
     def CreateReferenceId(
         self, request: QueryCreateReferenceIdRequest
@@ -80,7 +80,7 @@ class CfeSignatureRestClient(CfeSignature):
         json_response = self._rest_api.get(
             f"{self.API_URL}/create_reference_id/{request.creator}"
         )
-        return Parse(json_response, QueryCreateReferenceIdResponse())
+        return QueryCreateReferenceIdResponse().from_json(json_response)
 
     def CreateStorageKey(
         self, request: QueryCreateStorageKeyRequest
@@ -95,7 +95,7 @@ class CfeSignatureRestClient(CfeSignature):
         json_response = self._rest_api.get(
             f"{self.API_URL}/create_storage_key/{request.targetAccAddress}/{request.referenceId}"
         )
-        return Parse(json_response, QueryCreateStorageKeyResponse())
+        return QueryCreateStorageKeyResponse().from_json(json_response)
 
     def CreateReferencePayloadLink(
         self, request: QueryCreateReferencePayloadLinkRequest
@@ -110,7 +110,7 @@ class CfeSignatureRestClient(CfeSignature):
         json_response = self._rest_api.get(
             f"{self.API_URL}/create_reference_payload_link/{request.referenceId}/{request.payloadHash}"
         )
-        return Parse(json_response, QueryCreateReferencePayloadLinkResponse())
+        return QueryCreateReferencePayloadLinkResponse().from_json(json_response)
 
     def VerifySignature(
         self, request: QueryVerifySignatureRequest
@@ -125,7 +125,7 @@ class CfeSignatureRestClient(CfeSignature):
         json_response = self._rest_api.get(
             f"{self.API_URL}/verify_signature/{request.referenceId}/{request.targetAccAddress}"
         )
-        return Parse(json_response, QueryVerifySignatureResponse())
+        return QueryVerifySignatureResponse().from_json(json_response)
 
     def GetAccountInfo(
         self, request: QueryGetAccountInfoRequest
@@ -140,7 +140,7 @@ class CfeSignatureRestClient(CfeSignature):
         json_response = self._rest_api.get(
             f"{self.API_URL}/get_account_info/{request.accAddressString}"
         )
-        return Parse(json_response, QueryGetAccountInfoResponse())
+        return QueryGetAccountInfoResponse().from_json(json_response)
 
     def VerifyReferencePayloadLink(
         self, request: QueryVerifyReferencePayloadLinkRequest
@@ -155,7 +155,7 @@ class CfeSignatureRestClient(CfeSignature):
         json_response = self._rest_api.get(
             f"{self.API_URL}/verify_reference_payload_link/{request.referenceId}/{request.payloadHash}"
         )
-        return Parse(json_response, QueryVerifyReferencePayloadLinkResponse())
+        return QueryVerifyReferencePayloadLinkResponse().from_json(json_response)
 
     def GetReferencePayloadLink(
         self, request: QueryGetReferencePayloadLinkRequest
@@ -170,4 +170,4 @@ class CfeSignatureRestClient(CfeSignature):
         json_response = self._rest_api.get(
             f"{self.API_URL}/get_reference_payload_link/{request.referenceId}"
         )
-        return Parse(json_response, QueryGetReferencePayloadLinkResponse())
+        return QueryGetReferencePayloadLinkResponse().from_json(json_response)

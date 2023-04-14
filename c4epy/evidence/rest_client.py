@@ -23,7 +23,7 @@ from google.protobuf.json_format import Parse
 
 from c4epy.common.rest_client import RestClient
 from c4epy.evidence.interface import Evidence
-from c4epy.protos.cosmos.evidence.v1beta1.query_pb2 import (
+from c4epy.protos.cosmos.evidence.v1beta1 import (
     QueryAllEvidenceRequest,
     QueryAllEvidenceResponse,
     QueryEvidenceRequest,
@@ -55,7 +55,7 @@ class EvidenceRestClient(Evidence):
         json_response = self._rest_api.get(
             f"{self.API_URL}/evidence/{request.evidence_hash}",
         )
-        return Parse(json_response, QueryEvidenceResponse())
+        return QueryEvidenceResponse().from_json(json_response)
 
     def AllEvidence(self, request: QueryAllEvidenceRequest) -> QueryAllEvidenceResponse:
         """
@@ -66,4 +66,4 @@ class EvidenceRestClient(Evidence):
         :return: QueryAllEvidenceResponse
         """
         json_response = self._rest_api.get(f"{self.API_URL}/evidence", request)
-        return Parse(json_response, QueryAllEvidenceResponse())
+        return QueryAllEvidenceResponse().from_json(json_response)

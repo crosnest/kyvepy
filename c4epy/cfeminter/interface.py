@@ -21,7 +21,7 @@
 
 from abc import ABC, abstractmethod
 
-from c4epy.protos.c4echain.cfeminter.query_pb2 import (
+from c4epy.protos.c4echain.cfeminter import (
     QueryInflationRequest,
     QueryInflationResponse,
     QueryParamsRequest,

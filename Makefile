@@ -20,6 +20,18 @@ C4EPY_TESTS_DIR := tests
 C4EPY_EXAMPLES_DIR := examples
 C4EPY_SCRIPTS_DIR := scripts
 
+PROTO_THIRDPARTY_URL := https://github.com/regen-network/protobuf
+PROTO_THIRDPARTY_VERSION := v1.3.3-alpha.regen.1
+PROTO_THIRDPARTY_DIR := build/gogoproto-proto-schema
+
+COSMOS_PROTO_URL := https://github.com/cosmos/cosmos-proto
+COSMOS_PROTO_VERSION := v1.0.0-alpha8
+COSMOS_PROTO_DIR := build/cosmos-proto-schema
+
+GOOGLEAPI_PROTO_URL := https://github.com/googleapis/googleapis.git
+GOOGLEAPI_PROTO_VERSION := common-protos-1_3_1
+GOOGLEAPI_PROTO_DIR := build/googleapi-proto-schema
+
 PYTHON_CODE_DIRS := $(C4EPY_SRC_DIR) $(C4EPY_TESTS_DIR) $(C4EPY_EXAMPLES_DIR) $(C4EPY_SCRIPTS_DIR)
 
 ########################################
@@ -257,22 +269,24 @@ unique = $(if $1,$(firstword $1) $(call unique,$(filter-out $(firstword $1),$1))
 
 proto: fetch_proto_schema_source generate_proto_types generate_init_py_files
 
-generate_proto_types: $(COSMOS_SDK_DIR) $(WASMD_DIR) $(IBCGO_DIR) $(C4E_DIR)
+generate_proto_types: download_sources apply_third_party
 	rm -frv $(C4EPY_PROTOS_DIR)/*
-	# python3 -m grpc_tools.protoc --proto_path=$(WASMD_DIR)/proto --proto_path=$(WASMD_DIR)/third_party/proto  --python_out=$(C4EPY_PROTOS_DIR) --grpc_python_out=$(C4EPY_PROTOS_DIR) $(shell find $(WASMD_DIR) \( -path */proto/* -or -path */third_party/proto/* \) -type f -name *.proto)
-	python3 -m grpc_tools.protoc --proto_path=$(IBCGO_DIR)/proto --proto_path=$(IBCGO_DIR)/third_party/proto  --python_out=$(C4EPY_PROTOS_DIR) --grpc_python_out=$(C4EPY_PROTOS_DIR) $(shell find $(IBCGO_DIR) \( -path */proto/* -or -path */third_party/proto/* \) -type f -name *.proto)
+#	python3 -m grpc_tools.protoc --proto_path=$(WASMD_DIR)/proto --proto_path=$(WASMD_DIR)/third_party/proto  --python_out=$(C4EPY_PROTOS_DIR) --grpc_python_out=$(C4EPY_PROTOS_DIR) $(shell find $(WASMD_DIR) \( -path */proto/* -or -path */third_party/proto/* \) -type f -name *.proto)
+#	python3 -m grpc_tools.protoc --proto_path=$(IBCGO_DIR)/proto --proto_path=$(IBCGO_DIR)/third_party/proto  --python_out=$(C4EPY_PROTOS_DIR) --grpc_python_out=$(C4EPY_PROTOS_DIR) $(shell find $(IBCGO_DIR) \( -path */proto/* -or -path */third_party/proto/* \) -type f -name *.proto)
 # ensure cosmos-sdk is last as previous modules may have duplicated proto models which are now outdated
-	python3 -m grpc_tools.protoc --proto_path=$(COSMOS_SDK_DIR)/proto --proto_path=$(COSMOS_SDK_DIR)/third_party/proto  --proto_path=$(IBCGO_DIR)/third_party/proto --python_out=$(C4EPY_PROTOS_DIR) --grpc_python_out=$(C4EPY_PROTOS_DIR) $(shell find $(COSMOS_SDK_DIR) $(IBCGO_DIR)/third_party/proto/gogoproto \( -path */proto/* -or -path */third_party/proto/* \) -type f -name *.proto)
+#	python3 -m grpc_tools.protoc --proto_path=$(COSMOS_SDK_DIR)/proto --proto_path=$(COSMOS_SDK_DIR)/third_party/proto --python_betterproto_out=$(C4EPY_PROTOS_DIR) $(shell find $(COSMOS_SDK_DIR) \( -not -path */nft/* \) \( -path */proto/* -or -path */third_party/proto/* \) -type f -name *.proto)
+#	find $(COSMOS_SDK_DIR) \( -path */proto/* -or -path */third_party/proto/* \) -type f -name *.proto -exec python3 -m grpc_tools.protoc --proto_path=$(COSMOS_SDK_DIR)/proto --proto_path=$(COSMOS_SDK_DIR)/third_party/proto --python_betterproto_out=$(C4EPY_PROTOS_DIR)  {} \;
 	# other chains modules
-	python3 -m grpc_tools.protoc --proto_path=$(COSMOS_SDK_DIR)/proto --proto_path=$(IBCGO_DIR)/third_party/proto --proto_path=$(C4E_DIR)/proto --python_out=$(C4EPY_PROTOS_DIR) --grpc_python_out=$(C4EPY_PROTOS_DIR) $(shell find $(C4E_DIR) $(IBCGO_DIR)/third_party/proto/gogoproto  \( -path */proto/* -or -path */third_party/proto/* \) -type f -name *.proto)
+	python3 -m grpc_tools.protoc --proto_path=$(COSMOS_SDK_DIR)/proto --proto_path=$(COSMOS_SDK_DIR)/third_party/proto --proto_path=$(C4E_DIR)/proto --python_betterproto_out=$(C4EPY_PROTOS_DIR) $(shell find $(C4E_DIR) $(COSMOS_SDK_DIR) \( -path */proto/* -or -path */third_party/proto/* \) -type f -name *.proto)
 
 fetch_proto_schema_source: $(COSMOS_SDK_DIR) $(WASMD_DIR) $(IBCGO_DIR) $(C4E_DIR)
 
 .PHONY: generate_init_py_files
 generate_init_py_files: generate_proto_types
-	find $(C4EPY_PROTOS_DIR)/ -type d -exec touch {}/__init__.py \;
+	echo "now empty step"
+#	find $(C4EPY_PROTOS_DIR)/ -type d -exec touch {}/__init__.py \;
 # restore root __init__.py as it contains code to have the proto files module available
-	git restore $(C4EPY_PROTOS_DIR)/__init__.py
+#	git restore $(C4EPY_PROTOS_DIR)/__init__.py
 
 $(SOURCE): $(COSMOS_SDK_DIR)
 
@@ -282,25 +296,57 @@ $(GENERATED): $(SOURCE)
 $(INIT_PY_FILES_TO_CREATE): $(GENERATED_DIRS)
 	touch $(INIT_PY_FILES_TO_CREATE)
 
-$(GENERATED_DIRS): $(COSMOS_SDK_DIR) $(WASMD_DIR) $(IBCGO_DIR)
+download_sources:
+	echo "download sources"
+	make $(COSMOS_SDK_DIR) $(WASMD_DIR) $(IBCGO_DIR) $(C4E_DIR)
+
+apply_third_party:
+	echo "apply third_party"
+	make $(PROTO_THIRDPARTY_DIR) $(COSMOS_PROTO_DIR) $(GOOGLEAPI_PROTO_DIR)
+
+$(GENERATED_DIRS): $(COSMOS_SDK_DIR) $(WASMD_DIR) $(IBCGO_DIR) $(C4E_DIR)
+
+$(GOOGLEAPI_PROTO_DIR): Makefile
+	rm -rf $(GOOGLEAPI_PROTO_DIR)
+	git clone --branch $(GOOGLEAPI_PROTO_VERSION) --depth 1 --quiet --no-checkout --filter=blob:none $(GOOGLEAPI_PROTO_URL) $(GOOGLEAPI_PROTO_DIR)
+	cd $(GOOGLEAPI_PROTO_DIR) && git checkout $(GOOGLEAPI_PROTO_VERSION) -- $(GOOGLEAPI_PROTO_RELATIVE_DIRS)
+	mkdir -p $(COSMOS_SDK_DIR)/third_party/proto/google/api/
+	cp -a $(GOOGLEAPI_PROTO_DIR)/google/api/annotations.proto $(GOOGLEAPI_PROTO_DIR)/google/api/http.proto $(COSMOS_SDK_DIR)/third_party/proto/google/api/
+
+$(COSMOS_PROTO_DIR): Makefile
+	rm -rf $(COSMOS_PROTO_DIR)
+	git clone --branch $(COSMOS_PROTO_VERSION) --depth 1 --quiet --no-checkout --filter=blob:none $(COSMOS_PROTO_URL) $(COSMOS_PROTO_DIR)
+	cd $(COSMOS_PROTO_DIR) && git checkout $(COSMOS_PROTO_VERSION) -- $(COSMOS_PROTO_RELATIVE_DIRS)
+	mkdir -p $(COSMOS_SDK_DIR)/third_party/proto/cosmos_proto
+	find ${COSMOS_PROTO_DIR}/proto/cosmos_proto -type f -name "*.proto" -exec cp {} $(COSMOS_SDK_DIR)/third_party/proto/cosmos_proto \;
+
+$(PROTO_THIRDPARTY_DIR): Makefile
+	rm -rf $(PROTO_THIRDPARTY_DIR)
+	git clone --branch $(PROTO_THIRDPARTY_VERSION) --depth 1 --quiet --no-checkout --filter=blob:none $(PROTO_THIRDPARTY_URL) $(PROTO_THIRDPARTY_DIR)
+	cd $(PROTO_THIRDPARTY_DIR) && git checkout $(PROTO_THIRDPARTY_VERSION) -- $(PROTO_THIRDPARTY_RELATIVE_DIRS)
+	mkdir -p $(COSMOS_SDK_DIR)/third_party/proto/gogoproto
+	find ${PROTO_THIRDPARTY_DIR}/gogoproto -type f -name "*.proto" -exec cp {} $(COSMOS_SDK_DIR)/third_party/proto/gogoproto \;
+	mkdir -p $(COSMOS_SDK_DIR)/third_party/proto/google/protobuf
+	find ${PROTO_THIRDPARTY_DIR}/protobuf -type f -name "*.proto" -exec cp {} $(COSMOS_SDK_DIR)/third_party/proto/google/protobuf \;
+
 
 $(COSMOS_SDK_DIR): Makefile
-	rm -rfv $(COSMOS_SDK_DIR)
+	rm -rf $(COSMOS_SDK_DIR)
 	git clone --branch $(COSMOS_SDK_VERSION) --depth 1 --quiet --no-checkout --filter=blob:none $(COSMOS_SDK_URL) $(COSMOS_SDK_DIR)
 	cd $(COSMOS_SDK_DIR) && git checkout $(COSMOS_SDK_VERSION) -- $(COSMOS_PROTO_RELATIVE_DIRS)
 
 $(WASMD_DIR): Makefile
-	rm -rfv $(WASMD_DIR)
+	rm -rf $(WASMD_DIR)
 	git clone --branch $(WASMD_VERSION) --depth 1 --quiet --no-checkout --filter=blob:none $(WASMD_URL) $(WASMD_DIR)
 	cd $(WASMD_DIR) && git checkout $(WASMD_VERSION) -- $(WASMD_PROTO_RELATIVE_DIRS)
 
 $(IBCGO_DIR): Makefile
-	rm -rfv $(IBCGO_DIR)
+	rm -rf $(IBCGO_DIR)
 	git clone --branch $(IBCGO_VERSION) --depth 1 --quiet --no-checkout --filter=blob:none $(IBCGO_URL) $(IBCGO_DIR)
 	cd $(IBCGO_DIR) && git checkout $(IBCGO_VERSION) -- $(IBCGO_PROTO_RELATIVE_DIRS)
 
 $(C4E_DIR): Makefile
-	rm -rfv $(C4E_DIR)
+	rm -rf $(C4E_DIR)
 	git clone --branch $(C4E_VERSION) --depth 1 --quiet --no-checkout --filter=blob:none $(C4E_URL) $(C4E_DIR)
 	cd $(C4E_DIR) && git checkout $(C4E_VERSION) -- $(C4E_PROTO_RELATIVE_DIRS)
 

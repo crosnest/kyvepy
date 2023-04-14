@@ -24,7 +24,7 @@ from unittest import TestCase
 from google.protobuf.json_format import ParseDict
 
 from c4epy.common.utils import json_encode
-from c4epy.protos.cosmos.staking.v1beta1.query_pb2 import (
+from c4epy.protos.cosmos.staking.v1beta1 import (
     QueryDelegationRequest,
     QueryDelegationResponse,
     QueryDelegatorDelegationsRequest,
@@ -97,7 +97,7 @@ class StakingRestClientTestCase(TestCase):
         }
         mock_client = MockRestClient(json_encode(content))
 
-        expected_response = ParseDict(content, QueryValidatorsResponse())
+        expected_response = QueryValidatorsResponse().from_dict(content)
 
         staking = StakingRestClient(mock_client)
 
@@ -128,7 +128,7 @@ class StakingRestClientTestCase(TestCase):
         }
         mock_client = MockRestClient(json_encode(content))
 
-        expected_response = ParseDict(content, QueryValidatorResponse())
+        expected_response = QueryValidatorResponse().from_dict(content)
 
         staking = StakingRestClient(mock_client)
 
@@ -159,7 +159,7 @@ class StakingRestClientTestCase(TestCase):
         }
         mock_client = MockRestClient(json_encode(content))
 
-        expected_response = ParseDict(content, QueryValidatorDelegationsResponse())
+        expected_response = QueryValidatorDelegationsResponse().from_dict(content)
 
         staking = StakingRestClient(mock_client)
 
@@ -230,7 +230,7 @@ class StakingRestClientTestCase(TestCase):
         }
         mock_client = MockRestClient(json_encode(content))
 
-        expected_response = ParseDict(content, QueryDelegationResponse())
+        expected_response = QueryDelegationResponse().from_dict(content)
 
         staking = StakingRestClient(mock_client)
 
@@ -266,7 +266,7 @@ class StakingRestClientTestCase(TestCase):
         }
         mock_client = MockRestClient(json_encode(content))
 
-        expected_response = ParseDict(content, QueryUnbondingDelegationResponse())
+        expected_response = QueryUnbondingDelegationResponse().from_dict(content)
 
         staking = StakingRestClient(mock_client)
 
@@ -301,7 +301,7 @@ class StakingRestClientTestCase(TestCase):
         }
         mock_client = MockRestClient(json_encode(content))
 
-        expected_response = ParseDict(content, QueryDelegatorDelegationsResponse())
+        expected_response = QueryDelegatorDelegationsResponse().from_dict(content)
 
         staking = StakingRestClient(mock_client)
 
@@ -395,7 +395,7 @@ class StakingRestClientTestCase(TestCase):
 
         mock_client = MockRestClient(json_encode(content))
 
-        expected_response = ParseDict(content, QueryRedelegationsResponse())
+        expected_response = QueryRedelegationsResponse().from_dict(content)
 
         staking = StakingRestClient(mock_client)
 
@@ -446,7 +446,7 @@ class StakingRestClientTestCase(TestCase):
 
         mock_client = MockRestClient(json_encode(content))
 
-        expected_response = ParseDict(content, QueryDelegatorValidatorsResponse())
+        expected_response = QueryDelegatorValidatorsResponse().from_dict(content)
 
         staking = StakingRestClient(mock_client)
 
@@ -494,7 +494,7 @@ class StakingRestClientTestCase(TestCase):
 
         mock_client = MockRestClient(json_encode(content))
 
-        expected_response = ParseDict(content, QueryDelegatorValidatorResponse())
+        expected_response = QueryDelegatorValidatorResponse().from_dict(content)
 
         staking = StakingRestClient(mock_client)
 
@@ -567,7 +567,7 @@ class StakingRestClientTestCase(TestCase):
 
         mock_client = MockRestClient(json_encode(content))
 
-        expected_response = ParseDict(content, QueryHistoricalInfoResponse())
+        expected_response = QueryHistoricalInfoResponse().from_dict(content)
 
         staking = StakingRestClient(mock_client)
 
@@ -584,7 +584,7 @@ class StakingRestClientTestCase(TestCase):
 
         mock_client = MockRestClient(json_encode(content))
 
-        expected_response = ParseDict(content, QueryPoolResponse())
+        expected_response = QueryPoolResponse().from_dict(content)
 
         staking = StakingRestClient(mock_client)
 
@@ -606,7 +606,7 @@ class StakingRestClientTestCase(TestCase):
 
         mock_client = MockRestClient(json_encode(content))
 
-        expected_response = ParseDict(content, QueryParamsResponse())
+        expected_response = QueryParamsResponse().from_dict(content)
 
         staking = StakingRestClient(mock_client)
 

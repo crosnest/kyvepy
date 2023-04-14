@@ -21,7 +21,7 @@
 
 from abc import ABC, abstractmethod
 
-from c4epy.protos.c4echain.cfedistributor.query_pb2 import (
+from c4epy.protos.chain4energy.c4echain.cfedistributor import (
     QueryParamsRequest,
     QueryParamsResponse,
     QueryStatesRequest,

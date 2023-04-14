@@ -21,7 +21,7 @@ from google.protobuf.json_format import Parse
 
 from c4epy.common.rest_client import RestClient
 from c4epy.ibc.core.channel.interface import IBCCoreChannel  # type: ignore
-from c4epy.protos.ibc.core.channel.v1.query_pb2 import (
+from c4epy.protos.ibc.core.channel.v1 import (
     QueryChannelClientStateRequest,
     QueryChannelClientStateResponse,
     QueryChannelConsensusStateRequest,
@@ -74,7 +74,7 @@ class IBCCoreChannelRestClient(IBCCoreChannel):
         json_response = self._rest_api.get(
             f"{self.API_URL}/channels/{request.channel_id}/ports/{request.port_id}"
         )
-        return Parse(json_response, QueryChannelResponse())
+        return QueryChannelResponse().from_json(json_response)
 
     def Channels(self, request: QueryChannelsRequest) -> QueryChannelsResponse:
         """
@@ -84,7 +84,7 @@ class IBCCoreChannelRestClient(IBCCoreChannel):
         :return: QueryChannelsResponse
         """
         json_response = self._rest_api.get(f"{self.API_URL}/channels", request)
-        return Parse(json_response, QueryChannelsResponse())
+        return QueryChannelsResponse().from_json(json_response)
 
     def ConnectionChannels(
         self, request: QueryConnectionChannelsRequest
@@ -98,7 +98,7 @@ class IBCCoreChannelRestClient(IBCCoreChannel):
         json_response = self._rest_api.get(
             f"{self.API_URL}/connections/{request.connection}/channels", request
         )
-        return Parse(json_response, QueryConnectionChannelsResponse())
+        return QueryConnectionChannelsResponse().from_json(json_response)
 
     def ChannelClientState(
         self, request: QueryChannelClientStateRequest
@@ -112,7 +112,7 @@ class IBCCoreChannelRestClient(IBCCoreChannel):
         json_response = self._rest_api.get(
             f"{self.API_URL}/channels/{request.channel_id}/ports/{request.port_id}/client_state"
         )
-        return Parse(json_response, QueryChannelClientStateResponse())
+        return QueryChannelClientStateResponse().from_json(json_response)
 
     def ChannelConsensusState(
         self, request: QueryChannelConsensusStateRequest
@@ -126,7 +126,7 @@ class IBCCoreChannelRestClient(IBCCoreChannel):
         json_response = self._rest_api.get(
             f"{self.API_URL}/channels/{request.channel_id}/ports/{request.port_id}/consensus_state/revision/{request.revision_number}/height/{request.revision_height}"
         )
-        return Parse(json_response, QueryChannelConsensusStateResponse())
+        return QueryChannelConsensusStateResponse().from_json(json_response)
 
     def PacketCommitment(
         self, request: QueryPacketCommitmentRequest
@@ -140,7 +140,7 @@ class IBCCoreChannelRestClient(IBCCoreChannel):
         json_response = self._rest_api.get(
             f"{self.API_URL}/channels/{request.channel_id}/ports/{request.port_id}/packet_commitments/{request.sequence}"
         )
-        return Parse(json_response, QueryPacketCommitmentResponse())
+        return QueryPacketCommitmentResponse().from_json(json_response)
 
     def PacketCommitments(
         self, request: QueryPacketCommitmentsRequest
@@ -155,7 +155,7 @@ class IBCCoreChannelRestClient(IBCCoreChannel):
             f"{self.API_URL}/channels/{request.channel_id}/ports/{request.port_id}/packet_commitments",
             request,
         )
-        return Parse(json_response, QueryPacketCommitmentsResponse())
+        return QueryPacketCommitmentsResponse().from_json(json_response)
 
     def PacketReceipt(
         self, request: QueryPacketReceiptRequest
@@ -169,7 +169,7 @@ class IBCCoreChannelRestClient(IBCCoreChannel):
         json_response = self._rest_api.get(
             f"{self.API_URL}/channels/{request.channel_id}/ports/{request.port_id}/packet_receipts/{request.sequence}"
         )
-        return Parse(json_response, QueryPacketReceiptResponse())
+        return QueryPacketReceiptResponse().from_json(json_response)
 
     def PacketAcknowledgement(
         self, request: QueryPacketAcknowledgementRequest
@@ -183,7 +183,7 @@ class IBCCoreChannelRestClient(IBCCoreChannel):
         json_response = self._rest_api.get(
             f"{self.API_URL}/channels/{request.channel_id}/ports/{request.port_id}/packet_acks/{request.sequence}"
         )
-        return Parse(json_response, QueryPacketAcknowledgementResponse())
+        return QueryPacketAcknowledgementResponse().from_json(json_response)
 
     def PacketAcknowledgements(
         self, request: QueryPacketAcknowledgementsRequest
@@ -198,7 +198,7 @@ class IBCCoreChannelRestClient(IBCCoreChannel):
             f"{self.API_URL}/channels/{request.channel_id}/ports/{request.port_id}/packet_acknowledgements",
             request,
         )
-        return Parse(json_response, QueryPacketAcknowledgementsResponse())
+        return QueryPacketAcknowledgementsResponse().from_json(json_response)
 
     def UnreceivedPackets(
         self, request: QueryUnreceivedPacketsRequest
@@ -213,7 +213,7 @@ class IBCCoreChannelRestClient(IBCCoreChannel):
             f"{self.API_URL}/channels/{request.channel_id}/ports/{request.port_id}/packet_commitments/{','.join(map(str,request.packet_commitment_sequences))}/unreceived_packets",
             request,
         )
-        return Parse(json_response, QueryUnreceivedPacketsResponse())
+        return QueryUnreceivedPacketsResponse().from_json(json_response)
 
     def UnreceivedAcks(
         self, request: QueryUnreceivedAcksRequest
@@ -228,7 +228,7 @@ class IBCCoreChannelRestClient(IBCCoreChannel):
             f"{self.API_URL}/channels/{request.channel_id}/ports/{request.port_id}/packet_commitments/{','.join(map(str,request.packet_ack_sequences))}/unreceived_acks",
             request,
         )
-        return Parse(json_response, QueryUnreceivedAcksResponse())
+        return QueryUnreceivedAcksResponse().from_json(json_response)
 
     def NextSequenceReceive(
         self, request: QueryNextSequenceReceiveRequest
@@ -242,4 +242,4 @@ class IBCCoreChannelRestClient(IBCCoreChannel):
         json_response = self._rest_api.get(
             f"{self.API_URL}/channels/{request.channel_id}/ports/{request.port_id}/next_sequence"
         )
-        return Parse(json_response, QueryNextSequenceReceiveResponse())
+        return QueryNextSequenceReceiveResponse().from_json(json_response)

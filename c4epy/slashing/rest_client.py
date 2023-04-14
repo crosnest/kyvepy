@@ -21,7 +21,7 @@
 from google.protobuf.json_format import Parse
 
 from c4epy.common.rest_client import RestClient
-from c4epy.protos.cosmos.slashing.v1beta1.query_pb2 import (
+from c4epy.protos.cosmos.slashing.v1beta1 import (
     QueryParamsResponse,
     QuerySigningInfoRequest,
     QuerySigningInfoResponse,
@@ -53,7 +53,7 @@ class SlashingRestClient(Slashing):
         json_response = self._rest_api.get(
             f"{self.API_URL}/params",
         )
-        return Parse(json_response, QueryParamsResponse())
+        return QueryParamsResponse().from_json(json_response)
 
     def SigningInfo(self, request: QuerySigningInfoRequest) -> QuerySigningInfoResponse:
         """
@@ -66,7 +66,7 @@ class SlashingRestClient(Slashing):
         json_response = self._rest_api.get(
             f"{self.API_URL}/signing_infos/{request.cons_address}",
         )
-        return Parse(json_response, QuerySigningInfoResponse())
+        return QuerySigningInfoResponse().from_json(json_response)
 
     def SigningInfos(
         self, request: QuerySigningInfosRequest
@@ -79,4 +79,4 @@ class SlashingRestClient(Slashing):
         :return: QuerySigningInfosResponse
         """
         json_response = self._rest_api.get(f"{self.API_URL}/signing_infos", request)
-        return Parse(json_response, QuerySigningInfosResponse())
+        return QuerySigningInfosResponse().from_json(json_response)

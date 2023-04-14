@@ -20,7 +20,7 @@
 from google.protobuf.json_format import Parse
 
 from c4epy.common.rest_client import RestClient
-from c4epy.protos.cosmos.base.tendermint.v1beta1.query_pb2 import (
+from c4epy.protos.cosmos.base.tendermint.v1beta1 import (
     GetBlockByHeightRequest,
     GetBlockByHeightResponse,
     GetLatestBlockRequest,
@@ -60,7 +60,7 @@ class CosmosBaseTendermintRestClient(CosmosBaseTendermint):
         json_response = self._rest_api.get(
             f"{self.API_URL}/node_info",
         )
-        return Parse(json_response, GetNodeInfoResponse())
+        return GetNodeInfoResponse().from_json(json_response)
 
     def GetSyncing(self, request: GetSyncingRequest) -> GetSyncingResponse:
         """
@@ -72,7 +72,7 @@ class CosmosBaseTendermintRestClient(CosmosBaseTendermint):
         json_response = self._rest_api.get(
             f"{self.API_URL}/syncing",
         )
-        return Parse(json_response, GetSyncingResponse())
+        return GetSyncingResponse().from_json(json_response)
 
     def GetLatestBlock(self, request: GetLatestBlockRequest) -> GetLatestBlockResponse:
         """
@@ -84,7 +84,7 @@ class CosmosBaseTendermintRestClient(CosmosBaseTendermint):
         json_response = self._rest_api.get(
             f"{self.API_URL}/blocks/latest",
         )
-        return Parse(json_response, GetLatestBlockResponse())
+        return GetLatestBlockResponse().from_json(json_response)
 
     def GetBlockByHeight(
         self, request: GetBlockByHeightRequest
@@ -96,7 +96,7 @@ class CosmosBaseTendermintRestClient(CosmosBaseTendermint):
         :return: GetBlockByHeightResponse
         """
         json_response = self._rest_api.get(f"{self.API_URL}/blocks/{request.height}")
-        return Parse(json_response, GetBlockByHeightResponse())
+        return GetBlockByHeightResponse().from_json(json_response)
 
     def GetLatestValidatorSet(
         self, request: GetLatestValidatorSetRequest
@@ -110,7 +110,7 @@ class CosmosBaseTendermintRestClient(CosmosBaseTendermint):
         json_response = self._rest_api.get(
             f"{self.API_URL}/validatorsets/latest", request
         )
-        return Parse(json_response, GetLatestValidatorSetResponse())
+        return GetLatestValidatorSetResponse().from_json(json_response)
 
     def GetValidatorSetByHeight(
         self, request: GetValidatorSetByHeightRequest
@@ -124,4 +124,4 @@ class CosmosBaseTendermintRestClient(CosmosBaseTendermint):
         json_response = self._rest_api.get(
             f"{self.API_URL}/validatorsets/{request.height}", request
         )
-        return Parse(json_response, GetValidatorSetByHeightResponse())
+        return GetValidatorSetByHeightResponse().from_json(json_response)

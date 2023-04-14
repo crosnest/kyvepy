@@ -23,7 +23,7 @@ from google.protobuf.json_format import Parse
 
 from c4epy.auth.interface import Auth
 from c4epy.common.rest_client import RestClient
-from c4epy.protos.cosmos.auth.v1beta1.query_pb2 import (
+from c4epy.protos.cosmos.auth.v1beta1 import (
     QueryAccountRequest,
     QueryAccountResponse,
     QueryParamsRequest,
@@ -53,7 +53,7 @@ class AuthRestClient(Auth):
         :return: QueryAccountResponse
         """
         json_response = self._rest_api.get(f"{self.API_URL}/accounts/{request.address}")
-        return Parse(json_response, QueryAccountResponse())
+        return QueryAccountResponse().from_json(json_response)
 
     def Params(self, request: QueryParamsRequest) -> QueryParamsResponse:
         """
@@ -64,4 +64,4 @@ class AuthRestClient(Auth):
         :return: QueryParamsResponse
         """
         json_response = self._rest_api.get(f"{self.API_URL}/params")
-        return Parse(json_response, QueryParamsResponse())
+        return QueryParamsResponse().from_json(json_response)

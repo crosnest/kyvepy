@@ -19,7 +19,7 @@
 """Distribution."""
 
 from c4epy.crypto.address import Address
-from c4epy.protos.cosmos.distribution.v1beta1.tx_pb2 import MsgWithdrawDelegatorReward
+from c4epy.protos.cosmos.distribution.v1beta1 import MsgWithdrawDelegatorReward
 
 
 def create_withdraw_delegator_reward(delegator: Address, validator: Address):

@@ -26,7 +26,7 @@ from google.protobuf.json_format import ParseDict
 
 from c4epy.cfeminter.rest_client import CfeMinterRestClient
 from c4epy.common.utils import json_encode
-from c4epy.protos.c4echain.cfeminter.query_pb2 import (
+from c4epy.protos.c4echain.cfeminter import (
     QueryInflationRequest,
     QueryInflationResponse,
     QueryParamsRequest,
@@ -46,7 +46,7 @@ class CfeMinterRestClientTestCase(unittest.TestCase):
     def test_query_inflation():
         """Test query minter for positive value."""
         content = {"inflation": "0.019935838916075397"}
-        expected_response = ParseDict(content, QueryInflationResponse())
+        expected_response = QueryInflationResponse().from_dict(content)
 
         mock_client = MockRestClient(json_encode(content))
         minter = CfeMinterRestClient(mock_client)
@@ -79,7 +79,7 @@ class CfeMinterRestClientTestCase(unittest.TestCase):
             },
             "state_history": [],
         }
-        expected_response = ParseDict(expected_content, QueryStateResponse())
+        expected_response = QueryStateResponse().from_dict(expected_content)
 
         mock_client = MockRestClient(json_encode(content))
         minter = CfeMinterRestClient(mock_client)
@@ -112,7 +112,7 @@ class CfeMinterRestClientTestCase(unittest.TestCase):
                 },
             }
         }
-        expected_response = ParseDict(content, QueryParamsResponse())
+        expected_response = QueryParamsResponse().from_dict(content)
 
         mock_client = MockRestClient(json_encode(content))
         minter = CfeMinterRestClient(mock_client)

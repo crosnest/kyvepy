@@ -21,13 +21,13 @@ from typing import Dict, Tuple
 from unittest import TestCase
 
 from google.protobuf.json_format import ParseDict
-from google.protobuf.wrappers_pb2 import Int32Value  # noqa # needed for protobuf decode
+from google.protobuf import Int32Value  # noqa # needed for protobuf decode
 
 from c4epy.common.utils import json_encode
 from c4epy.ibc.core.connection.rest_client import (  # type: ignore
     IBCCoreConnectionRestClient,
 )
-from c4epy.protos.ibc.core.connection.v1.query_pb2 import (
+from c4epy.protos.ibc.core.connection.v1 import (
     QueryClientConnectionsRequest,
     QueryClientConnectionsResponse,
     QueryConnectionClientStateRequest,
@@ -85,7 +85,7 @@ class IBCCoreConnectionRestClientTestCase(TestCase):
             "proof_height": {"revision_number": "1", "revision_height": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
-        expected_response = ParseDict(content, QueryConnectionResponse())
+        expected_response = QueryConnectionResponse().from_dict(content)
 
         assert (
             rest_client.Connection(
@@ -119,7 +119,7 @@ class IBCCoreConnectionRestClientTestCase(TestCase):
             "height": {"revision_number": "1", "revision_height": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
-        expected_response = ParseDict(content, QueryConnectionsResponse())
+        expected_response = QueryConnectionsResponse().from_dict(content)
 
         assert rest_client.Connections(QueryConnectionsRequest()) == expected_response
         assert mock_client.last_base_url == "/ibc/core/connection/v1beta1/connections"
@@ -132,7 +132,7 @@ class IBCCoreConnectionRestClientTestCase(TestCase):
             "proof_height": {"revision_number": "1", "revision_height": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
-        expected_response = ParseDict(content, QueryClientConnectionsResponse())
+        expected_response = QueryClientConnectionsResponse().from_dict(content)
 
         assert (
             rest_client.ClientConnections(
@@ -155,7 +155,7 @@ class IBCCoreConnectionRestClientTestCase(TestCase):
             "proof_height": {"revision_number": "1", "revision_height": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
-        expected_response = ParseDict(content, QueryConnectionClientStateResponse())
+        expected_response = QueryConnectionClientStateResponse().from_dict(content)
 
         assert (
             rest_client.ConnectionClientState(
@@ -177,7 +177,7 @@ class IBCCoreConnectionRestClientTestCase(TestCase):
             "proof_height": {"revision_number": "1", "revision_height": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
-        expected_response = ParseDict(content, QueryConnectionConsensusStateResponse())
+        expected_response = QueryConnectionConsensusStateResponse().from_dict(content)
 
         assert (
             rest_client.ConnectionConsensusState(

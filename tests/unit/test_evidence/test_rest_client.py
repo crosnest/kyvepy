@@ -21,11 +21,11 @@ from typing import Dict, Tuple
 from unittest import TestCase
 
 from google.protobuf.json_format import ParseDict
-from google.protobuf.wrappers_pb2 import Int32Value  # noqa # needed for protobuf decode
+from google.protobuf import Int32Value  # noqa # needed for protobuf decode
 
 from c4epy.common.utils import json_encode
 from c4epy.evidence.rest_client import EvidenceRestClient
-from c4epy.protos.cosmos.evidence.v1beta1.query_pb2 import (
+from c4epy.protos.cosmos.evidence.v1beta1 import (
     QueryAllEvidenceRequest,
     QueryAllEvidenceResponse,
     QueryEvidenceRequest,
@@ -62,7 +62,7 @@ class EvidenceRestClientTestCase(TestCase):
             }
         }
         mock_client, evidence = self.make_clients(content)
-        expected_response = ParseDict(content, QueryEvidenceResponse())
+        expected_response = QueryEvidenceResponse().from_dict(content)
 
         assert (
             evidence.Evidence(QueryEvidenceRequest(evidence_hash=b"hash"))
@@ -82,7 +82,7 @@ class EvidenceRestClientTestCase(TestCase):
             "pagination": {"next_key": "string", "total": "1"},
         }
         mock_client, evidence = self.make_clients(content)
-        expected_response = ParseDict(content, QueryAllEvidenceResponse())
+        expected_response = QueryAllEvidenceResponse().from_dict(content)
 
         assert evidence.AllEvidence(QueryAllEvidenceRequest()) == expected_response
         assert mock_client.last_base_url == "/cosmos/evidence/v1beta1/evidence"

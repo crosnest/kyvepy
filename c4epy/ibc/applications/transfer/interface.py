@@ -20,7 +20,7 @@
 
 from abc import ABC, abstractmethod
 
-from c4epy.protos.ibc.applications.transfer.v1.query_pb2 import (
+from c4epy.protos.ibc.applications.transfer.v1 import (
     QueryDenomTraceRequest,
     QueryDenomTraceResponse,
     QueryDenomTracesRequest,

@@ -24,7 +24,7 @@ from google.protobuf.json_format import ParseDict
 
 from c4epy.common.utils import json_encode
 from c4epy.gov.rest_client import GovRestClient
-from c4epy.protos.cosmos.gov.v1beta1.query_pb2 import (
+from c4epy.protos.cosmos.gov.v1beta1 import (
     QueryDepositRequest,
     QueryDepositResponse,
     QueryDepositsRequest,
@@ -84,7 +84,7 @@ class GovRestClientTestCase(TestCase):
             }
         }
         mock_client, gov = self.make_clients(content)
-        expected_response = ParseDict(content, QueryProposalResponse())
+        expected_response = QueryProposalResponse().from_dict(content)
 
         assert gov.Proposal(QueryProposalRequest(proposal_id=1)) == expected_response
         assert mock_client.last_base_url == "/cosmos/gov/v1beta1/proposals/1"
@@ -112,7 +112,7 @@ class GovRestClientTestCase(TestCase):
             "pagination": {"next_key": "string", "total": "1"},
         }
         mock_client, gov = self.make_clients(content)
-        expected_response = ParseDict(content, QueryProposalsResponse())
+        expected_response = QueryProposalsResponse().from_dict(content)
 
         assert gov.Proposals(QueryProposalsRequest()) == expected_response
         assert mock_client.last_base_url == "/cosmos/gov/v1beta1/proposals/"
@@ -121,7 +121,7 @@ class GovRestClientTestCase(TestCase):
         """Test Vote method."""
         content = {"vote": {"proposal_id": "10", "voter": "addr"}}
         mock_client, gov = self.make_clients(content)
-        expected_response = ParseDict(content, QueryVoteResponse())
+        expected_response = QueryVoteResponse().from_dict(content)
 
         assert (
             gov.Vote(QueryVoteRequest(proposal_id=10, voter="addr"))
@@ -138,7 +138,7 @@ class GovRestClientTestCase(TestCase):
             "pagination": {"next_key": "string", "total": "1"},
         }
         mock_client, gov = self.make_clients(content)
-        expected_response = ParseDict(content, QueryVotesResponse())
+        expected_response = QueryVotesResponse().from_dict(content)
 
         assert gov.Votes(QueryVotesRequest(proposal_id=1)) == expected_response
         assert mock_client.last_base_url == "/cosmos/gov/v1beta1/proposals/1/votes/"
@@ -158,7 +158,7 @@ class GovRestClientTestCase(TestCase):
             },
         }
         mock_client, gov = self.make_clients(content)
-        expected_response = ParseDict(content, QueryParamsResponse())
+        expected_response = QueryParamsResponse().from_dict(content)
 
         assert gov.Params(QueryParamsRequest(params_type="some")) == expected_response
         assert mock_client.last_base_url == "/cosmos/gov/v1beta1/params/some"
@@ -173,7 +173,7 @@ class GovRestClientTestCase(TestCase):
             }
         }
         mock_client, gov = self.make_clients(content)
-        expected_response = ParseDict(content, QueryDepositResponse())
+        expected_response = QueryDepositResponse().from_dict(content)
 
         assert (
             gov.Deposit(QueryDepositRequest(proposal_id=10, depositor="depositor"))
@@ -197,7 +197,7 @@ class GovRestClientTestCase(TestCase):
             "pagination": {"next_key": "string", "total": "1"},
         }
         mock_client, gov = self.make_clients(content)
-        expected_response = ParseDict(content, QueryDepositsResponse())
+        expected_response = QueryDepositsResponse().from_dict(content)
 
         assert gov.Deposits(QueryDepositsRequest(proposal_id=1)) == expected_response
         assert mock_client.last_base_url == "/cosmos/gov/v1beta1/proposals/1/deposits/"
@@ -213,7 +213,7 @@ class GovRestClientTestCase(TestCase):
             }
         }
         mock_client, gov = self.make_clients(content)
-        expected_response = ParseDict(content, QueryTallyResultResponse())
+        expected_response = QueryTallyResultResponse().from_dict(content)
 
         assert (
             gov.TallyResult(QueryTallyResultRequest(proposal_id=10))

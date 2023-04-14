@@ -22,8 +22,8 @@
 from enum import Enum
 
 from c4epy.crypto.address import Address
-from c4epy.protos.cosmos.base.v1beta1.coin_pb2 import Coin
-from c4epy.protos.cosmos.staking.v1beta1.tx_pb2 import (
+from c4epy.protos.cosmos.base.v1beta1 import Coin
+from c4epy.protos.cosmos.staking.v1beta1 import (
     MsgBeginRedelegate,
     MsgDelegate,
     MsgUndelegate,

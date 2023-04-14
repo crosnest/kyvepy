@@ -23,7 +23,7 @@ from c4epy.common.rest_client import RestClient
 from c4epy.ibc.applications.transfer.interface import (  # type: ignore
     IBCApplicationsTransfer,
 )
-from c4epy.protos.ibc.applications.transfer.v1.query_pb2 import (
+from c4epy.protos.ibc.applications.transfer.v1 import (
     QueryDenomTraceRequest,
     QueryDenomTraceResponse,
     QueryDenomTracesRequest,
@@ -56,7 +56,7 @@ class IBCApplicationsTransferRestClient(IBCApplicationsTransfer):
         json_response = self._rest_api.get(
             f"{self.API_URL}/denom_traces/{request.hash}"
         )
-        return Parse(json_response, QueryDenomTraceResponse())
+        return QueryDenomTraceResponse().from_json(json_response)
 
     def DenomTraces(self, request: QueryDenomTracesRequest) -> QueryDenomTracesResponse:
         """
@@ -66,7 +66,7 @@ class IBCApplicationsTransferRestClient(IBCApplicationsTransfer):
         :return: QueryDenomTracesResponse
         """
         json_response = self._rest_api.get(f"{self.API_URL}/denom_traces", request)
-        return Parse(json_response, QueryDenomTracesResponse())
+        return QueryDenomTracesResponse().from_json(json_response)
 
     def Params(self, request: QueryParamsRequest) -> QueryParamsResponse:
         """
@@ -76,4 +76,4 @@ class IBCApplicationsTransferRestClient(IBCApplicationsTransfer):
         :return: QueryParamsResponse
         """
         json_response = self._rest_api.get(f"{self.API_URL}/params")
-        return Parse(json_response, QueryParamsResponse())
+        return QueryParamsResponse().from_json(json_response)

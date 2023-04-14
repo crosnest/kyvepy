@@ -21,10 +21,10 @@ from typing import Dict, Tuple
 from unittest import TestCase
 
 from google.protobuf.json_format import ParseDict
-from google.protobuf.wrappers_pb2 import Int32Value  # noqa # needed for protobuf decode
+from google.protobuf import Int32Value  # noqa # needed for protobuf decode
 
 from c4epy.common.utils import json_encode
-from c4epy.protos.cosmos.base.tendermint.v1beta1.query_pb2 import (
+from c4epy.protos.cosmos.base.tendermint.v1beta1 import (
     GetBlockByHeightRequest,
     GetBlockByHeightResponse,
     GetLatestBlockRequest,
@@ -95,7 +95,7 @@ class CosmosBaseTendermintRestClientTestCase(TestCase):
             },
         }
         mock_client, rest_client = self.make_clients(content)
-        expected_response = ParseDict(content, GetNodeInfoResponse())
+        expected_response = GetNodeInfoResponse().from_dict(content)
 
         assert rest_client.GetNodeInfo(GetNodeInfoRequest()) == expected_response
         assert mock_client.last_base_url == "/cosmos/base/tendermint/v1beta1/node_info"
@@ -104,7 +104,7 @@ class CosmosBaseTendermintRestClientTestCase(TestCase):
         """Test GetSyncing method."""
         content = {"syncing": True}
         mock_client, rest_client = self.make_clients(content)
-        expected_response = ParseDict(content, GetSyncingResponse())
+        expected_response = GetSyncingResponse().from_dict(content)
 
         assert rest_client.GetSyncing(GetSyncingRequest()) == expected_response
         assert mock_client.last_base_url == "/cosmos/base/tendermint/v1beta1/syncing"
@@ -157,7 +157,7 @@ class CosmosBaseTendermintRestClientTestCase(TestCase):
             },
         }
         mock_client, rest_client = self.make_clients(content)
-        expected_response = ParseDict(content, GetLatestBlockResponse())
+        expected_response = GetLatestBlockResponse().from_dict(content)
 
         assert rest_client.GetLatestBlock(GetLatestBlockRequest()) == expected_response
         assert (
@@ -212,7 +212,7 @@ class CosmosBaseTendermintRestClientTestCase(TestCase):
             },
         }
         mock_client, rest_client = self.make_clients(content)
-        expected_response = ParseDict(content, GetBlockByHeightResponse())
+        expected_response = GetBlockByHeightResponse().from_dict(content)
 
         assert (
             rest_client.GetBlockByHeight(GetBlockByHeightRequest(height=123))
@@ -235,7 +235,7 @@ class CosmosBaseTendermintRestClientTestCase(TestCase):
             "pagination": {"next_key": "string", "total": "12"},
         }
         mock_client, rest_client = self.make_clients(content)
-        expected_response = ParseDict(content, GetLatestValidatorSetResponse())
+        expected_response = GetLatestValidatorSetResponse().from_dict(content)
 
         assert (
             rest_client.GetLatestValidatorSet(GetLatestValidatorSetRequest())
@@ -261,7 +261,7 @@ class CosmosBaseTendermintRestClientTestCase(TestCase):
             "pagination": {"next_key": "string", "total": "12"},
         }
         mock_client, rest_client = self.make_clients(content)
-        expected_response = ParseDict(content, GetValidatorSetByHeightResponse())
+        expected_response = GetValidatorSetByHeightResponse().from_dict(content)
 
         assert (
             rest_client.GetValidatorSetByHeight(

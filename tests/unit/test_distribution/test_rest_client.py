@@ -25,7 +25,7 @@ from google.protobuf.json_format import ParseDict
 
 from c4epy.common.utils import json_encode
 from c4epy.distribution.rest_client import DistributionRestClient
-from c4epy.protos.cosmos.distribution.v1beta1.query_pb2 import (
+from c4epy.protos.cosmos.distribution.v1beta1 import (
     QueryCommunityPoolResponse,
     QueryDelegationRewardsRequest,
     QueryDelegationRewardsResponse,
@@ -56,7 +56,7 @@ class DistributionRestClientTestCase(TestCase):
         content = {"pool": [{"denom": "string", "amount": "123"}]}
         mock_client = MockRestClient(json_encode(content).encode("utf8"))
 
-        expected_response = ParseDict(content, QueryCommunityPoolResponse())
+        expected_response = QueryCommunityPoolResponse().from_dict(content)
 
         distribution = DistributionRestClient(mock_client)
 
@@ -79,7 +79,7 @@ class DistributionRestClientTestCase(TestCase):
         }
         mock_client = MockRestClient(json_encode(content))
 
-        expected_response = ParseDict(content, QueryDelegationTotalRewardsResponse())
+        expected_response = QueryDelegationTotalRewardsResponse().from_dict(content)
 
         distribution = DistributionRestClient(mock_client)
 
@@ -100,7 +100,7 @@ class DistributionRestClientTestCase(TestCase):
         content = {"rewards": [{"denom": "string", "amount": "1234"}]}
         mock_client = MockRestClient(json_encode(content))
 
-        expected_response = ParseDict(content, QueryDelegationRewardsResponse())
+        expected_response = QueryDelegationRewardsResponse().from_dict(content)
 
         distribution = DistributionRestClient(mock_client)
 
@@ -124,7 +124,7 @@ class DistributionRestClientTestCase(TestCase):
         content = {"validators": ["string"]}
         mock_client = MockRestClient(json_encode(content))
 
-        expected_response = ParseDict(content, QueryDelegatorValidatorsResponse())
+        expected_response = QueryDelegatorValidatorsResponse().from_dict(content)
 
         distribution = DistributionRestClient(mock_client)
 
@@ -145,7 +145,7 @@ class DistributionRestClientTestCase(TestCase):
         content = {"withdraw_address": "string"}
         mock_client = MockRestClient(json_encode(content))
 
-        expected_response = ParseDict(content, QueryDelegatorWithdrawAddressResponse())
+        expected_response = QueryDelegatorWithdrawAddressResponse().from_dict(content)
 
         distribution = DistributionRestClient(mock_client)
 
@@ -173,7 +173,7 @@ class DistributionRestClientTestCase(TestCase):
         }
         mock_client = MockRestClient(json_encode(content))
 
-        expected_response = ParseDict(content, QueryParamsResponse())
+        expected_response = QueryParamsResponse().from_dict(content)
 
         distribution = DistributionRestClient(mock_client)
 
@@ -194,7 +194,7 @@ class DistributionRestClientTestCase(TestCase):
         }
         mock_client = MockRestClient(json_encode(content))
 
-        expected_response = ParseDict(content, QueryValidatorCommissionResponse())
+        expected_response = QueryValidatorCommissionResponse().from_dict(content)
 
         distribution = DistributionRestClient(mock_client)
 
@@ -243,7 +243,7 @@ class DistributionRestClientTestCase(TestCase):
         }
         mock_client = MockRestClient(json_encode(content))
 
-        expected_response = ParseDict(content, QueryValidatorSlashesResponse())
+        expected_response = QueryValidatorSlashesResponse().from_dict(content)
 
         distribution = DistributionRestClient(mock_client)
 

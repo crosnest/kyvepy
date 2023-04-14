@@ -20,8 +20,8 @@
 """Bank send message."""
 
 from c4epy.crypto.address import Address
-from c4epy.protos.cosmos.bank.v1beta1.tx_pb2 import MsgSend
-from c4epy.protos.cosmos.base.v1beta1.coin_pb2 import Coin
+from c4epy.protos.cosmos.bank.v1beta1 import MsgSend
+from c4epy.protos.cosmos.base.v1beta1 import Coin
 
 
 def create_bank_send_msg(

@@ -23,14 +23,14 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Any, List, Optional, Union
 
-from google.protobuf.any_pb2 import Any as ProtoAny
+from google.protobuf import Any as ProtoAny
 
 from c4epy.aerial.coins import parse_coins
 from c4epy.crypto.interface import Signer
 from c4epy.crypto.keypairs import PublicKey
-from c4epy.protos.cosmos.crypto.secp256k1.keys_pb2 import PubKey as ProtoPubKey
-from c4epy.protos.cosmos.tx.signing.v1beta1.signing_pb2 import SignMode
-from c4epy.protos.cosmos.tx.v1beta1.tx_pb2 import (
+from c4epy.protos.cosmos.crypto.secp256k1 import PubKey as ProtoPubKey
+from c4epy.protos.cosmos.tx.signing.v1beta1 import SignMode
+from c4epy.protos.cosmos.tx.v1beta1 import (
     AuthInfo,
     Fee,
     ModeInfo,

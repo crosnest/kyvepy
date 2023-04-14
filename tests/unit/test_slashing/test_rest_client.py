@@ -23,7 +23,7 @@ from unittest import TestCase
 from google.protobuf.json_format import ParseDict
 
 from c4epy.common.utils import json_encode
-from c4epy.protos.cosmos.slashing.v1beta1.query_pb2 import (
+from c4epy.protos.cosmos.slashing.v1beta1 import (
     QueryParamsResponse,
     QuerySigningInfoRequest,
     QuerySigningInfoResponse,
@@ -65,7 +65,7 @@ class SlashingRestClientTestCase(TestCase):
             }
         }
         mock_client, slashing = self.make_clients(content)
-        expected_response = ParseDict(content, QueryParamsResponse())
+        expected_response = QueryParamsResponse().from_dict(content)
 
         assert slashing.Params() == expected_response
         assert mock_client.last_base_url == "/cosmos/slashing/v1beta1/params"
@@ -83,7 +83,7 @@ class SlashingRestClientTestCase(TestCase):
             }
         }
         mock_client, slashing = self.make_clients(content)
-        expected_response = ParseDict(content, QuerySigningInfoResponse())
+        expected_response = QuerySigningInfoResponse().from_dict(content)
 
         assert (
             slashing.SigningInfo(QuerySigningInfoRequest(cons_address="some_addr"))
@@ -110,7 +110,7 @@ class SlashingRestClientTestCase(TestCase):
             "pagination": {"next_key": "string", "total": "1"},
         }
         mock_client, slashing = self.make_clients(content)
-        expected_response = ParseDict(content, QuerySigningInfosResponse())
+        expected_response = QuerySigningInfosResponse().from_dict(content)
 
         assert slashing.SigningInfos(QuerySigningInfosRequest()) == expected_response
         assert mock_client.last_base_url == "/cosmos/slashing/v1beta1/signing_infos"

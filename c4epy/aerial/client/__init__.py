@@ -55,28 +55,28 @@ from c4epy.common.rest_client import RestClient
 from c4epy.crypto.address import Address
 from c4epy.distribution.rest_client import DistributionRestClient
 from c4epy.params.rest_client import ParamsRestClient
-from c4epy.protos.cosmos.auth.v1beta1.auth_pb2 import BaseAccount
-from c4epy.protos.cosmos.auth.v1beta1.query_pb2 import QueryAccountRequest
+from c4epy.protos.cosmos.auth.v1beta1 import BaseAccount
+from c4epy.protos.cosmos.auth.v1beta1 import QueryAccountRequest
 from c4epy.protos.cosmos.auth.v1beta1.query_pb2_grpc import QueryStub as AuthGrpcClient
-from c4epy.protos.cosmos.bank.v1beta1.query_pb2 import (
+from c4epy.protos.cosmos.bank.v1beta1 import (
     QueryAllBalancesRequest,
     QueryBalanceRequest,
 )
 from c4epy.protos.cosmos.bank.v1beta1.query_pb2_grpc import QueryStub as BankGrpcClient
-from c4epy.protos.cosmos.crypto.ed25519.keys_pb2 import (  # noqa # pylint: disable=unused-import
+from c4epy.protos.cosmos.crypto.ed25519 import (  # noqa # pylint: disable=unused-import
     PubKey,
 )
-from c4epy.protos.cosmos.distribution.v1beta1.query_pb2 import (
+from c4epy.protos.cosmos.distribution.v1beta1 import (
     QueryDelegationRewardsRequest,
 )
 from c4epy.protos.cosmos.distribution.v1beta1.query_pb2_grpc import (
     QueryStub as DistributionGrpcClient,
 )
-from c4epy.protos.cosmos.params.v1beta1.query_pb2 import QueryParamsRequest
+from c4epy.protos.cosmos.params.v1beta1 import QueryParamsRequest
 from c4epy.protos.cosmos.params.v1beta1.query_pb2_grpc import (
     QueryStub as QueryParamsGrpcClient,
 )
-from c4epy.protos.cosmos.staking.v1beta1.query_pb2 import (
+from c4epy.protos.cosmos.staking.v1beta1 import (
     QueryDelegatorDelegationsRequest,
     QueryDelegatorUnbondingDelegationsRequest,
     QueryValidatorsRequest,
@@ -84,7 +84,7 @@ from c4epy.protos.cosmos.staking.v1beta1.query_pb2 import (
 from c4epy.protos.cosmos.staking.v1beta1.query_pb2_grpc import (
     QueryStub as StakingGrpcClient,
 )
-from c4epy.protos.cosmos.tx.v1beta1.service_pb2 import (
+from c4epy.protos.cosmos.tx.v1beta1 import (
     BroadcastMode,
     BroadcastTxRequest,
     GetTxRequest,

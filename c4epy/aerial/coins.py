@@ -22,7 +22,7 @@
 import re
 from typing import List
 
-from c4epy.protos.cosmos.base.v1beta1.coin_pb2 import Coin
+from c4epy.protos.cosmos.base.v1beta1 import Coin
 
 
 def parse_coins(value: str) -> List[Coin]:
