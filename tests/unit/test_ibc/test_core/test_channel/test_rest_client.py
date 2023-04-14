@@ -16,7 +16,9 @@
 #   limitations under the License.
 #
 # ------------------------------------------------------------------------------
+
 """Tests for REST implementation of IBC Core Channel."""
+
 from typing import Dict, Tuple
 from unittest import TestCase
 
@@ -50,7 +52,6 @@ from c4epy.protos.ibc.core.channel.v1 import (
     QueryUnreceivedPacketsRequest,
     QueryUnreceivedPacketsResponse,
 )
-from google.protobuf import Int32Value  # noqa # needed for protobuf decode
 
 from tests.helpers import MockRestClient
 

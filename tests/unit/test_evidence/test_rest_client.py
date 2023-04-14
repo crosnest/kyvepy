@@ -16,7 +16,9 @@
 #   limitations under the License.
 #
 # ------------------------------------------------------------------------------
+
 """Tests for REST implementation of Evidence."""
+
 from typing import Dict, Tuple
 from unittest import TestCase
 
@@ -28,7 +30,6 @@ from c4epy.protos.cosmos.evidence.v1beta1 import (
     QueryEvidenceRequest,
     QueryEvidenceResponse,
 )
-from google.protobuf import Int32Value  # noqa # needed for protobuf decode
 
 from tests.helpers import MockRestClient
 

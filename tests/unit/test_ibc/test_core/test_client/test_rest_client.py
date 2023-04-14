@@ -16,7 +16,9 @@
 #   limitations under the License.
 #
 # ------------------------------------------------------------------------------
+
 """Tests for REST implementation of IBC Core Client."""
+
 from typing import Dict, Tuple
 from unittest import TestCase
 
@@ -34,7 +36,6 @@ from c4epy.protos.ibc.core.client.v1 import (
     QueryConsensusStatesRequest,
     QueryConsensusStatesResponse,
 )
-from google.protobuf import Int32Value  # noqa # needed for protobuf decode
 
 from tests.helpers import MockRestClient
 

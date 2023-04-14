@@ -685,9 +685,10 @@ class LedgerClient:
         :param tx: transaction
         :return: Submitted transaction
         """
+        mode = BroadcastMode.BROADCAST_MODE_SYNC
         # create the broadcast request
         broadcast_req = BroadcastTxRequest(
-            tx_bytes=tx.tx.SerializeToString(), mode=BroadcastMode.BROADCAST_MODE_SYNC
+            tx_bytes=tx.tx.SerializeToString(), mode=mode
         )
 
         # broadcast the transaction
