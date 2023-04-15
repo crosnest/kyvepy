@@ -56,11 +56,10 @@ timedelta
 #### get`_`paginated
 
 ```python
-def get_paginated(
-        initial_request: Any,
-        request_method: Callable,
-        pages_limit: int = 0,
-        per_page_limit: Optional[int] = DEFAULT_PER_PAGE_LIMIT) -> List[Any]
+def get_paginated(initial_request: Any,
+                  request_method: Callable,
+                  pages_limit: int = 0,
+                  per_page_limit: int = DEFAULT_PER_PAGE_LIMIT) -> List[Any]
 ```
 
 Get pages for specific request.

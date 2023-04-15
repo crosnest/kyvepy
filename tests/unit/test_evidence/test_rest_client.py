@@ -57,7 +57,7 @@ class EvidenceRestClientTestCase(TestCase):
         content = {
             "evidence": {
                 "@type": "type.googleapis.com/google.protobuf.Int32Value",
-                "value": "42",
+                "value": "NDI=",
             }
         }
         mock_client, evidence = self.make_clients(content)
@@ -75,10 +75,10 @@ class EvidenceRestClientTestCase(TestCase):
             "evidence": [
                 {
                     "@type": "type.googleapis.com/google.protobuf.Int32Value",
-                    "value": "42",
+                    "value": "NDI=",
                 }
             ],
-            "pagination": {"next_key": "string", "total": "1"},
+            "pagination": {"next_key": "c3RyaW5n", "total": "1"},
         }
         mock_client, evidence = self.make_clients(content)
         expected_response = QueryAllEvidenceResponse().from_dict(content)

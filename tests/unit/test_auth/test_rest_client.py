@@ -31,9 +31,6 @@ from c4epy.protos.cosmos.auth.v1beta1 import (
     QueryParamsRequest,
     QueryParamsResponse,
 )
-from c4epy.protos.cosmos.crypto.secp256k1 import (  # noqa # needed for protobuf decode
-    PubKey,
-)
 
 from tests.helpers import MockRestClient
 
