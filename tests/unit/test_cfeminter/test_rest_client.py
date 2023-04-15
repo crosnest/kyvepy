@@ -63,10 +63,9 @@ class CfeMinterRestClientTestCase(unittest.TestCase):
                 "amount_minted": "1245",
                 "remainder_to_mint": "0.12345",
                 "last_mint_block_time": "2023-04-15T08:25:48.171549411Z",
-                "remainder_from_previous_minter": "0.000000000000000000"
+                "remainder_from_previous_minter": "0.000000000000000000",
             },
-            "state_history": [
-            ]
+            "state_history": [],
         }
         expected_response = QueryStateResponse().from_dict(content)
 
@@ -92,10 +91,10 @@ class CfeMinterRestClientTestCase(unittest.TestCase):
                             "@type": "/chain4energy.c4echain.cfeminter.ExponentialStepMinting",
                             "step_duration": "126230400s",
                             "amount": "32000000000000",
-                            "amount_multiplier": "0.500000000000000000"
-                        }
+                            "amount_multiplier": "0.500000000000000000",
+                        },
                     }
-                ]
+                ],
             }
         }
         expected_response = QueryParamsResponse().from_dict(content)
