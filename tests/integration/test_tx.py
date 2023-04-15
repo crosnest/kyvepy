@@ -84,16 +84,16 @@ class TestTx:
 
 
 class TestTxRestAPI(TestTx):
-    """Test dorado rest api"""
+    """Test c4echain rest api"""
 
     def _get_network_config(self):
         return NetworkConfig(
-            chain_id="dorado-1",
-            url="rest+https://lcd-testnet.c4e.io:443",
+            chain_id="c4echain",
+            url="rest+http://127.0.0.1:1317",
             fee_minimum_gas_price=0.025,
             fee_denomination="uc4e",
             staking_denomination="uc4e",
-            faucet_url=None,
+            faucet_url="http://127.0.0.1:4500",
         )
 
 

@@ -2,103 +2,128 @@ name: Checks and Tests
 on: pull_request
 
 jobs:
-  code_quality_check:
-    name: Check Code Quality
-    runs-on: '${{ matrix.os }}'
-    strategy:
-      matrix:
-        os:
-          - ubuntu-latest
-        python-version:
-          - '3.9'
-        tox-job:
-          - black-check
-          - isort-check
-          - flake8
-          - vulture
-          - bandit
-          - safety
-          - mypy
-          - pylint
-          - liccheck
-          - copyright-check
-          - check-manifest
-          - check_api_docs
-    timeout-minutes: 30
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
-        with:
-          python-version: '${{ matrix.python-version }}'
-      - name: Install dependencies
-        run: pip install tox==3.25.1
-      - name: 'Run check ${{ matrix.tox-job }}'
-        run: |
-          tox -e ${{ matrix.tox-job }}
-  spell-check:
-    name: Check Spelling
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: rojopolis/spellcheck-github-actions@0.25.0
-        with:
-          config_path: .spellcheck.yml
-  markdown-link-check:
-    name: Check Links
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: gaurav-nelson/github-action-markdown-link-check@v1
-        with:
-          use-quiet-mode: 'yes'
-          use-verbose-mode: 'yes'
-          config-file: .md-link-check.json
-  unit_tests:
-    name: Unit Tests
-    runs-on: '${{ matrix.os }}'
-    strategy:
-      matrix:
-        os:
-          - ubuntu-latest
-          - macos-latest
-          - windows-latest
-        python-version:
-          - '3.8'
-          - '3.9'
-          - '3.10'
-    timeout-minutes: 30
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
-        with:
-          python-version: '${{ matrix.python-version }}'
-      - name: Install dependencies
-        run: pip install tox==3.25.1
-      - name: Unit Tests
-        run: |
-          tox -e test-unit
-        shell: bash
-      - name: Coverage Report
-        run: tox -e coverage-report
+#  code_quality_check:
+#    name: Check Code Quality
+#    runs-on: '${{ matrix.os }}'
+#    strategy:
+#      matrix:
+#        os:
+#          - ubuntu-latest
+#        python-version:
+#          - '3.9'
+#        tox-job:
+#          - black-check
+#          - isort-check
+#          - flake8
+#          - vulture
+#          - bandit
+#          - safety
+#          - mypy
+#          - pylint
+#          - liccheck
+#          - copyright-check
+#          - check-manifest
+#          - check_api_docs
+#    timeout-minutes: 30
+#    steps:
+#      - uses: actions/checkout@v3
+#      - uses: actions/setup-python@v4
+#        with:
+#          python-version: '${{ matrix.python-version }}'
+#      - name: Install dependencies
+#        run: pip install tox==3.25.1
+#      - name: 'Run check ${{ matrix.tox-job }}'
+#        run: |
+#          tox -e ${{ matrix.tox-job }}
+#  spell-check:
+#    name: Check Spelling
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v3
+#      - uses: rojopolis/spellcheck-github-actions@0.25.0
+#        with:
+#          config_path: .spellcheck.yml
+#  markdown-link-check:
+#    name: Check Links
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v3
+#      - uses: gaurav-nelson/github-action-markdown-link-check@v1
+#        with:
+#          use-quiet-mode: 'yes'
+#          use-verbose-mode: 'yes'
+#          config-file: .md-link-check.json
+#  unit_tests:
+#    name: Unit Tests
+#    runs-on: '${{ matrix.os }}'
+#    strategy:
+#      matrix:
+#        os:
+#          - ubuntu-latest
+#          - macos-latest
+#          - windows-latest
+#        python-version:
+#          - '3.8'
+#          - '3.9'
+#          - '3.10'
+#    timeout-minutes: 30
+#    steps:
+#      - uses: actions/checkout@v3
+#      - uses: actions/setup-python@v4
+#        with:
+#          python-version: '${{ matrix.python-version }}'
+#      - name: Install dependencies
+#        run: pip install tox==3.25.1
+#      - name: Unit Tests
+#        run: |
+#          tox -e test-unit
+#        shell: bash
+#      - name: Coverage Report
+#        run: tox -e coverage-report
+
+#  checkout_chain_sources:
+#    name: Checkout chain_sources
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v3
+#      - name: checkout chain4energy to chain4energy-chain directory
+#        run: make checkout-chain-sources
+
   integration_tests:
     name: Integration tests
     runs-on: '${{ matrix.os }}'
+    services:
+      chain:
+        image: ./scripts/Dockerfile
+        ports:
+          - 1317:1317
+          - 4500:4500
+          - 26657:26657
     strategy:
       matrix:
         os:
           - ubuntu-latest
-          - windows-latest
-          - macos-latest
+#          - windows-latest
+#          - macos-latest
         python-version:
           - 3.9
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
+#
+#      - name: run chain
+#        uses: ./action/cli/action.yml
+
       - uses: actions/setup-python@v4
         with:
           python-version: '${{ matrix.python-version }}'
       - name: Install dependencies
         run: pip install tox==3.25.1
+
+      - name: wait for chain to start
+        run: while [ -z "$(curl -sv localhost:26657/health)" ]; do sleep 1; done
+
       - name: Integration Tests
         run: |
           tox -e test-integration

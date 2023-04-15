@@ -394,3 +394,16 @@ check-manifest-ci:
 .PHONY: check-api-docs-ci
 check-api-docs-ci:
 	python scripts/generate_api_docs.py --check-clean
+
+checkout-chain-sources: Makefile
+	git clone --branch $(C4E_VERSION) --depth 1 --quiet --no-checkout --filter=blob:none $(C4E_URL) chain4energy-chain
+	cd chain4energy-chain && git checkout $(C4E_VERSION) -- $(C4E_PROTO_RELATIVE_DIRS)
+
+run-service-docker:
+	docker build  --build-arg VERSION=$(C4E_VERSION) --build-arg REPOSITORY=$(C4E_URL)  -t c4echain_serve ./scripts/
+	docker run --name testchain -d -p 1317:1317 -p 4500:4500 -p 26657:26657 -it --rm c4echain_serve tail -F /dev/null
+	#docker exec testchain ignite chain build
+	#docker exec -td testchain ignite chain serve --skip-proto --quit-on-fail
+
+stop-service-docker:
+	docker stop testchain
