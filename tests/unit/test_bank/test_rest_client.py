@@ -75,7 +75,7 @@ class BankRestClientTestCase(unittest.TestCase):
         """Test query all balances for the positive result."""
         expected_response = QueryAllBalancesResponse(
             balances=[Coin(denom="stake", amount="1234")],
-            pagination=PageResponse(next_key=None, total=0),
+            pagination=PageResponse(total=0),
         )
         content = {
             "balances": [{"denom": "stake", "amount": "1234"}],
@@ -137,7 +137,7 @@ class BankRestClientTestCase(unittest.TestCase):
     def test_query_denoms_metadata():
         """Test query denoms metadata for the positive result."""
         expected_response = QueryDenomsMetadataResponse(
-            pagination=PageResponse(next_key=None, total=0)
+            pagination=PageResponse(total=0)
         )
         content = {"metadatas": [], "pagination": {"next_key": None, "total": 0}}
         mock_client = MockRestClient(json_encode(content))

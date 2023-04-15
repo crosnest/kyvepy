@@ -78,7 +78,6 @@ class CfeMinterRestClientTestCase(unittest.TestCase):
     @staticmethod
     def test_query_params():
         """Test query params for positive result."""
-        # todo: change content with v1.2.0 content
         content = {
             "params": {
                 "mint_denom": "uc4e",

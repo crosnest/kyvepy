@@ -107,7 +107,7 @@ class GovRestClientTestCase(TestCase):
                     "voting_end_time": "2022-02-21T13:09:02.842Z",
                 }
             ],
-            "pagination": {"next_key": "string", "total": "1"},
+            "pagination": {"next_key": "c3RyaW5n", "total": "1"},
         }
         mock_client, gov = self.make_clients(content)
         expected_response = QueryProposalsResponse().from_dict(content)
@@ -133,7 +133,7 @@ class GovRestClientTestCase(TestCase):
         """Test Votes method."""
         content = {
             "votes": [{"proposal_id": "1", "voter": "string"}],
-            "pagination": {"next_key": "string", "total": "1"},
+            "pagination": {"next_key": "c3RyaW5n", "total": "1"},
         }
         mock_client, gov = self.make_clients(content)
         expected_response = QueryVotesResponse().from_dict(content)
@@ -150,9 +150,9 @@ class GovRestClientTestCase(TestCase):
                 "max_deposit_period": "10s",
             },
             "tally_params": {
-                "quorum": "string",
-                "threshold": "string",
-                "veto_threshold": "string",
+                "quorum": "c3RyaW5n",
+                "threshold": "c3RyaW5n",
+                "veto_threshold": "c3RyaW5n",
             },
         }
         mock_client, gov = self.make_clients(content)
@@ -192,7 +192,7 @@ class GovRestClientTestCase(TestCase):
                     "amount": [{"denom": "string", "amount": "10"}],
                 }
             ],
-            "pagination": {"next_key": "string", "total": "1"},
+            "pagination": {"next_key": "c3RyaW5n", "total": "1"},
         }
         mock_client, gov = self.make_clients(content)
         expected_response = QueryDepositsResponse().from_dict(content)

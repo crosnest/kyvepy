@@ -42,7 +42,7 @@ from tests.helpers import MockRestClient
 
 TYPE = {
     "@type": "type.googleapis.com/google.protobuf.Int32Value",
-    "value": "42",
+    "value": "NDI=",
 }
 
 
@@ -68,7 +68,7 @@ class IBCCoreClientRestClientTestCase(TestCase):
         """Test ClientState method."""
         content = {
             "client_state": TYPE,
-            "proof": "string",
+            "proof": "c3RyaW5n",
             "proof_height": {"revision_number": "1", "revision_height": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
@@ -87,7 +87,7 @@ class IBCCoreClientRestClientTestCase(TestCase):
         """Test ClientStates method."""
         content = {
             "client_states": [{"client_id": "string", "client_state": TYPE}],
-            "pagination": {"next_key": "string", "total": "1"},
+            "pagination": {"next_key": "c3RyaW5n", "total": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
         expected_response = QueryClientStatesResponse().from_dict(content)
@@ -99,7 +99,7 @@ class IBCCoreClientRestClientTestCase(TestCase):
         """Test ConsensusState method."""
         content = {
             "consensus_state": TYPE,
-            "proof": "string",
+            "proof": "c3RyaW5n",
             "proof_height": {"revision_number": "1", "revision_height": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
@@ -130,7 +130,7 @@ class IBCCoreClientRestClientTestCase(TestCase):
                     "consensus_state": TYPE,
                 }
             ],
-            "pagination": {"next_key": "string", "total": "1"},
+            "pagination": {"next_key": "c3RyaW5n", "total": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
         expected_response = QueryConsensusStatesResponse().from_dict(content)

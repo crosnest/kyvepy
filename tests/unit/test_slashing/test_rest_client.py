@@ -56,10 +56,10 @@ class SlashingRestClientTestCase(TestCase):
         content = {
             "params": {
                 "signed_blocks_window": "12",
-                "min_signed_per_window": "12",
+                "min_signed_per_window": "MTI=",
                 "downtime_jail_duration": "12s",
-                "slash_fraction_double_sign": "12",
-                "slash_fraction_downtime": "12",
+                "slash_fraction_double_sign": "MTI=",
+                "slash_fraction_downtime": "MTI=",
             }
         }
         mock_client, slashing = self.make_clients(content)
@@ -105,7 +105,7 @@ class SlashingRestClientTestCase(TestCase):
                     "missed_blocks_counter": "1",
                 }
             ],
-            "pagination": {"next_key": "string", "total": "1"},
+            "pagination": {"next_key": "c3RyaW5n", "total": "1"},
         }
         mock_client, slashing = self.make_clients(content)
         expected_response = QuerySigningInfosResponse().from_dict(content)

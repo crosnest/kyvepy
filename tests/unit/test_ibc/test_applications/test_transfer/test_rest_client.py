@@ -73,7 +73,7 @@ class IBCApplicationsTransferRestClientTestCase(TestCase):
         """Test DenomTraces method."""
         content = {
             "denom_traces": [{"path": "string", "base_denom": "string"}],
-            "pagination": {"next_key": "string", "total": "1"},
+            "pagination": {"next_key": "c3RyaW5n", "total": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
         expected_response = QueryDenomTracesResponse().from_dict(content)

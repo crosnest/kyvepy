@@ -58,7 +58,7 @@ from tests.helpers import MockRestClient
 
 TYPE = {
     "@type": "type.googleapis.com/google.protobuf.Int32Value",
-    "value": "42",
+    "value": "NDI=",
 }
 
 
@@ -90,7 +90,7 @@ class IBCCoreChannelRestClientTestCase(TestCase):
                 "connection_hops": ["1"],
                 "version": "1",
             },
-            "proof": "string",
+            "proof": "c3RyaW5n",
             "proof_height": {"revision_number": "1", "revision_height": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
@@ -121,7 +121,7 @@ class IBCCoreChannelRestClientTestCase(TestCase):
                     "channel_id": "1",
                 }
             ],
-            "pagination": {"next_key": "string", "total": "1"},
+            "pagination": {"next_key": "c3RyaW5n", "total": "1"},
             "height": {"revision_number": "1", "revision_height": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
@@ -144,7 +144,7 @@ class IBCCoreChannelRestClientTestCase(TestCase):
                     "channel_id": "1",
                 }
             ],
-            "pagination": {"next_key": "string", "total": "1"},
+            "pagination": {"next_key": "c3RyaW5n", "total": "1"},
             "height": {"revision_number": "1", "revision_height": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
@@ -165,7 +165,7 @@ class IBCCoreChannelRestClientTestCase(TestCase):
         """Test ChannelClientState method."""
         content = {
             "identified_client_state": {"client_id": "1", "client_state": TYPE},
-            "proof": "string",
+            "proof": "c3RyaW5n",
             "proof_height": {"revision_number": "1", "revision_height": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
@@ -187,7 +187,7 @@ class IBCCoreChannelRestClientTestCase(TestCase):
         content = {
             "consensus_state": TYPE,
             "client_id": "1",
-            "proof": "string",
+            "proof": "c3RyaW5n",
             "proof_height": {
                 "revision_number": "1",
             },
@@ -211,8 +211,8 @@ class IBCCoreChannelRestClientTestCase(TestCase):
     def test_PacketCommitment(self):
         """Test PacketCommitment method."""
         content = {
-            "commitment": "string",
-            "proof": "string",
+            "commitment": "c3RyaW5n",
+            "proof": "c3RyaW5n",
             "proof_height": {"revision_number": "1", "revision_height": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
@@ -237,10 +237,10 @@ class IBCCoreChannelRestClientTestCase(TestCase):
                     "port_id": "1",
                     "channel_id": "1",
                     "sequence": "1",
-                    "data": "string",
+                    "data": "c3RyaW5n",
                 }
             ],
-            "pagination": {"next_key": "string", "total": "1"},
+            "pagination": {"next_key": "c3RyaW5n", "total": "1"},
             "height": {"revision_number": "1", "revision_height": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
@@ -261,7 +261,7 @@ class IBCCoreChannelRestClientTestCase(TestCase):
         """Test PacketReceipt method."""
         content = {
             "received": True,
-            "proof": "string",
+            "proof": "c3RyaW5n",
             "proof_height": {"revision_number": "1", "revision_height": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
@@ -281,8 +281,8 @@ class IBCCoreChannelRestClientTestCase(TestCase):
     def test_PacketAcknowledgement(self):
         """Test PacketAcknowledgement method."""
         content = {
-            "acknowledgement": "string",
-            "proof": "string",
+            "acknowledgement": "c3RyaW5n",
+            "proof": "c3RyaW5n",
             "proof_height": {"revision_number": "1", "revision_height": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
@@ -305,9 +305,9 @@ class IBCCoreChannelRestClientTestCase(TestCase):
         """Test PacketAcknowledgements method."""
         content = {
             "acknowledgements": [
-                {"port_id": "1", "channel_id": "1", "sequence": "1", "data": "string"}
+                {"port_id": "1", "channel_id": "1", "sequence": "1", "data": "c3RyaW5n"}
             ],
-            "pagination": {"next_key": "string", "total": "1"},
+            "pagination": {"next_key": "c3RyaW5n", "total": "1"},
             "height": {"revision_number": "1", "revision_height": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
@@ -372,7 +372,7 @@ class IBCCoreChannelRestClientTestCase(TestCase):
         """Test NextSequenceReceive method."""
         content = {
             "next_sequence_receive": "1",
-            "proof": "string",
+            "proof": "c3RyaW5n",
             "proof_height": {"revision_number": "1", "revision_height": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
