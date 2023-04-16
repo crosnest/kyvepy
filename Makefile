@@ -401,7 +401,7 @@ checkout-chain-sources: Makefile
 
 run-service-docker:
 	docker build  --build-arg VERSION=$(C4E_VERSION) --build-arg REPOSITORY=$(C4E_URL)  -t c4echain_serve ./scripts/
-	docker run --name testchain -d -p 1317:1317 -p 4500:4500 -p 26657:26657 -it --rm c4echain_serve tail -F /dev/null
+	#docker run --name testchain -d -p 1317:1317 -p 4500:4500 -p 26657:26657 -it --rm c4echain_serve tail -F /dev/null
 	#docker exec testchain ignite chain build
 	#docker exec -td testchain ignite chain serve --skip-proto --quit-on-fail
 
