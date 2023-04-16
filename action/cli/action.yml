@@ -1,5 +1,10 @@
 name: cli
 description: Ignite CLI
+inputs:
+  args:
+    description: 'arguments'
+    required: false
+    default: 'chain server --skip-proto'
 runs:
   using: docker
-  image: ./scripts/Dockerfile
+  image: Dockerfile

@@ -4,7 +4,7 @@ WORKDIR /temp
 RUN git clone https://github.com/chain4energy/c4e-chain
 
 
-FROM ignitehq/cli AS BUILD
+FROM ignitehq/cli:v0.26.1 AS BUILD
 COPY --from=CLONE /temp/c4e-chain /c4e-chain
 WORKDIR /c4e-chain
 USER root
