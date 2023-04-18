@@ -17,11 +17,11 @@
 #
 # ------------------------------------------------------------------------------
 """Implementation of Gov interface using REST."""
-
+from google.protobuf.json_format import Parse
 
 from c4epy.common.rest_client import RestClient
 from c4epy.gov.interface import Gov
-from c4epy.protos.cosmos.gov.v1beta1 import (
+from c4epy.protos.cosmos.gov.v1beta1.query_pb2 import (
     QueryDepositRequest,
     QueryDepositResponse,
     QueryDepositsRequest,
@@ -65,7 +65,7 @@ class GovRestClient(Gov):
         json_response = self._rest_api.get(
             f"{self.API_URL}/proposals/{request.proposal_id}",
         )
-        return QueryProposalResponse().from_json(json_response)
+        return Parse(json_response, QueryProposalResponse())
 
     def Proposals(self, request: QueryProposalsRequest) -> QueryProposalsResponse:
         """
@@ -79,7 +79,7 @@ class GovRestClient(Gov):
             f"{self.API_URL}/proposals/",
             request,
         )
-        return QueryProposalsResponse().from_json(json_response)
+        return Parse(json_response, QueryProposalsResponse())
 
     def Vote(self, request: QueryVoteRequest) -> QueryVoteResponse:
         """
@@ -92,7 +92,7 @@ class GovRestClient(Gov):
         json_response = self._rest_api.get(
             f"{self.API_URL}/proposals/{request.proposal_id}/votes/{request.voter}"
         )
-        return QueryVoteResponse().from_json(json_response)
+        return Parse(json_response, QueryVoteResponse())
 
     def Votes(self, request: QueryVotesRequest) -> QueryVotesResponse:
         """
@@ -107,7 +107,7 @@ class GovRestClient(Gov):
             request,
             ["proposalID"],
         )
-        return QueryVotesResponse().from_json(json_response)
+        return Parse(json_response, QueryVotesResponse())
 
     def Params(self, request: QueryParamsRequest) -> QueryParamsResponse:
         """
@@ -120,7 +120,7 @@ class GovRestClient(Gov):
         json_response = self._rest_api.get(
             f"{self.API_URL}/params/{request.params_type}"
         )
-        return QueryParamsResponse().from_json(json_response)
+        return Parse(json_response, QueryParamsResponse())
 
     def Deposit(self, request: QueryDepositRequest) -> QueryDepositResponse:
         """
@@ -133,7 +133,7 @@ class GovRestClient(Gov):
         json_response = self._rest_api.get(
             f"{self.API_URL}/proposals/{request.proposal_id}/deposits/{request.depositor}"
         )
-        return QueryDepositResponse().from_json(json_response)
+        return Parse(json_response, QueryDepositResponse())
 
     def Deposits(self, request: QueryDepositsRequest) -> QueryDepositsResponse:
         """Deposits queries all deposits of a single proposal.
@@ -147,7 +147,7 @@ class GovRestClient(Gov):
             request,
             ["proposalID"],
         )
-        return QueryDepositsResponse().from_json(json_response)
+        return Parse(json_response, QueryDepositsResponse())
 
     def TallyResult(self, request: QueryTallyResultRequest) -> QueryTallyResultResponse:
         """
@@ -160,4 +160,4 @@ class GovRestClient(Gov):
         json_response = self._rest_api.get(
             f"{self.API_URL}/proposals/{request.proposal_id}/tally"
         )
-        return QueryTallyResultResponse().from_json(json_response)
+        return Parse(json_response, QueryTallyResultResponse())

@@ -18,9 +18,10 @@
 # ------------------------------------------------------------------------------
 
 """Implementation of Staking interface using REST."""
+from google.protobuf.json_format import Parse
 
 from c4epy.common.rest_client import RestClient
-from c4epy.protos.cosmos.staking.v1beta1 import (
+from c4epy.protos.cosmos.staking.v1beta1.query_pb2 import (
     QueryDelegationRequest,
     QueryDelegationResponse,
     QueryDelegatorDelegationsRequest,
@@ -74,7 +75,7 @@ class StakingRestClient(Staking):
         :return: QueryValidatorsResponse
         """
         json_response = self._rest_api.get(f"{self.API_URL}/validators", request)
-        return QueryValidatorsResponse().from_json(json_response)
+        return Parse(json_response, QueryValidatorsResponse())
 
     def Validator(self, request: QueryValidatorRequest) -> QueryValidatorResponse:
         """
@@ -86,7 +87,7 @@ class StakingRestClient(Staking):
         json_response = self._rest_api.get(
             f"{self.API_URL}/validators/{request.validator_addr}",
         )
-        return QueryValidatorResponse().from_json(json_response)
+        return Parse(json_response, QueryValidatorResponse())
 
     def ValidatorDelegations(
         self, request: QueryValidatorDelegationsRequest
@@ -102,7 +103,7 @@ class StakingRestClient(Staking):
             request,
             ["validatorAddr"],
         )
-        return QueryValidatorDelegationsResponse().from_json(json_response)
+        return Parse(json_response, QueryValidatorDelegationsResponse())
 
     def ValidatorUnbondingDelegations(
         self, request: QueryValidatorUnbondingDelegationsRequest
@@ -118,7 +119,7 @@ class StakingRestClient(Staking):
             request,
             ["validatorAddr"],
         )
-        return QueryValidatorUnbondingDelegationsResponse().from_json(json_response)
+        return Parse(json_response, QueryValidatorUnbondingDelegationsResponse())
 
     def Delegation(self, request: QueryDelegationRequest) -> QueryDelegationResponse:
         """
@@ -130,7 +131,7 @@ class StakingRestClient(Staking):
         json_response = self._rest_api.get(
             f"{self.API_URL}/validators/{request.validator_addr}/delegations/{request.delegator_addr}",
         )
-        return QueryDelegationResponse().from_json(json_response)
+        return Parse(json_response, QueryDelegationResponse())
 
     def UnbondingDelegation(
         self, request: QueryUnbondingDelegationRequest
@@ -144,7 +145,7 @@ class StakingRestClient(Staking):
         json_response = self._rest_api.get(
             f"{self.API_URL}/validators/{request.validator_addr}/delegations/{request.delegator_addr}/unbonding_delegation",
         )
-        return QueryUnbondingDelegationResponse().from_json(json_response)
+        return Parse(json_response, QueryUnbondingDelegationResponse())
 
     def DelegatorDelegations(
         self, request: QueryDelegatorDelegationsRequest
@@ -160,7 +161,7 @@ class StakingRestClient(Staking):
             request,
             ["delegatorAddr"],
         )
-        return QueryDelegatorDelegationsResponse().from_json(json_response)
+        return Parse(json_response, QueryDelegatorDelegationsResponse())
 
     def DelegatorUnbondingDelegations(
         self, request: QueryDelegatorUnbondingDelegationsRequest
@@ -176,7 +177,7 @@ class StakingRestClient(Staking):
             request,
             ["delegatorAddr"],
         )
-        return QueryDelegatorUnbondingDelegationsResponse().from_json(json_response)
+        return Parse(json_response, QueryDelegatorUnbondingDelegationsResponse())
 
     def Redelegations(
         self, request: QueryRedelegationsRequest
@@ -192,7 +193,7 @@ class StakingRestClient(Staking):
             request,
             ["delegatorAddr"],
         )
-        return QueryRedelegationsResponse().from_json(json_response)
+        return Parse(json_response, QueryRedelegationsResponse())
 
     def DelegatorValidators(
         self, request: QueryDelegatorValidatorsRequest
@@ -208,7 +209,7 @@ class StakingRestClient(Staking):
             request,
             ["delegatorAddr"],
         )
-        return QueryDelegatorValidatorsResponse().from_json(json_response)
+        return Parse(json_response, QueryDelegatorValidatorsResponse())
 
     def DelegatorValidator(
         self, request: QueryDelegatorValidatorRequest
@@ -222,7 +223,7 @@ class StakingRestClient(Staking):
         json_response = self._rest_api.get(
             f"{self.API_URL}/delegators/{request.delegator_addr}/validators/{request.validator_addr}",
         )
-        return QueryDelegatorValidatorResponse().from_json(json_response)
+        return Parse(json_response, QueryDelegatorValidatorResponse())
 
     def HistoricalInfo(
         self, request: QueryHistoricalInfoRequest
@@ -236,7 +237,7 @@ class StakingRestClient(Staking):
         json_response = self._rest_api.get(
             f"{self.API_URL}/historical_info/{request.height}"
         )
-        return QueryHistoricalInfoResponse().from_json(json_response)
+        return Parse(json_response, QueryHistoricalInfoResponse())
 
     def Pool(self, request: QueryPoolRequest) -> QueryPoolResponse:
         """
@@ -246,7 +247,7 @@ class StakingRestClient(Staking):
         :return: QueryPoolResponse
         """
         json_response = self._rest_api.get(f"{self.API_URL}/pool")
-        return QueryPoolResponse().from_json(json_response)
+        return Parse(json_response, QueryPoolResponse())
 
     def Params(self, request: QueryParamsRequest) -> QueryParamsResponse:
         """
@@ -256,4 +257,4 @@ class StakingRestClient(Staking):
         :return: QueryParamsResponse
         """
         json_response = self._rest_api.get(f"{self.API_URL}/params")
-        return QueryParamsResponse().from_json(json_response)
+        return Parse(json_response, QueryParamsResponse())

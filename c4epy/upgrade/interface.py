@@ -20,7 +20,7 @@
 
 from abc import ABC, abstractmethod
 
-from c4epy.protos.cosmos.upgrade.v1beta1 import (
+from c4epy.protos.cosmos.upgrade.v1beta1.query_pb2 import (
     QueryAppliedPlanRequest,
     QueryAppliedPlanResponse,
     QueryCurrentPlanRequest,

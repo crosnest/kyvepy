@@ -18,10 +18,11 @@
 # ------------------------------------------------------------------------------
 
 """Implementation of cfedistributor interface using REST."""
+from google.protobuf.json_format import Parse
 
 from c4epy.cfeminter.interface import CfeMinter
 from c4epy.common.rest_client import RestClient
-from c4epy.protos.chain4energy.c4echain.cfeminter import (
+from c4epy.protos.c4echain.cfeminter.query_pb2 import (
     QueryInflationRequest,
     QueryInflationResponse,
     QueryParamsRequest,
@@ -53,7 +54,7 @@ class CfeMinterRestClient(CfeMinter):
         :return: QueryInflationResponse
         """
         json_response = self._rest_api.get(f"{self.API_URL}/inflation")
-        return QueryInflationResponse().from_json(json_response)
+        return Parse(json_response, QueryInflationResponse())
 
     def Params(self, request: QueryParamsRequest) -> QueryParamsResponse:
         """
@@ -64,7 +65,7 @@ class CfeMinterRestClient(CfeMinter):
         :return: QueryParamsResponse
         """
         json_response = self._rest_api.get(f"{self.API_URL}/params")
-        return QueryParamsResponse().from_json(json_response)
+        return Parse(json_response, QueryParamsResponse())
 
     def State(self, request: QueryStateRequest) -> QueryStateResponse:
         """
@@ -75,4 +76,4 @@ class CfeMinterRestClient(CfeMinter):
         :return: QueryStatesResponse
         """
         json_response = self._rest_api.get(f"{self.API_URL}/state")
-        return QueryStateResponse().from_json(json_response)
+        return Parse(json_response, QueryStateResponse())

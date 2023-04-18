@@ -81,26 +81,7 @@ jobs:
 #      - name: Coverage Report
 #        run: tox -e coverage-report
 
-
-#  create-service-docker:
-#    name: Create docker image
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v3
-#      - name: create docker image c4echain_serve
-#        run: make run-service-docker
-
-#  checkout_chain_sources:
-#    name: Checkout chain_sources
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v3
-#      - name: checkout chain4energy to chain4energy-chain directory
-#        run: make checkout-chain-sources
-
   integration_tests:
-#    needs: checkout_chain_sources
-#    needs: create-service-docker
     name: Integration tests
     runs-on: '${{ matrix.os }}'
     strategy:
@@ -116,19 +97,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: run chain
-        uses: ./action/cli/action.yml
-        with:
-          args: "chain server --skip-proto &"
-
       - uses: actions/setup-python@v4
         with:
           python-version: '${{ matrix.python-version }}'
       - name: Install dependencies
         run: pip install tox==3.25.1
 
-      - name: wait for chain to start
-        run: while [ -z "$(curl -sv localhost:26657/health)" ]; do sleep 1; done
+      - name: Integration Tests
+        run:
 
       - name: Integration Tests
         run: |

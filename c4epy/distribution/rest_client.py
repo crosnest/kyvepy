@@ -18,11 +18,11 @@
 # ------------------------------------------------------------------------------
 
 """Implementation of Distribution interface using REST."""
-
+from google.protobuf.json_format import Parse
 
 from c4epy.common.rest_client import RestClient
 from c4epy.distribution.interface import Distribution
-from c4epy.protos.cosmos.distribution.v1beta1 import (
+from c4epy.protos.cosmos.distribution.v1beta1.query_pb2 import (
     QueryCommunityPoolResponse,
     QueryDelegationRewardsRequest,
     QueryDelegationRewardsResponse,
@@ -62,7 +62,7 @@ class DistributionRestClient(Distribution):
         :return: a QueryCommunityPoolResponse instance
         """
         json_response = self._rest_api.get(f"{self.API_URL}/community_pool")
-        return QueryCommunityPoolResponse().from_json(json_response)
+        return Parse(json_response, QueryCommunityPoolResponse())
 
     def DelegationTotalRewards(
         self, request: QueryDelegationTotalRewardsRequest
@@ -76,7 +76,7 @@ class DistributionRestClient(Distribution):
         json_response = self._rest_api.get(
             f"{self.API_URL}/delegators/{request.delegator_address}/rewards"
         )
-        return QueryDelegationTotalRewardsResponse().from_json(json_response)
+        return Parse(json_response, QueryDelegationTotalRewardsResponse())
 
     def DelegationRewards(
         self, request: QueryDelegationRewardsRequest
@@ -90,7 +90,7 @@ class DistributionRestClient(Distribution):
         json_response = self._rest_api.get(
             f"{self.API_URL}/delegators/{request.delegator_address}/rewards/{request.validator_address}"
         )
-        return QueryDelegationRewardsResponse().from_json(json_response)
+        return Parse(json_response, QueryDelegationRewardsResponse())
 
     def DelegatorValidators(
         self, request: QueryDelegatorValidatorsRequest
@@ -104,7 +104,7 @@ class DistributionRestClient(Distribution):
         json_response = self._rest_api.get(
             f"{self.API_URL}/delegators/{request.delegator_address}/validators"
         )
-        return QueryDelegatorValidatorsResponse().from_json(json_response)
+        return Parse(json_response, QueryDelegatorValidatorsResponse())
 
     def DelegatorWithdrawAddress(
         self, request: QueryDelegatorWithdrawAddressRequest
@@ -118,7 +118,7 @@ class DistributionRestClient(Distribution):
         json_response = self._rest_api.get(
             f"{self.API_URL}/delegators/{request.delegator_address}/withdraw_address"
         )
-        return QueryDelegatorWithdrawAddressResponse().from_json(json_response)
+        return Parse(json_response, QueryDelegatorWithdrawAddressResponse())
 
     def Params(self) -> QueryParamsResponse:
         """
@@ -127,7 +127,7 @@ class DistributionRestClient(Distribution):
         :return: a QueryParamsResponse instance
         """
         json_response = self._rest_api.get(f"{self.API_URL}/params")
-        return QueryParamsResponse().from_json(json_response)
+        return Parse(json_response, QueryParamsResponse())
 
     def ValidatorCommission(
         self, request: QueryValidatorCommissionRequest
@@ -141,7 +141,7 @@ class DistributionRestClient(Distribution):
         json_response = self._rest_api.get(
             f"{self.API_URL}/validators/{request.validator_address}/commission"
         )
-        return QueryValidatorCommissionResponse().from_json(json_response)
+        return Parse(json_response, QueryValidatorCommissionResponse())
 
     def ValidatorOutstandingRewards(
         self, request: QueryValidatorOutstandingRewardsRequest
@@ -155,7 +155,7 @@ class DistributionRestClient(Distribution):
         json_response = self._rest_api.get(
             f"{self.API_URL}/validators/{request.validator_address}/outstanding_rewards"
         )
-        return QueryValidatorOutstandingRewardsResponse().from_json(json_response)
+        return Parse(json_response, QueryValidatorOutstandingRewardsResponse())
 
     def ValidatorSlashes(
         self, request: QueryValidatorSlashesRequest
@@ -171,4 +171,4 @@ class DistributionRestClient(Distribution):
             request,
             ["validatorAddress"],
         )
-        return QueryValidatorSlashesResponse().from_json(json_response)
+        return Parse(json_response, QueryValidatorSlashesResponse())

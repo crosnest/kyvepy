@@ -21,8 +21,10 @@
 from typing import Dict, Tuple
 from unittest import TestCase
 
+from google.protobuf.json_format import ParseDict
+
 from c4epy.common.utils import json_encode
-from c4epy.protos.cosmos.upgrade.v1beta1 import (
+from c4epy.protos.cosmos.upgrade.v1beta1.query_pb2 import (
     QueryAppliedPlanRequest,
     QueryAppliedPlanResponse,
     QueryCurrentPlanRequest,
@@ -62,7 +64,7 @@ class CosmosUpgradeRestClientTestCase(TestCase):
             }
         }
         mock_client, rest_client = self.make_clients(content)
-        expected_response = QueryCurrentPlanResponse().from_dict(content)
+        expected_response = ParseDict(content, QueryCurrentPlanResponse())
 
         assert rest_client.CurrentPlan(QueryCurrentPlanRequest()) == expected_response
         assert mock_client.last_base_url == "/cosmos/upgrade/v1beta1/current_plan"
@@ -71,7 +73,7 @@ class CosmosUpgradeRestClientTestCase(TestCase):
         """Test AppliedPlan method."""
         content = {"height": "12"}
         mock_client, rest_client = self.make_clients(content)
-        expected_response = QueryAppliedPlanResponse().from_dict(content)
+        expected_response = ParseDict(content, QueryAppliedPlanResponse())
 
         assert (
             rest_client.AppliedPlan(QueryAppliedPlanRequest(name="test"))

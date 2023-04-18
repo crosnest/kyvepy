@@ -16,15 +16,16 @@
 #   limitations under the License.
 #
 # ------------------------------------------------------------------------------
-
 """Tests for REST implementation of IBC Core Client."""
-
 from typing import Dict, Tuple
 from unittest import TestCase
 
+from google.protobuf.json_format import ParseDict
+from google.protobuf.wrappers_pb2 import Int32Value  # noqa # needed for protobuf decode
+
 from c4epy.common.utils import json_encode
 from c4epy.ibc.core.client.rest_client import IBCCoreClientRestClient  # type: ignore
-from c4epy.protos.ibc.core.client.v1 import (
+from c4epy.protos.ibc.core.client.v1.query_pb2 import (
     QueryClientParamsRequest,
     QueryClientParamsResponse,
     QueryClientStateRequest,
@@ -42,7 +43,7 @@ from tests.helpers import MockRestClient
 
 TYPE = {
     "@type": "type.googleapis.com/google.protobuf.Int32Value",
-    "value": "NDI=",
+    "value": "42",
 }
 
 
@@ -68,11 +69,11 @@ class IBCCoreClientRestClientTestCase(TestCase):
         """Test ClientState method."""
         content = {
             "client_state": TYPE,
-            "proof": "c3RyaW5n",
+            "proof": "string",
             "proof_height": {"revision_number": "1", "revision_height": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
-        expected_response = QueryClientStateResponse().from_dict(content)
+        expected_response = ParseDict(content, QueryClientStateResponse())
 
         assert (
             rest_client.ClientState(QueryClientStateRequest(client_id="client_id"))
@@ -87,10 +88,10 @@ class IBCCoreClientRestClientTestCase(TestCase):
         """Test ClientStates method."""
         content = {
             "client_states": [{"client_id": "string", "client_state": TYPE}],
-            "pagination": {"next_key": "c3RyaW5n", "total": "1"},
+            "pagination": {"next_key": "string", "total": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
-        expected_response = QueryClientStatesResponse().from_dict(content)
+        expected_response = ParseDict(content, QueryClientStatesResponse())
 
         assert rest_client.ClientStates(QueryClientStatesRequest()) == expected_response
         assert mock_client.last_base_url == "/ibc/core/client/v1beta1/client_states"
@@ -99,11 +100,11 @@ class IBCCoreClientRestClientTestCase(TestCase):
         """Test ConsensusState method."""
         content = {
             "consensus_state": TYPE,
-            "proof": "c3RyaW5n",
+            "proof": "string",
             "proof_height": {"revision_number": "1", "revision_height": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
-        expected_response = QueryConsensusStateResponse().from_dict(content)
+        expected_response = ParseDict(content, QueryConsensusStateResponse())
 
         assert (
             rest_client.ConsensusState(
@@ -130,10 +131,10 @@ class IBCCoreClientRestClientTestCase(TestCase):
                     "consensus_state": TYPE,
                 }
             ],
-            "pagination": {"next_key": "c3RyaW5n", "total": "1"},
+            "pagination": {"next_key": "string", "total": "1"},
         }
         mock_client, rest_client = self.make_clients(content)
-        expected_response = QueryConsensusStatesResponse().from_dict(content)
+        expected_response = ParseDict(content, QueryConsensusStatesResponse())
 
         assert (
             rest_client.ConsensusStates(
@@ -150,7 +151,7 @@ class IBCCoreClientRestClientTestCase(TestCase):
         """Test ClientParams method."""
         content = {}
         mock_client, rest_client = self.make_clients(content)
-        expected_response = QueryClientParamsResponse().from_dict(content)
+        expected_response = ParseDict(content, QueryClientParamsResponse())
 
         assert rest_client.ClientParams(QueryClientParamsRequest()) == expected_response
         assert mock_client.last_base_url == "/ibc/client/v1beta1/params"

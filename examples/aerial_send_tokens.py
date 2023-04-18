@@ -35,7 +35,7 @@ def main():
 
     while alice_balance < (10**18):
         print("Providing wealth to alice...")
-        faucet_api.get_wealth(alice.address())
+        faucet_api.get_wealth(alice.address(), "100000000uc4e")
         alice_balance = ledger.query_bank_balance(alice.address())
 
     print(

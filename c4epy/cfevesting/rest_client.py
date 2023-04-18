@@ -22,7 +22,7 @@
 
 from c4epy.cfevesting.interface import CfeVesting
 from c4epy.common.rest_client import RestClient
-from c4epy.protos.chain4energy.c4echain.cfevesting import (
+from c4epy.protos.chain4energy.c4echain.cfevesting.query_pb2 import (
     QueryGenesisVestingsSummaryRequest,
     QueryGenesisVestingsSummaryResponse,
     QueryParamsRequest,
@@ -58,7 +58,7 @@ class CfeVestingRestClient(CfeVesting):
         :return: QueryParamsResponse
         """
         json_response = self._rest_api.get(f"{self.API_URL}/params")
-        return QueryParamsResponse().from_json(json_response)
+        return Parse(json_response, QueryParamsResponse())
 
     def VestingType(self, request: QueryVestingTypeRequest) -> QueryVestingTypeResponse:
         """
@@ -69,7 +69,7 @@ class CfeVestingRestClient(CfeVesting):
         :return: QueryStatesResponse
         """
         json_response = self._rest_api.get(f"{self.API_URL}/vesting_type")
-        return QueryVestingTypeResponse().from_json(json_response)
+        return Parse(json_response, QueryVestingTypeResponse())
 
     def VestingPools(
         self, request: QueryVestingPoolsRequest
@@ -84,7 +84,7 @@ class CfeVestingRestClient(CfeVesting):
         json_response = self._rest_api.get(
             f"{self.API_URL}/vesting_pools/{request.owner}"
         )
-        return QueryVestingPoolsResponse().from_json(json_response)
+        return Parse(json_response, QueryVestingPoolsResponse())
 
     def VestingsSummary(
         self, request: QueryVestingsSummaryRequest
@@ -97,7 +97,7 @@ class CfeVestingRestClient(CfeVesting):
         :return: QueryParamsResponse
         """
         json_response = self._rest_api.get(f"{self.API_URL}/summary")
-        return QueryVestingsSummaryResponse().from_json(json_response)
+        return Parse(json_response, QueryVestingsSummaryResponse())
 
     def GenesisVestingsSummary(
         self, request: QueryGenesisVestingsSummaryRequest
@@ -110,4 +110,4 @@ class CfeVestingRestClient(CfeVesting):
         :return: QueryParamsResponse
         """
         json_response = self._rest_api.get(f"{self.API_URL}/genesis_summary")
-        return QueryGenesisVestingsSummaryResponse().from_json(json_response)
+        return Parse(json_response, QueryGenesisVestingsSummaryResponse())

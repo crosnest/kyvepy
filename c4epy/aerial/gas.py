@@ -140,7 +140,7 @@ class OfflineMessageTableStrategy(GasStrategy):
         gas_estimate = 0
         for msg in tx.msgs:
             gas_estimate += self._table.get(
-                str(type(msg))[21:-2], self._fallback_gas_limit
+                msg.DESCRIPTOR.full_name, self._fallback_gas_limit
             )
         return self._clip_gas(gas_estimate)
 

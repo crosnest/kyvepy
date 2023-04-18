@@ -28,9 +28,9 @@ from c4epy.aerial.client.staking import create_delegate_msg
 from c4epy.aerial.faucet import FaucetApi
 from c4epy.aerial.tx import SigningCfg, Transaction
 from c4epy.aerial.wallet import LocalWallet
-from c4epy.protos.cosmos.bank.v1beta1 import QueryTotalSupplyRequest
-from c4epy.protos.cosmos.params.v1beta1 import QueryParamsRequest
-from c4epy.protos.cosmos.staking.v1beta1 import QueryValidatorsRequest
+from c4epy.protos.cosmos.bank.v1beta1.query_pb2 import QueryTotalSupplyRequest
+from c4epy.protos.cosmos.params.v1beta1.query_pb2 import QueryParamsRequest
+from c4epy.protos.cosmos.staking.v1beta1.query_pb2 import QueryValidatorsRequest
 
 
 # This function returns the total reward for given:
@@ -62,7 +62,7 @@ def main():
     faucet_api = FaucetApi(NetworkConfig.chain4energy_stable_testnet())
 
     # Set initial stake and desired stake period
-    initial_stake = 50000000000000000000
+    initial_stake = 50000000
     total_period = 60000
 
     req = QueryValidatorsRequest()
@@ -135,7 +135,7 @@ def main():
 
     while alice_balance < initial_stake:
         print("Providing wealth to alice...")
-        faucet_api.get_wealth(alice.address())
+        faucet_api.get_wealth(alice.address(), "100000000uc4e")
         alice_balance = ledger.query_bank_balance(alice.address())
 
     tx = Transaction()

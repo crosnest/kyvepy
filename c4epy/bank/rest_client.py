@@ -18,11 +18,11 @@
 # ------------------------------------------------------------------------------
 
 """Implementation of Bank interface using REST."""
-
+from google.protobuf.json_format import Parse
 
 from c4epy.bank.interface import Bank
 from c4epy.common.rest_client import RestClient
-from c4epy.protos.cosmos.bank.v1beta1 import (
+from c4epy.protos.cosmos.bank.v1beta1.query_pb2 import (
     QueryAllBalancesRequest,
     QueryAllBalancesResponse,
     QueryBalanceRequest,
@@ -66,7 +66,7 @@ class BankRestClient(Bank):
             request,
             ["address", "denom"],
         )
-        return QueryBalanceResponse().from_json(response)
+        return Parse(response, QueryBalanceResponse())
 
     def AllBalances(self, request: QueryAllBalancesRequest) -> QueryAllBalancesResponse:
         """
@@ -79,7 +79,7 @@ class BankRestClient(Bank):
         response = self._rest_api.get(
             f"{self.API_URL}/balances/{request.address}", request, ["address"]
         )
-        return QueryAllBalancesResponse().from_json(response)
+        return Parse(response, QueryAllBalancesResponse())
 
     def TotalSupply(self, request: QueryTotalSupplyRequest) -> QueryTotalSupplyResponse:
         """
@@ -90,7 +90,7 @@ class BankRestClient(Bank):
         :return: QueryTotalSupplyResponse
         """
         response = self._rest_api.get(f"{self.API_URL}/supply", request)
-        return QueryTotalSupplyResponse().from_json(response)
+        return Parse(response, QueryTotalSupplyResponse())
 
     def SupplyOf(self, request: QuerySupplyOfRequest) -> QuerySupplyOfResponse:
         """
@@ -101,7 +101,7 @@ class BankRestClient(Bank):
         :return: QuerySupplyOfResponse
         """
         response = self._rest_api.get(f"{self.API_URL}/supply/{request.denom}")
-        return QuerySupplyOfResponse().from_json(response)
+        return Parse(response, QuerySupplyOfResponse())
 
     def Params(self, request: QueryParamsRequest) -> QueryParamsResponse:
         """
@@ -112,7 +112,7 @@ class BankRestClient(Bank):
         :return: QueryParamsResponse
         """
         response = self._rest_api.get(f"{self.API_URL}/params")
-        return QueryParamsResponse().from_json(response)
+        return Parse(response, QueryParamsResponse())
 
     def DenomMetadata(
         self, request: QueryDenomMetadataRequest
@@ -125,7 +125,7 @@ class BankRestClient(Bank):
         :return: QueryDenomMetadataResponse
         """
         response = self._rest_api.get(f"{self.API_URL}/denoms_metadata/{request.denom}")
-        return QueryDenomMetadataResponse().from_json(response)
+        return Parse(response, QueryDenomMetadataResponse())
 
     def DenomsMetadata(
         self, request: QueryDenomsMetadataRequest
@@ -138,4 +138,4 @@ class BankRestClient(Bank):
         :return: QueryDenomsMetadataResponse
         """
         response = self._rest_api.get(f"{self.API_URL}/denoms_metadata", request)
-        return QueryDenomsMetadataResponse().from_json(response)
+        return Parse(response, QueryDenomsMetadataResponse())

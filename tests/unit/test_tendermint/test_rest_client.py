@@ -20,8 +20,11 @@
 from typing import Dict, Tuple
 from unittest import TestCase
 
+from google.protobuf.json_format import ParseDict
+from google.protobuf.wrappers_pb2 import Int32Value  # noqa # needed for protobuf decode
+
 from c4epy.common.utils import json_encode
-from c4epy.protos.cosmos.base.tendermint.v1beta1 import (
+from c4epy.protos.cosmos.base.tendermint.v1beta1.query_pb2 import (
     GetBlockByHeightRequest,
     GetBlockByHeightResponse,
     GetLatestBlockRequest,
@@ -42,7 +45,7 @@ from tests.helpers import MockRestClient
 
 TYPE = {
     "@type": "type.googleapis.com/google.protobuf.Int32Value",
-    "value": "NDI=",
+    "value": "42",
 }
 
 
@@ -77,7 +80,7 @@ class CosmosBaseTendermintRestClientTestCase(TestCase):
                 "listen_addr": "string",
                 "network": "string",
                 "version": "string",
-                "channels": "c3RyaW5n",
+                "channels": "string",
                 "moniker": "string",
                 "other": {"tx_index": "string", "rpc_address": "string"},
             },
@@ -92,7 +95,7 @@ class CosmosBaseTendermintRestClientTestCase(TestCase):
             },
         }
         mock_client, rest_client = self.make_clients(content)
-        expected_response = GetNodeInfoResponse().from_dict(content)
+        expected_response = ParseDict(content, GetNodeInfoResponse())
 
         assert rest_client.GetNodeInfo(GetNodeInfoRequest()) == expected_response
         assert mock_client.last_base_url == "/cosmos/base/tendermint/v1beta1/node_info"
@@ -101,7 +104,7 @@ class CosmosBaseTendermintRestClientTestCase(TestCase):
         """Test GetSyncing method."""
         content = {"syncing": True}
         mock_client, rest_client = self.make_clients(content)
-        expected_response = GetSyncingResponse().from_dict(content)
+        expected_response = ParseDict(content, GetSyncingResponse())
 
         assert rest_client.GetSyncing(GetSyncingRequest()) == expected_response
         assert mock_client.last_base_url == "/cosmos/base/tendermint/v1beta1/syncing"
@@ -110,8 +113,8 @@ class CosmosBaseTendermintRestClientTestCase(TestCase):
         """Test GetLatestBlock method."""
         content = {
             "block_id": {
-                "hash": "c3RyaW5n",
-                "part_set_header": {"total": 0, "hash": "c3RyaW5n"},
+                "hash": "string",
+                "part_set_header": {"total": 0, "hash": "string"},
             },
             "block": {
                 "header": {
@@ -120,41 +123,41 @@ class CosmosBaseTendermintRestClientTestCase(TestCase):
                     "height": "12",
                     "time": "2022-03-29T10:21:54.568Z",
                     "last_block_id": {
-                        "hash": "c3RyaW5n",
-                        "part_set_header": {"total": 0, "hash": "c3RyaW5n"},
+                        "hash": "string",
+                        "part_set_header": {"total": 0, "hash": "string"},
                     },
-                    "last_commit_hash": "c3RyaW5n",
-                    "data_hash": "c3RyaW5n",
-                    "validators_hash": "c3RyaW5n",
-                    "next_validators_hash": "c3RyaW5n",
-                    "consensus_hash": "c3RyaW5n",
-                    "app_hash": "c3RyaW5n",
-                    "last_results_hash": "c3RyaW5n",
-                    "evidence_hash": "c3RyaW5n",
-                    "proposer_address": "c3RyaW5n",
+                    "last_commit_hash": "string",
+                    "data_hash": "string",
+                    "validators_hash": "string",
+                    "next_validators_hash": "string",
+                    "consensus_hash": "string",
+                    "app_hash": "string",
+                    "last_results_hash": "string",
+                    "evidence_hash": "string",
+                    "proposer_address": "string",
                 },
-                "data": {"txs": ["c3RyaW5n"]},
+                "data": {"txs": ["string"]},
                 "evidence": {"evidence": []},
                 "last_commit": {
                     "height": "12",
                     "round": 0,
                     "block_id": {
-                        "hash": "c3RyaW5n",
-                        "part_set_header": {"total": 0, "hash": "c3RyaW5n"},
+                        "hash": "string",
+                        "part_set_header": {"total": 0, "hash": "string"},
                     },
                     "signatures": [
                         {
                             "block_id_flag": "BLOCK_ID_FLAG_UNKNOWN",
-                            "validator_address": "c3RyaW5n",
+                            "validator_address": "string",
                             "timestamp": "2022-03-29T10:21:54.569Z",
-                            "signature": "c3RyaW5n",
+                            "signature": "string",
                         }
                     ],
                 },
             },
         }
         mock_client, rest_client = self.make_clients(content)
-        expected_response = GetLatestBlockResponse().from_dict(content)
+        expected_response = ParseDict(content, GetLatestBlockResponse())
 
         assert rest_client.GetLatestBlock(GetLatestBlockRequest()) == expected_response
         assert (
@@ -165,8 +168,8 @@ class CosmosBaseTendermintRestClientTestCase(TestCase):
         """Test GetBlockByHeight method."""
         content = {
             "block_id": {
-                "hash": "c3RyaW5n",
-                "part_set_header": {"total": 0, "hash": "c3RyaW5n"},
+                "hash": "string",
+                "part_set_header": {"total": 0, "hash": "string"},
             },
             "block": {
                 "header": {
@@ -175,41 +178,41 @@ class CosmosBaseTendermintRestClientTestCase(TestCase):
                     "height": "12",
                     "time": "2022-03-29T10:27:01.686Z",
                     "last_block_id": {
-                        "hash": "c3RyaW5n",
-                        "part_set_header": {"total": 0, "hash": "c3RyaW5n"},
+                        "hash": "string",
+                        "part_set_header": {"total": 0, "hash": "string"},
                     },
-                    "last_commit_hash": "c3RyaW5n",
-                    "data_hash": "c3RyaW5n",
-                    "validators_hash": "c3RyaW5n",
-                    "next_validators_hash": "c3RyaW5n",
-                    "consensus_hash": "c3RyaW5n",
-                    "app_hash": "c3RyaW5n",
-                    "last_results_hash": "c3RyaW5n",
-                    "evidence_hash": "c3RyaW5n",
-                    "proposer_address": "c3RyaW5n",
+                    "last_commit_hash": "string",
+                    "data_hash": "string",
+                    "validators_hash": "string",
+                    "next_validators_hash": "string",
+                    "consensus_hash": "string",
+                    "app_hash": "string",
+                    "last_results_hash": "string",
+                    "evidence_hash": "string",
+                    "proposer_address": "string",
                 },
-                "data": {"txs": ["c3RyaW5n"]},
+                "data": {"txs": ["string"]},
                 "evidence": {"evidence": []},
                 "last_commit": {
                     "height": "12",
                     "round": 0,
                     "block_id": {
-                        "hash": "c3RyaW5n",
-                        "part_set_header": {"total": 0, "hash": "c3RyaW5n"},
+                        "hash": "string",
+                        "part_set_header": {"total": 0, "hash": "string"},
                     },
                     "signatures": [
                         {
                             "block_id_flag": "BLOCK_ID_FLAG_UNKNOWN",
-                            "validator_address": "c3RyaW5n",
+                            "validator_address": "string",
                             "timestamp": "2022-03-29T10:27:01.687Z",
-                            "signature": "c3RyaW5n",
+                            "signature": "string",
                         }
                     ],
                 },
             },
         }
         mock_client, rest_client = self.make_clients(content)
-        expected_response = GetBlockByHeightResponse().from_dict(content)
+        expected_response = ParseDict(content, GetBlockByHeightResponse())
 
         assert (
             rest_client.GetBlockByHeight(GetBlockByHeightRequest(height=123))
@@ -223,16 +226,16 @@ class CosmosBaseTendermintRestClientTestCase(TestCase):
             "block_height": "12",
             "validators": [
                 {
-                    "address": "c3RyaW5n",
+                    "address": "string",
                     "pub_key": TYPE,
                     "voting_power": "12",
                     "proposer_priority": "12",
                 }
             ],
-            "pagination": {"next_key": "c3RyaW5n", "total": "12"},
+            "pagination": {"next_key": "string", "total": "12"},
         }
         mock_client, rest_client = self.make_clients(content)
-        expected_response = GetLatestValidatorSetResponse().from_dict(content)
+        expected_response = ParseDict(content, GetLatestValidatorSetResponse())
 
         assert (
             rest_client.GetLatestValidatorSet(GetLatestValidatorSetRequest())
@@ -255,10 +258,10 @@ class CosmosBaseTendermintRestClientTestCase(TestCase):
                     "proposer_priority": "12",
                 }
             ],
-            "pagination": {"next_key": "c3RyaW5n", "total": "12"},
+            "pagination": {"next_key": "string", "total": "12"},
         }
         mock_client, rest_client = self.make_clients(content)
-        expected_response = GetValidatorSetByHeightResponse().from_dict(content)
+        expected_response = ParseDict(content, GetValidatorSetByHeightResponse())
 
         assert (
             rest_client.GetValidatorSetByHeight(

@@ -28,9 +28,9 @@ from c4epy.aerial.client.utils import prepare_and_broadcast_basic_transaction
 from c4epy.aerial.faucet import FaucetApi
 from c4epy.aerial.tx import Transaction
 from c4epy.aerial.wallet import LocalWallet
-from c4epy.protos.cosmos.authz.v1beta1 import MsgExec
-from c4epy.protos.cosmos.bank.v1beta1 import MsgSend
-from c4epy.protos.cosmos.base.v1beta1 import Coin
+from c4epy.protos.cosmos.authz.v1beta1.query_pb2 import MsgExec
+from c4epy.protos.cosmos.bank.v1beta1.query_pb2 import MsgSend
+from c4epy.protos.cosmos.base.v1beta1.query_pb2 import Coin
 
 
 def _parse_commandline():
@@ -81,7 +81,7 @@ def main():
 
     while wallet_balance < (10**18):
         print("Providing wealth to wallet...")
-        faucet_api.get_wealth(authz_wallet.address())
+        faucet_api.get_wealth(authz_wallet.address(), "100000000uc4e")
         wallet_balance = ledger.query_bank_balance(authz_wallet.address())
 
     ledger = LedgerClient(NetworkConfig.latest_stable_testnet())

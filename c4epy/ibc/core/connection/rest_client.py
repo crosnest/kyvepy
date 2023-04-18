@@ -17,11 +17,11 @@
 #
 # ------------------------------------------------------------------------------
 """Implementation of IBC Applications Transfer  interface using REST."""
-
+from google.protobuf.json_format import Parse
 
 from c4epy.common.rest_client import RestClient
 from c4epy.ibc.core.connection.interface import IBCCoreConnection  # type: ignore
-from c4epy.protos.ibc.core.connection.v1 import (
+from c4epy.protos.ibc.core.connection.v1.query_pb2 import (
     QueryClientConnectionsRequest,
     QueryClientConnectionsResponse,
     QueryConnectionClientStateRequest,
@@ -58,7 +58,7 @@ class IBCCoreConnectionRestClient(IBCCoreConnection):
         json_response = self._rest_api.get(
             f"{self.API_URL}/connections/{request.connection_id}"
         )
-        return QueryConnectionResponse().from_json(json_response)
+        return Parse(json_response, QueryConnectionResponse())
 
     def Connections(self, request: QueryConnectionsRequest) -> QueryConnectionsResponse:
         """
@@ -68,7 +68,7 @@ class IBCCoreConnectionRestClient(IBCCoreConnection):
         :return: QueryConnectionsResponse
         """  # noqa: D401
         json_response = self._rest_api.get(f"{self.API_URL}/connections", request)
-        return QueryConnectionsResponse().from_json(json_response)
+        return Parse(json_response, QueryConnectionsResponse())
 
     def ClientConnections(
         self, request: QueryClientConnectionsRequest
@@ -82,7 +82,7 @@ class IBCCoreConnectionRestClient(IBCCoreConnection):
         json_response = self._rest_api.get(
             f"{self.API_URL}/client_connections/{request.client_id}"
         )
-        return QueryClientConnectionsResponse().from_json(json_response)
+        return Parse(json_response, QueryClientConnectionsResponse())
 
     def ConnectionClientState(
         self, request: QueryConnectionClientStateRequest
@@ -96,7 +96,7 @@ class IBCCoreConnectionRestClient(IBCCoreConnection):
         json_response = self._rest_api.get(
             f"{self.API_URL}/connections/{request.connection_id}/client_state"
         )
-        return QueryConnectionClientStateResponse().from_json(json_response)
+        return Parse(json_response, QueryConnectionClientStateResponse())
 
     def ConnectionConsensusState(
         self, request: QueryConnectionConsensusStateRequest
@@ -110,4 +110,4 @@ class IBCCoreConnectionRestClient(IBCCoreConnection):
         json_response = self._rest_api.get(
             f"{self.API_URL}/connections/{request.connection_id}/consensus_state/revision/{request.revision_number}/height/{request.revision_height}"
         )
-        return QueryConnectionConsensusStateResponse().from_json(json_response)
+        return Parse(json_response, QueryConnectionConsensusStateResponse())

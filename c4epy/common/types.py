@@ -18,9 +18,10 @@
 # ------------------------------------------------------------------------------
 
 """Common types."""
-
+from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Union
 
+import betterproto
 
 Primitive = Union[str, int, bool, float]
 _JSONDict = Dict[Any, Any]  # temporary placeholder
@@ -28,3 +29,20 @@ _JSONList = List[Any]  # temporary placeholder
 _JSONType = Optional[Union[Primitive, _JSONDict, _JSONList]]
 # Added Dict[str, _JSONDict] as workaround to not properly resolving recursive types - _JSONDict should be subset of _JSONType
 JSONLike = Union[Dict[str, _JSONType], Dict[str, _JSONDict]]
+
+@dataclass(eq=False, repr=False)
+class Any(betterproto.Message):
+    type_url: str = betterproto.string_field(1)
+    value: betterproto.Message = betterproto.message_field(2)
+
+    def to_dict(
+        self, casing: betterproto.Casing = betterproto.Casing.CAMEL, include_default_values: bool = False
+    ) -> Dict[str, Any]:
+        raw_dict = super().to_dict(casing, include_default_values)
+        dict_: Dict[str, Any] = {}
+        type_url = casing('type_url').rstrip("_") # type: ignore
+        if type_url in raw_dict:
+            dict_['@type'] = raw_dict[type_url]
+        value = casing('value').rstrip("_") # type: ignore
+        dict_.update(raw_dict.get(value, {}))
+        return dict_

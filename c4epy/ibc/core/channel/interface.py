@@ -20,7 +20,7 @@
 
 from abc import ABC, abstractmethod
 
-from c4epy.protos.ibc.core.channel.v1 import (
+from c4epy.protos.ibc.core.channel.v1.query_pb2 import (
     QueryChannelClientStateRequest,
     QueryChannelClientStateResponse,
     QueryChannelConsensusStateRequest,

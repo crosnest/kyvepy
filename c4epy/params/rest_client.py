@@ -18,11 +18,11 @@
 # ------------------------------------------------------------------------------
 
 """Implementation of Params interface using REST."""
-
+from google.protobuf.json_format import Parse
 
 from c4epy.common.rest_client import RestClient
 from c4epy.params.interface import Params
-from c4epy.protos.cosmos.params.v1beta1 import QueryParamsRequest, QueryParamsResponse
+from c4epy.protos.cosmos.params.v1beta1.query_pb2 import QueryParamsRequest, QueryParamsResponse
 
 
 class ParamsRestClient(Params):
@@ -46,4 +46,4 @@ class ParamsRestClient(Params):
         :return: QueryParamsResponse
         """
         json_response = self._rest_api.get(f"{self.API_URL}/params", request)
-        return QueryParamsResponse().from_json(json_response)
+        return Parse(json_response, QueryParamsResponse())

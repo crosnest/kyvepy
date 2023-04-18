@@ -28,7 +28,7 @@ from c4epy.crypto.hashfuncs import ripemd160, sha256
 from c4epy.crypto.keypairs import PublicKey
 
 
-DEFAULT_PREFIX = "fetch"
+DEFAULT_PREFIX = "c4e"
 
 
 def _to_bech32(prefix: str, data: bytes) -> str:

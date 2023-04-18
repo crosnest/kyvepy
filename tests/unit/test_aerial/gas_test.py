@@ -28,7 +28,7 @@ from c4epy.aerial.gas import (
     SimulationGasStrategy,
 )
 from c4epy.aerial.tx import Transaction
-from c4epy.protos.cosmos.bank.v1beta1 import MsgSend
+from c4epy.protos.cosmos.bank.v1beta1.tx_pb2 import MsgSend
 
 
 @pytest.mark.parametrize(

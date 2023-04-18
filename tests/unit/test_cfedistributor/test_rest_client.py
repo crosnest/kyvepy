@@ -22,10 +22,11 @@
 import unittest
 
 import pytest
+from google.protobuf.json_format import ParseDict
 
 from c4epy.cfedistributor.rest_client import CfeDistributorRestClient
 from c4epy.common.utils import json_encode
-from c4epy.protos.chain4energy.c4echain.cfedistributor import (
+from c4epy.protos.c4echain.cfedistributor.query_pb2 import (
     QueryParamsRequest,
     QueryParamsResponse,
     QueryStatesRequest,
@@ -55,7 +56,7 @@ class CfeDistributorRestClientTestCase(unittest.TestCase):
             ],
             "coins_on_distributor_account": [{"denom": "uc4e", "amount": "3"}],
         }
-        expected_response = QueryStatesResponse().from_dict(content)
+        expected_response = ParseDict(content, QueryStatesResponse())
 
         mock_client = MockRestClient(json_encode(content))
         distributor = CfeDistributorRestClient(mock_client)
@@ -93,7 +94,7 @@ class CfeDistributorRestClientTestCase(unittest.TestCase):
                 ]
             }
         }
-        expected_response = QueryParamsResponse().from_dict(content)
+        expected_response = ParseDict(content, QueryParamsResponse())
 
         mock_client = MockRestClient(json_encode(content))
         distributor = CfeDistributorRestClient(mock_client)

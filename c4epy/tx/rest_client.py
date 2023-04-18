@@ -25,10 +25,10 @@ from typing import Any, Dict, List
 
 from c4epy.common.rest_client import RestClient
 from c4epy.common.utils import json_encode
-from c4epy.protos.cosmos.crypto.secp256k1 import (  # noqa: F401  # pylint: disable=unused-import
+from c4epy.protos.cosmos.crypto.secp256k1.keys_pb2 import (  # noqa: F401  # pylint: disable=unused-import
     PubKey as ProtoPubKey,
 )
-from c4epy.protos.cosmos.tx.v1beta1 import (
+from c4epy.protos.cosmos.tx.v1beta1.service_pb2 import (
     BroadcastTxRequest,
     BroadcastTxResponse,
     GetTxRequest,
@@ -65,7 +65,7 @@ class TxRestClient(TxInterface):
             f"{self.API_URL}/simulate",
             request,
         )
-        return SimulateResponse().from_json(response)
+        return Parse(response, SimulateResponse())
 
     def GetTx(self, request: GetTxRequest) -> GetTxResponse:
         """
@@ -91,7 +91,7 @@ class TxRestClient(TxInterface):
         :return: BroadcastTxResponse
         """
         response = self.rest_client.post(f"{self.API_URL}/txs", request)
-        return BroadcastTxResponse().from_json(response)
+        return Parse(response, BroadcastTxResponse())
 
     def GetTxsEvent(self, request: GetTxsEventRequest) -> GetTxsEventResponse:
         """

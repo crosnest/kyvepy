@@ -74,7 +74,7 @@ def main():
 
     while wallet_balance < (initial_stake):
         print("Providing wealth to wallet...")
-        faucet_api.get_wealth(alice.address())
+        faucet_api.get_wealth(alice.address(), "100000000uc4e")
         wallet_balance = ledger.query_bank_balance(alice.address())
 
     # delegate some tokens to this validator

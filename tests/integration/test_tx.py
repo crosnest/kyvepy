@@ -39,7 +39,7 @@ class TestTx:
 
     def _get_network_config(self):
         """Get network config."""
-        return NetworkConfig.chain4energy_stable_testnet()
+        return NetworkConfig.chain4energy_integration_testnet()
 
     def get_ledger(self):
         """Get Ledger"""
@@ -49,7 +49,7 @@ class TestTx:
         """Get wallet 1."""
         faucet_api = FaucetApi(self._get_network_config())
         wallet1 = LocalWallet.generate()
-        faucet_api.get_wealth(wallet1.address())
+        faucet_api.get_wealth(wallet1.address(), "100000000uc4e")
         return wallet1
 
     def get_wallet_2(self):

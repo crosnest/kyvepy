@@ -21,7 +21,7 @@
 
 from abc import ABC, abstractmethod
 
-from c4epy.protos.cosmos.auth.v1beta1 import (
+from c4epy.protos.cosmos.auth.v1beta1.query_pb2 import (
     QueryAccountRequest,
     QueryAccountResponse,
     QueryParamsRequest,

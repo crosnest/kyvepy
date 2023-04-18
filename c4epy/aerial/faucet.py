@@ -62,7 +62,7 @@ class FaucetApi:
 
         :return: url string
         """
-        return f"{self._net_config.faucet_url}/api/v3/claims"
+        return f"{self._net_config.faucet_url}"
 
     def _status_uri(self, uid: str) -> str:
         """
@@ -73,7 +73,7 @@ class FaucetApi:
         """
         return f"{self._claim_url()}/{uid}"
 
-    def _try_create_faucet_claim(self, address: str) -> Optional[str]:
+    def _try_create_faucet_claim(self, address: str, coins: str = None) -> Optional[str]:
         """
         Create a token faucet claim request.
 
@@ -82,17 +82,22 @@ class FaucetApi:
         :raises ValueError: key `uid` not found in response
         """
         uri = self._claim_url()
+        if coins:
+            payload = {"address": address, "coins": [coins] }
+        else:
+            payload = {"address": address}
         response = requests.post(
-            url=uri, json={"address": address}, timeout=DEFAULT_TIMEOUT
+            url=uri, json=payload, timeout=DEFAULT_TIMEOUT
         )
         uid = None
         if response.status_code == 200:
-            try:
-                uid = response.json()["uuid"]
-            except KeyError as error:  # pragma: nocover
-                raise ValueError(
-                    f"key `uid` not found in response_json={response.json()}"
-                ) from error
+            return "OK"
+            # try:
+            #     uid = response.json()["uuid"]
+            # except KeyError as error:  # pragma: nocover
+            #     raise ValueError(
+            #         f"key `uid` not found in response_json={response.json()}"
+            #     ) from error
 
         return uid
 
@@ -118,7 +123,7 @@ class FaucetApi:
             status=data["claim"]["status"],
         )
 
-    def get_wealth(self, address: Union[Address, str]) -> None:
+    def get_wealth(self, address: Union[Address, str], coins = None) -> None:
         """
         Get wealth from the faucet for the provided address.
 
@@ -129,13 +134,16 @@ class FaucetApi:
         :raises ValueError: Faucet claim check timed out
         """
         address = str(address)
-        uid = self._try_create_faucet_claim(address)
+        uid = self._try_create_faucet_claim(address, coins)
         if uid is None:  # pragma: nocover
             raise RuntimeError("Unable to create faucet claim")
-
         retry_attempts = self.MAX_RETRY_ATTEMPTS
         while retry_attempts > 0:
             retry_attempts -= 1
+
+            # Ignite faucet does not return anythng
+            if uid == "OK":
+                break
 
             # lookup status form the claim uid
             status = self._try_check_faucet_claim(uid)

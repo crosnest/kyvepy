@@ -18,10 +18,11 @@
 # ------------------------------------------------------------------------------
 
 """Implementation of cfedistributor interface using REST."""
+from google.protobuf.json_format import Parse
 
 from c4epy.cfedistributor.interface import CfeDistributor
 from c4epy.common.rest_client import RestClient
-from c4epy.protos.chain4energy.c4echain.cfedistributor import (
+from c4epy.protos.c4echain.cfedistributor.query_pb2 import (
     QueryParamsRequest,
     QueryParamsResponse,
     QueryStatesRequest,
@@ -51,7 +52,7 @@ class CfeDistributorRestClient(CfeDistributor):
         :return: QueryParamsResponse
         """
         json_response = self._rest_api.get(f"{self.API_URL}/params")
-        return QueryParamsResponse().from_json(json_response)
+        return Parse(json_response, QueryParamsResponse())
 
     def States(self, request: QueryStatesRequest) -> QueryStatesResponse:
         """
@@ -62,4 +63,4 @@ class CfeDistributorRestClient(CfeDistributor):
         :return: QueryStatesResponse
         """
         json_response = self._rest_api.get(f"{self.API_URL}/states")
-        return QueryStatesResponse().from_json(json_response)
+        return Parse(json_response, QueryStatesResponse())

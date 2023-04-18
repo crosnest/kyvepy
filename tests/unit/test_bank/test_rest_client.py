@@ -23,9 +23,8 @@ import unittest
 
 from c4epy.bank.rest_client import BankRestClient
 from c4epy.common.utils import json_encode
-from c4epy.protos.cosmos.bank.v1beta1 import (
-    Metadata,
-    Params,
+from c4epy.protos.cosmos.bank.v1beta1.bank_pb2 import Metadata, Params
+from c4epy.protos.cosmos.bank.v1beta1.query_pb2 import (
     QueryAllBalancesRequest,
     QueryAllBalancesResponse,
     QueryBalanceRequest,
@@ -41,8 +40,8 @@ from c4epy.protos.cosmos.bank.v1beta1 import (
     QueryTotalSupplyRequest,
     QueryTotalSupplyResponse,
 )
-from c4epy.protos.cosmos.base.query.v1beta1 import PageResponse
-from c4epy.protos.cosmos.base.v1beta1 import Coin
+from c4epy.protos.cosmos.base.query.v1beta1.pagination_pb2 import PageResponse
+from c4epy.protos.cosmos.base.v1beta1.coin_pb2 import Coin
 
 from tests.helpers import MockRestClient
 
@@ -75,7 +74,7 @@ class BankRestClientTestCase(unittest.TestCase):
         """Test query all balances for the positive result."""
         expected_response = QueryAllBalancesResponse(
             balances=[Coin(denom="stake", amount="1234")],
-            pagination=PageResponse(total=0),
+            pagination=PageResponse(next_key=None, total=0),
         )
         content = {
             "balances": [{"denom": "stake", "amount": "1234"}],
@@ -137,7 +136,7 @@ class BankRestClientTestCase(unittest.TestCase):
     def test_query_denoms_metadata():
         """Test query denoms metadata for the positive result."""
         expected_response = QueryDenomsMetadataResponse(
-            pagination=PageResponse(total=0)
+            pagination=PageResponse(next_key=None, total=0)
         )
         content = {"metadatas": [], "pagination": {"next_key": None, "total": 0}}
         mock_client = MockRestClient(json_encode(content))

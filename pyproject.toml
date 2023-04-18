@@ -42,7 +42,8 @@ bip-utils = "*"
 blspy = "*"
 google-api-python-client = "*"
 jsonschema = ">=3.2.0,<5"
-betterproto = { version = ">=1.2.5", extras = ["compiler"], allow-prereleases = true}
+#betterproto = { version = ">=1.2.5", extras = ["compiler"], allow-prereleases = true}
+betterproto = { git = "https://github.com/ported-pw/python-betterproto.git", rev = "ported-pw/well-known"}
 
 [tool.poetry.group.dev]
 optional = true
@@ -66,7 +67,8 @@ flake8-bugbear = "==22.10.25"
 flake8-eradicate = "==1.4.0"
 flake8-docstrings = "==1.6.0"
 flake8-isort = "==5.0"
-betterproto = { version = ">=1.2.5", extras = ["compiler"], allow-prereleases = true}
+#betterproto = { version = ">=1.2.5", extras = ["compiler"], allow-prereleases = true}
+betterproto = { git = "https://github.com/ported-pw/python-betterproto.git", rev = "ported-pw/well-known", extras = ["compiler"]}
 
 [tool.poetry.group.docs]
 optional = true

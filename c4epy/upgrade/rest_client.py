@@ -17,10 +17,10 @@
 #
 # ------------------------------------------------------------------------------
 """Implementation of IBC Applications Transfer  interface using REST."""
-
+from google.protobuf.json_format import Parse
 
 from c4epy.common.rest_client import RestClient
-from c4epy.protos.cosmos.upgrade.v1beta1 import (
+from c4epy.protos.cosmos.upgrade.v1beta1.query_pb2 import (
     QueryAppliedPlanRequest,
     QueryAppliedPlanResponse,
     QueryCurrentPlanRequest,
@@ -52,7 +52,7 @@ class CosmosUpgradeRestClient(CosmosUpgrade):
         json_response = self._rest_api.get(
             f"{self.API_URL}/current_plan",
         )
-        return QueryCurrentPlanResponse().from_json(json_response)
+        return Parse(json_response, QueryCurrentPlanResponse())
 
     def AppliedPlan(self, request: QueryAppliedPlanRequest) -> QueryAppliedPlanResponse:
         """
@@ -64,4 +64,4 @@ class CosmosUpgradeRestClient(CosmosUpgrade):
         json_response = self._rest_api.get(
             f"{self.API_URL}/applied_plan/{request.name}", request
         )
-        return QueryAppliedPlanResponse().from_json(json_response)
+        return Parse(json_response, QueryAppliedPlanResponse())

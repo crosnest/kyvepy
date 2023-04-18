@@ -20,7 +20,7 @@
 
 from abc import ABC, abstractmethod
 
-from c4epy.protos.ibc.core.connection.v1 import (
+from c4epy.protos.ibc.core.connection.v1.query_pb2 import (
     QueryClientConnectionsRequest,
     QueryClientConnectionsResponse,
     QueryConnectionClientStateRequest,

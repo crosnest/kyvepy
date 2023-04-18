@@ -272,12 +272,12 @@ proto: fetch_proto_schema_source generate_proto_types generate_init_py_files
 generate_proto_types: download_sources apply_third_party
 	rm -frv $(C4EPY_PROTOS_DIR)/*
 #	python3 -m grpc_tools.protoc --proto_path=$(WASMD_DIR)/proto --proto_path=$(WASMD_DIR)/third_party/proto  --python_out=$(C4EPY_PROTOS_DIR) --grpc_python_out=$(C4EPY_PROTOS_DIR) $(shell find $(WASMD_DIR) \( -path */proto/* -or -path */third_party/proto/* \) -type f -name *.proto)
-	python3 -m grpc_tools.protoc --proto_path=$(IBCGO_DIR)/proto --proto_path=$(IBCGO_DIR)/third_party/proto  --python_betterproto_out=$(C4EPY_PROTOS_DIR) $(shell find $(IBCGO_DIR) \( -path */proto/* -or -path */third_party/proto/* \) -type f -name *.proto)
+	python3 -m grpc_tools.protoc --proto_path=$(IBCGO_DIR)/proto --proto_path=$(IBCGO_DIR)/third_party/proto --python_out=$(C4EPY_PROTOS_DIR) --grpc_python_out=$(C4EPY_PROTOS_DIR) $(shell find $(IBCGO_DIR) \( -path */proto/* -or -path */third_party/proto/* \) -type f -name *.proto)
 # ensure cosmos-sdk is last as previous modules may have duplicated proto models which are now outdated
 #	python3 -m grpc_tools.protoc --proto_path=$(COSMOS_SDK_DIR)/proto --proto_path=$(COSMOS_SDK_DIR)/third_party/proto --python_betterproto_out=$(C4EPY_PROTOS_DIR) $(shell find $(COSMOS_SDK_DIR) \( -not -path */nft/* \) \( -path */proto/* -or -path */third_party/proto/* \) -type f -name *.proto)
 #	find $(COSMOS_SDK_DIR) \( -path */proto/* -or -path */third_party/proto/* \) -type f -name *.proto -exec python3 -m grpc_tools.protoc --proto_path=$(COSMOS_SDK_DIR)/proto --proto_path=$(COSMOS_SDK_DIR)/third_party/proto --python_betterproto_out=$(C4EPY_PROTOS_DIR)  {} \;
 	# other chains modules
-	python3 -m grpc_tools.protoc --proto_path=$(COSMOS_SDK_DIR)/proto --proto_path=$(COSMOS_SDK_DIR)/third_party/proto --proto_path=$(C4E_DIR)/proto --python_betterproto_out=$(C4EPY_PROTOS_DIR) $(shell find $(C4E_DIR) $(COSMOS_SDK_DIR) \( -path */proto/* -or -path */third_party/proto/* \) -type f -name *.proto)
+	python3 -m grpc_tools.protoc --proto_path=$(COSMOS_SDK_DIR)/proto --proto_path=$(COSMOS_SDK_DIR)/third_party/proto --proto_path=$(C4E_DIR)/proto --python_out=$(C4EPY_PROTOS_DIR) --grpc_python_out=$(C4EPY_PROTOS_DIR) $(shell find $(C4E_DIR) $(COSMOS_SDK_DIR) \( -path */proto/* -or -path */third_party/proto/* \) -type f -name *.proto)
 
 fetch_proto_schema_source: $(COSMOS_SDK_DIR) $(WASMD_DIR) $(IBCGO_DIR) $(C4E_DIR)
 
@@ -286,7 +286,7 @@ generate_init_py_files: generate_proto_types
     # restore __init__.py files if missing
 	find $(C4EPY_PROTOS_DIR)/ -type d -exec sh -c 'test -e "'{}'/__init__.py" || touch "'{}'/__init__.py"' \;
 # restore root __init__.py as it contains code to have the proto files module available
-#	git restore $(C4EPY_PROTOS_DIR)/__init__.py
+	git restore $(C4EPY_PROTOS_DIR)/__init__.py
 
 $(SOURCE): $(COSMOS_SDK_DIR)
 
@@ -400,8 +400,7 @@ checkout-chain-sources: Makefile
 	cd chain4energy-chain && git checkout $(C4E_VERSION) -- $(C4E_PROTO_RELATIVE_DIRS)
 
 run-service-docker:
-	docker build  --build-arg VERSION=$(C4E_VERSION) --build-arg REPOSITORY=$(C4E_URL)  -t c4echain_serve ./scripts/
-	#docker run --name testchain -d -p 1317:1317 -p 4500:4500 -p 26657:26657 -it --rm c4echain_serve tail -F /dev/null
+
 	#docker exec testchain ignite chain build
 	#docker exec -td testchain ignite chain serve --skip-proto --quit-on-fail
 

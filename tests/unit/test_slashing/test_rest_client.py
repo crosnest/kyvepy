@@ -20,8 +20,10 @@
 from typing import Dict, Tuple
 from unittest import TestCase
 
+from google.protobuf.json_format import ParseDict
+
 from c4epy.common.utils import json_encode
-from c4epy.protos.cosmos.slashing.v1beta1 import (
+from c4epy.protos.cosmos.slashing.v1beta1.query_pb2 import (
     QueryParamsResponse,
     QuerySigningInfoRequest,
     QuerySigningInfoResponse,
@@ -56,14 +58,14 @@ class SlashingRestClientTestCase(TestCase):
         content = {
             "params": {
                 "signed_blocks_window": "12",
-                "min_signed_per_window": "MTI=",
+                "min_signed_per_window": "12",
                 "downtime_jail_duration": "12s",
-                "slash_fraction_double_sign": "MTI=",
-                "slash_fraction_downtime": "MTI=",
+                "slash_fraction_double_sign": "12",
+                "slash_fraction_downtime": "12",
             }
         }
         mock_client, slashing = self.make_clients(content)
-        expected_response = QueryParamsResponse().from_dict(content)
+        expected_response = ParseDict(content, QueryParamsResponse())
 
         assert slashing.Params() == expected_response
         assert mock_client.last_base_url == "/cosmos/slashing/v1beta1/params"
@@ -81,7 +83,7 @@ class SlashingRestClientTestCase(TestCase):
             }
         }
         mock_client, slashing = self.make_clients(content)
-        expected_response = QuerySigningInfoResponse().from_dict(content)
+        expected_response = ParseDict(content, QuerySigningInfoResponse())
 
         assert (
             slashing.SigningInfo(QuerySigningInfoRequest(cons_address="some_addr"))
@@ -105,10 +107,10 @@ class SlashingRestClientTestCase(TestCase):
                     "missed_blocks_counter": "1",
                 }
             ],
-            "pagination": {"next_key": "c3RyaW5n", "total": "1"},
+            "pagination": {"next_key": "string", "total": "1"},
         }
         mock_client, slashing = self.make_clients(content)
-        expected_response = QuerySigningInfosResponse().from_dict(content)
+        expected_response = ParseDict(content, QuerySigningInfosResponse())
 
         assert slashing.SigningInfos(QuerySigningInfosRequest()) == expected_response
         assert mock_client.last_base_url == "/cosmos/slashing/v1beta1/signing_infos"

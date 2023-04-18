@@ -17,11 +17,11 @@
 #
 # ------------------------------------------------------------------------------
 """Implementation of IBC Applications Transfer  interface using REST."""
-
+from google.protobuf.json_format import Parse
 
 from c4epy.common.rest_client import RestClient
 from c4epy.ibc.core.client.interface import IBCCoreClient  # type: ignore
-from c4epy.protos.ibc.core.client.v1 import (
+from c4epy.protos.ibc.core.client.v1.query_pb2 import (
     QueryClientParamsRequest,
     QueryClientParamsResponse,
     QueryClientStateRequest,
@@ -58,7 +58,7 @@ class IBCCoreClientRestClient(IBCCoreClient):
         json_response = self._rest_api.get(
             f"{self.API_URL}/client_states/{request.client_id}"
         )
-        return QueryClientStateResponse().from_json(json_response)
+        return Parse(json_response, QueryClientStateResponse())
 
     def ClientStates(
         self, request: QueryClientStatesRequest
@@ -70,7 +70,7 @@ class IBCCoreClientRestClient(IBCCoreClient):
         :return: QueryClientStatesResponse
         """
         json_response = self._rest_api.get(f"{self.API_URL}/client_states", request)
-        return QueryClientStatesResponse().from_json(json_response)
+        return Parse(json_response, QueryClientStatesResponse())
 
     def ConsensusState(
         self, request: QueryConsensusStateRequest
@@ -84,7 +84,7 @@ class IBCCoreClientRestClient(IBCCoreClient):
         json_response = self._rest_api.get(
             f"{self.API_URL}/consensus_states/{request.client_id}/revision/{request.revision_number}/height/{request.revision_height}"
         )
-        return QueryConsensusStateResponse().from_json(json_response)
+        return Parse(json_response, QueryConsensusStateResponse())
 
     def ConsensusStates(
         self, request: QueryConsensusStatesRequest
@@ -98,7 +98,7 @@ class IBCCoreClientRestClient(IBCCoreClient):
         json_response = self._rest_api.get(
             f"{self.API_URL}/consensus_states/{request.client_id}", request
         )
-        return QueryConsensusStatesResponse().from_json(json_response)
+        return Parse(json_response, QueryConsensusStatesResponse())
 
     def ClientParams(
         self, request: QueryClientParamsRequest
@@ -110,4 +110,4 @@ class IBCCoreClientRestClient(IBCCoreClient):
         :return: QueryClientParamsResponse
         """
         json_response = self._rest_api.get("/ibc/client/v1beta1/params")
-        return QueryClientParamsResponse().from_json(json_response)
+        return Parse(json_response, QueryClientParamsResponse())
