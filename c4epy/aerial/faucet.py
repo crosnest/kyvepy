@@ -73,31 +73,25 @@ class FaucetApi:
         """
         return f"{self._claim_url()}/{uid}"
 
-    def _try_create_faucet_claim(self, address: str, coins: str = None) -> Optional[str]:
+    def _try_create_faucet_claim(
+        self, address: str, coins: str = None
+    ) -> Optional[str]:
         """
         Create a token faucet claim request.
 
         :param address: the address to request funds
+        :param coins: number and denom of coins asked
         :return: None on failure, otherwise the request uid
-        :raises ValueError: key `uid` not found in response
         """
         uri = self._claim_url()
         if coins:
-            payload = {"address": address, "coins": [coins] }
+            payload = {"address": address, "coins": [coins]}
         else:
             payload = {"address": address}
-        response = requests.post(
-            url=uri, json=payload, timeout=DEFAULT_TIMEOUT
-        )
+        response = requests.post(url=uri, json=payload, timeout=DEFAULT_TIMEOUT)
         uid = None
         if response.status_code == 200:
             return "OK"
-            # try:
-            #     uid = response.json()["uuid"]
-            # except KeyError as error:  # pragma: nocover
-            #     raise ValueError(
-            #         f"key `uid` not found in response_json={response.json()}"
-            #     ) from error
 
         return uid
 
@@ -123,11 +117,12 @@ class FaucetApi:
             status=data["claim"]["status"],
         )
 
-    def get_wealth(self, address: Union[Address, str], coins = None) -> None:
+    def get_wealth(self, address: Union[Address, str], coins=None) -> None:
         """
         Get wealth from the faucet for the provided address.
 
         :param address: the address.
+        :param coins: amount and denom asked to faucet
         :raises RuntimeError: Unable to create faucet claim
         :raises RuntimeError: Failed to check faucet claim status
         :raises RuntimeError: Failed to get wealth for address

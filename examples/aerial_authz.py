@@ -28,9 +28,10 @@ from c4epy.aerial.client.utils import prepare_and_broadcast_basic_transaction
 from c4epy.aerial.faucet import FaucetApi
 from c4epy.aerial.tx import Transaction
 from c4epy.aerial.wallet import LocalWallet
-from c4epy.protos.cosmos.authz.v1beta1.query_pb2 import Grant, MsgGrant
-from c4epy.protos.cosmos.bank.v1beta1.query_pb2 import SendAuthorization
-from c4epy.protos.cosmos.base.v1beta1.query_pb2 import Coin
+from c4epy.protos.cosmos.authz.v1beta1.authz_pb2 import Grant
+from c4epy.protos.cosmos.authz.v1beta1.tx_pb2 import MsgGrant
+from c4epy.protos.cosmos.bank.v1beta1.authz_pb2 import SendAuthorization
+from c4epy.protos.cosmos.base.v1beta1.coin_pb2 import Coin
 
 
 def _parse_commandline():

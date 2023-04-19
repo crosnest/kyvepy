@@ -18,7 +18,6 @@
 # ------------------------------------------------------------------------------
 
 """Implementation of Auth interface using REST."""
-import json
 
 from google.protobuf.json_format import Parse
 

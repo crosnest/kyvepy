@@ -79,7 +79,6 @@ class CfeMinterRestClientTestCase(unittest.TestCase):
     @staticmethod
     def test_query_params():
         """Test query params for positive result."""
-        # todo: change content with v1.2.0 content
         content = {
             "params": {
                 "mint_denom": "uc4e",
@@ -92,10 +91,10 @@ class CfeMinterRestClientTestCase(unittest.TestCase):
                             "@type": "/chain4energy.c4echain.cfeminter.ExponentialStepMinting",
                             "step_duration": "126230400s",
                             "amount": "32000000000000",
-                            "amount_multiplier": "0.500000000000000000"
-                        }
+                            "amount_multiplier": "0.500000000000000000",
+                        },
                     }
-                ]
+                ],
             }
         }
         expected_response = ParseDict(content, QueryParamsResponse())

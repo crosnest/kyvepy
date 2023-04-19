@@ -93,6 +93,21 @@ Get the Chain4energy beta testnet.
 
 - `RuntimeError`: No beta testnet available
 
+<a id="c4epy.aerial.config.NetworkConfig.chain4energy_integration_testnet"></a>
+
+#### chain4energy`_`integration`_`testnet
+
+```python
+@classmethod
+def chain4energy_integration_testnet(cls)
+```
+
+Get the Chain4energy alpha testnet.
+
+**Returns**:
+
+Chain4energy integration testnet.
+
 <a id="c4epy.aerial.config.NetworkConfig.chain4energy_stable_testnet"></a>
 
 #### chain4energy`_`stable`_`testnet

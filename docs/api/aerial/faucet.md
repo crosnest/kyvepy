@@ -37,7 +37,7 @@ Init faucet API.
 #### get`_`wealth
 
 ```python
-def get_wealth(address: Union[Address, str]) -> None
+def get_wealth(address: Union[Address, str], coins=None) -> None
 ```
 
 Get wealth from the faucet for the provided address.
@@ -45,6 +45,7 @@ Get wealth from the faucet for the provided address.
 **Arguments**:
 
 - `address`: the address.
+- `coins`: amount and denom asked to faucet
 
 **Raises**:
 

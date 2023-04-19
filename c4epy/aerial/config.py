@@ -111,7 +111,7 @@ class NetworkConfig:
     def chain4energy_integration_testnet(cls):
         """Get the Chain4energy alpha testnet.
 
-        :raises RuntimeError: No alpha testnet available
+        :return: Chain4energy integration testnet.
         """
         return NetworkConfig(
             chain_id="c4echain",

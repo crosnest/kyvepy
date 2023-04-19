@@ -18,11 +18,11 @@
 # ------------------------------------------------------------------------------
 
 """Implementation of cfesignature interface using REST."""
-
+from google.protobuf.json_format import Parse
 
 from c4epy.cfesignature.interface import CfeSignature
 from c4epy.common.rest_client import RestClient
-from c4epy.protos.chain4energy.c4echain.cfesignature.query_pb2 import (
+from c4epy.protos.c4echain.cfesignature.query_pb2 import (
     QueryCreateReferenceIdRequest,
     QueryCreateReferenceIdResponse,
     QueryCreateReferencePayloadLinkRequest,
