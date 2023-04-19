@@ -96,16 +96,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
       - uses: actions/setup-python@v4
         with:
           python-version: '${{ matrix.python-version }}'
-      - name: Install dependencies
-        run: pip install tox==3.25.1
 
       - name: Integration Tests
-        run:
-
-      - name: Integration Tests
-        run: |
-          tox -e test-integration
+        run: scripts/integration_test.sh

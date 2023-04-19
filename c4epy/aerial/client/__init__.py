@@ -66,21 +66,29 @@ from c4epy.protos.cosmos.bank.v1beta1.query_pb2_grpc import QueryStub as BankGrp
 from c4epy.protos.cosmos.crypto.ed25519.keys_pb2 import (  # noqa # pylint: disable=unused-import
     PubKey,
 )
-from c4epy.protos.cosmos.distribution.v1beta1.query_pb2 import QueryDelegationRewardsRequest
-from c4epy.protos.cosmos.distribution.v1beta1.query_pb2_grpc import QueryStub as DistributionGrpcClient
+from c4epy.protos.cosmos.distribution.v1beta1.query_pb2 import (
+    QueryDelegationRewardsRequest,
+)
+from c4epy.protos.cosmos.distribution.v1beta1.query_pb2_grpc import (
+    QueryStub as DistributionGrpcClient,
+)
 from c4epy.protos.cosmos.params.v1beta1.query_pb2 import QueryParamsRequest
-from c4epy.protos.cosmos.params.v1beta1.query_pb2_grpc import QueryStub as QueryParamsGrpcClient
+from c4epy.protos.cosmos.params.v1beta1.query_pb2_grpc import (
+    QueryStub as QueryParamsGrpcClient,
+)
 from c4epy.protos.cosmos.staking.v1beta1.query_pb2 import (
     QueryDelegatorDelegationsRequest,
     QueryDelegatorUnbondingDelegationsRequest,
+    QueryValidatorsRequest,
 )
-from c4epy.protos.cosmos.staking.v1beta1.query_pb2_grpc import QueryStub as StakingGrpcClient
-from c4epy.protos.cosmos.staking.v1beta1.query_pb2 import QueryValidatorsRequest
+from c4epy.protos.cosmos.staking.v1beta1.query_pb2_grpc import (
+    QueryStub as StakingGrpcClient,
+)
 from c4epy.protos.cosmos.tx.v1beta1.service_pb2 import (
     BroadcastMode,
     BroadcastTxRequest,
     GetTxRequest,
-    SimulateRequest
+    SimulateRequest,
 )
 from c4epy.protos.cosmos.tx.v1beta1.service_pb2_grpc import ServiceStub as TxGrpcClient
 from c4epy.staking.rest_client import StakingRestClient
@@ -244,11 +252,10 @@ class LedgerClient:
         :return: account details
         """
         request = QueryAccountRequest(address=str(address))
-        response = self.auth.Account(request)  # type: ignore
+        response = self.auth.Account(request)
 
         account = BaseAccount()
-        if not isinstance(response.account, BaseAccount):
-        #if not response.account.Is(BaseAccount):
+        if not response.account.Is(BaseAccount.DESCRIPTOR):
             raise RuntimeError("Unexpected account type returned from query")
         response.account.Unpack(account)
 
@@ -266,7 +273,7 @@ class LedgerClient:
         :return: Query params
         """
         req = QueryParamsRequest(subspace=subspace, key=key)
-        resp = self.params.Params(req)  # type: ignore
+        resp = self.params.Params(req)
         return json.loads(resp.param.value)
 
     def query_bank_balance(self, address: Address, denom: Optional[str] = None) -> int:
@@ -283,7 +290,7 @@ class LedgerClient:
             denom=denom,
         )
 
-        resp = self.bank.Balance(req)  # type: ignore
+        resp = self.bank.Balance(req)
         assert resp.balance.denom == denom  # sanity check
 
         return int(float(resp.balance.amount))
@@ -295,7 +302,7 @@ class LedgerClient:
         :return: bank all balances
         """
         req = QueryAllBalancesRequest(address=str(address))
-        resp = self.bank.AllBalances(req)  # type: ignore
+        resp = self.bank.AllBalances(req)
 
         return [Coin(amount=coin.amount, denom=coin.denom) for coin in resp.balances]
 
@@ -342,7 +349,7 @@ class LedgerClient:
         if filtered_status != ValidatorStatus.UNSPECIFIED:
             req.status = filtered_status.value
 
-        resp = self.staking.Validators(req)  # type: ignore
+        resp = self.staking.Validators(req)
 
         validators: List[Validator] = []
         for validator in resp.validators:
@@ -364,18 +371,18 @@ class LedgerClient:
         """
         current_positions: List[StakingPosition] = []
 
-        deleg_req = QueryDelegatorDelegationsRequest(delegator_addr=str(address))
+        req = QueryDelegatorDelegationsRequest(delegator_addr=str(address))
 
         for resp in get_paginated(
-            deleg_req, self.staking.DelegatorDelegations, per_page_limit=1  # type: ignore
+            req, self.staking.DelegatorDelegations, per_page_limit=1
         ):
             for item in resp.delegation_responses:
 
-                rewad_req = QueryDelegationRewardsRequest(
+                req = QueryDelegationRewardsRequest(
                     delegator_address=str(address),
                     validator_address=str(item.delegation.validator_address),
                 )
-                rewards_resp = self.distribution.DelegationRewards(rewad_req)  # type: ignore
+                rewards_resp = self.distribution.DelegationRewards(req)
 
                 stake_reward = 0
                 for reward in rewards_resp.rewards:
@@ -394,13 +401,9 @@ class LedgerClient:
                 )
 
         unbonding_summary: Dict[str, int] = {}
-        unbond_deleg_req = QueryDelegatorUnbondingDelegationsRequest(
-            delegator_addr=str(address)
-        )
+        req = QueryDelegatorUnbondingDelegationsRequest(delegator_addr=str(address))
 
-        for resp in get_paginated(
-            unbond_deleg_req, self.staking.DelegatorUnbondingDelegations  # type: ignore
-        ):
+        for resp in get_paginated(req, self.staking.DelegatorUnbondingDelegations):
             for item in resp.unbonding_responses:
                 validator = str(item.validator_address)
                 total_unbonding = unbonding_summary.get(validator, 0)
@@ -619,7 +622,7 @@ class LedgerClient:
         """
         req = GetTxRequest(hash=tx_hash)
         try:
-            resp = self.txs.GetTx(req)  # type: ignore
+            resp = self.txs.GetTx(req)
         except grpc.RpcError as e:
             details = e.details()
             if "not found" in details:
@@ -677,7 +680,7 @@ class LedgerClient:
             raise RuntimeError("Unable to simulate non final transaction")
 
         req = SimulateRequest(tx=tx.tx)
-        resp = self.txs.Simulate(req)  # type: ignore
+        resp = self.txs.Simulate(req)
 
         return int(resp.gas_info.gas_used)
 
@@ -689,11 +692,11 @@ class LedgerClient:
         """
         # create the broadcast request
         broadcast_req = BroadcastTxRequest(
-            tx_bytes=tx.tx.SerializeToString(), mode=BroadcastMode.BROADCAST_MODE_SYNC  # type: ignore
+            tx_bytes=tx.tx.SerializeToString(), mode=BroadcastMode.BROADCAST_MODE_SYNC
         )
 
         # broadcast the transaction
-        resp = self.txs.BroadcastTx(broadcast_req)  # type: ignore
+        resp = self.txs.BroadcastTx(broadcast_req)
         tx_digest = resp.tx_response.txhash
 
         # check that the response is successful

@@ -200,7 +200,9 @@ class Transaction:
             signer_infos.append(
                 SignerInfo(
                     public_key=_create_proto_public_key(signing_cfg.public_key),
-                    mode_info=ModeInfo(single=ModeInfoSingle(SignMode.SIGN_MODE_DIRECT)),  # type: ignore
+                    mode_info=ModeInfo(
+                        single=ModeInfo.Single(mode=SignMode.SIGN_MODE_DIRECT)
+                    ),
                     sequence=signing_cfg.sequence_num,
                 )
             )

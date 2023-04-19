@@ -23,6 +23,8 @@ import base64
 import json
 from typing import Any, Dict, List
 
+from google.protobuf.json_format import Parse, ParseDict
+
 from c4epy.common.rest_client import RestClient
 from c4epy.common.utils import json_encode
 from c4epy.protos.cosmos.crypto.secp256k1.keys_pb2 import (  # noqa: F401  # pylint: disable=unused-import
@@ -39,6 +41,9 @@ from c4epy.protos.cosmos.tx.v1beta1.service_pb2 import (
     SimulateResponse,
 )
 from c4epy.tx.interface import TxInterface
+
+
+# Unused imports are required to make sure that related types get generated - Parse and ParseDict fail without them
 
 
 class TxRestClient(TxInterface):
@@ -81,7 +86,7 @@ class TxRestClient(TxInterface):
         self._fix_messages(dict_response["tx"]["body"]["messages"])
         self._fix_messages(dict_response["tx_response"]["tx"]["body"]["messages"])
 
-        return GetTxResponse().from_dict(dict_response)
+        return ParseDict(dict_response, GetTxResponse())
 
     def BroadcastTx(self, request: BroadcastTxRequest) -> BroadcastTxResponse:
         """
@@ -110,7 +115,7 @@ class TxRestClient(TxInterface):
         for tx_response in dict_response["tx_responses"]:
             self._fix_messages(tx_response["tx"]["body"]["messages"])
 
-        return GetTxsEventResponse().from_dict(dict_response)
+        return ParseDict(dict_response, GetTxsEventResponse())
 
     @staticmethod
     def _fix_messages(messages: List[Dict[str, Any]]):
