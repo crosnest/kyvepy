@@ -37,14 +37,14 @@ def main():
     """Run main."""
     alice = LocalWallet.generate()
 
-    ledger = LedgerClient(NetworkConfig.chain4energy_stable_testnet())
-    faucet_api = FaucetApi(NetworkConfig.chain4energy_stable_testnet())
+    ledger = LedgerClient(NetworkConfig.chain4energy_integration_testnet())
+    faucet_api = FaucetApi(NetworkConfig.chain4energy_integration_testnet())
 
     alice_balance = ledger.query_bank_balance(alice.address())
 
-    while alice_balance < (10**18):
+    while alice_balance < (10**6):
         print("Providing wealth to alice...")
-        faucet_api.get_wealth(alice.address(), "100000000uc4e")
+        faucet_api.get_wealth(alice.address())
         alice_balance = ledger.query_bank_balance(alice.address())
 
     # get all the active validators on the network

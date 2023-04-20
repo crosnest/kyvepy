@@ -31,6 +31,7 @@ RERUNS_DELAY = 10
 ROOT_DIR = Path(__file__).parent.parent.parent.parent
 
 
+@pytest.mark.integration
 @pytest.mark.flaky(reruns=MAX_FLAKY_RERUNS, reruns_delay=RERUNS_DELAY)
 def test_staking_example():
     """Test examples/aerial_staking.py"""
