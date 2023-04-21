@@ -106,5 +106,8 @@ jobs:
         with:
           python-version: '${{ matrix.python-version }}'
 
-      - name: Integration Tests
-        run: scripts/integration_test.sh
+      - name: run integration test within docker
+        run: make test-docker
+
+      - name: stop docker service
+        run: make stop-service-docker
