@@ -44,7 +44,7 @@ def main():
 
     while alice_balance < (10**6):
         print("Providing wealth to alice...")
-        faucet_api.get_wealth(alice.address(), f"1000000uc4e")
+        faucet_api.get_wealth(alice.address(), "1000000uc4e")
         alice_balance = ledger.query_bank_balance(alice.address())
 
     # get all the active validators on the network
