@@ -203,7 +203,7 @@ class Transaction:
                     mode_info=ModeInfo(
                         single=ModeInfo.Single(mode=SignMode.SIGN_MODE_DIRECT)
                     ),
-                    sequence=signing_cfg.sequence_num
+                    sequence=signing_cfg.sequence_num,
                 )
             )
 
