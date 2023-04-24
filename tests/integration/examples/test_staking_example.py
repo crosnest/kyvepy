@@ -31,10 +31,14 @@ RERUNS_DELAY = 10
 ROOT_DIR = Path(__file__).parent.parent.parent.parent
 
 
+@pytest.mark.skip
 @pytest.mark.integration
 @pytest.mark.flaky(reruns=MAX_FLAKY_RERUNS, reruns_delay=RERUNS_DELAY)
 def test_staking_example():
-    """Test examples/aerial_staking.py"""
+    """
+    Test examples/aerial_staking.py
+    This test need 2 validators running to be successful.
+    """
     proc = subprocess.run(  # nosec
         f"python {ROOT_DIR}/examples/aerial_staking.py",
         shell=True,

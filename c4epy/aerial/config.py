@@ -118,7 +118,7 @@ class NetworkConfig:
             url="rest+http://127.0.0.1:1317",
             fee_minimum_gas_price=0.025,
             fee_denomination="uc4e",
-            staking_denomination="stake",
+            staking_denomination="uc4e",
             faucet_url="http://127.0.0.1:4500",
         )
 
