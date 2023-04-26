@@ -22,15 +22,15 @@
 # ------------------------------------------------------------------------------
 import json
 
-from c4epy.aerial.client import LedgerClient, NetworkConfig
-from c4epy.aerial.client.distribution import create_withdraw_delegator_reward
-from c4epy.aerial.client.staking import create_delegate_msg
-from c4epy.aerial.faucet import FaucetApi
-from c4epy.aerial.tx import SigningCfg, Transaction
-from c4epy.aerial.wallet import LocalWallet
-from c4epy.protos.cosmos.bank.v1beta1.query_pb2 import QueryTotalSupplyRequest
-from c4epy.protos.cosmos.params.v1beta1.query_pb2 import QueryParamsRequest
-from c4epy.protos.cosmos.staking.v1beta1.query_pb2 import QueryValidatorsRequest
+from kyvepy.aerial.client import LedgerClient, NetworkConfig
+from kyvepy.aerial.client.distribution import create_withdraw_delegator_reward
+from kyvepy.aerial.client.staking import create_delegate_msg
+from kyvepy.aerial.faucet import FaucetApi
+from kyvepy.aerial.tx import SigningCfg, Transaction
+from kyvepy.aerial.wallet import LocalWallet
+from kyvepy.protos.cosmos.bank.v1beta1.query_pb2 import QueryTotalSupplyRequest
+from kyvepy.protos.cosmos.params.v1beta1.query_pb2 import QueryParamsRequest
+from kyvepy.protos.cosmos.staking.v1beta1.query_pb2 import QueryValidatorsRequest
 
 
 # This function returns the total reward for given:
@@ -135,14 +135,14 @@ def main():
 
     while alice_balance < initial_stake:
         print("Providing wealth to alice...")
-        faucet_api.get_wealth(alice.address(), "100000000uc4e")
+        faucet_api.get_wealth(alice.address(), "100000000ukyve")
         alice_balance = ledger.query_bank_balance(alice.address())
 
     tx = Transaction()
 
     # Add delegate msg
     tx.add_message(
-        create_delegate_msg(alice_address, validator.address, initial_stake, "uc4e")
+        create_delegate_msg(alice_address, validator.address, initial_stake, "ukyve")
     )
 
     # Add claim reward msg
@@ -159,7 +159,7 @@ def main():
     # simulate the fee for the transaction
     _, str_tx_fee = ledger.estimate_gas_and_fee_for_tx(tx)
 
-    denom = "uc4e"
+    denom = "ukyve"
     tx_fee = str_tx_fee[: -len(denom)]
 
     # Add a 20% to the fee estimation to get a more conservative estimate

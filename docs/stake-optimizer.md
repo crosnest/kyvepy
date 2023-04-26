@@ -7,8 +7,8 @@ When you delegate tokens to a validator for a determined period, you can use the
 First, you need to define a network to work with.
 
 ```python
-from c4epy.aerial.client import LedgerClient
-from c4epy.aerial.config import NetworkConfig
+from kyvepy.aerial.client import LedgerClient
+from kyvepy.aerial.config import NetworkConfig
 
 ledger = LedgerClient(NetworkConfig.fetchai_stable_testnet())
 ```
@@ -29,7 +29,7 @@ total_period = 60000
 We will now select a validator to delegate our tokens. We will do this by analyzing which one has the lowest `commission` and a reasonable amount of stake delegated compared to the total stake.
 
 ```python
-from c4epy.protos.cosmos.staking.v1beta1.query_pb2 import QueryValidatorsRequest
+from kyvepy.protos.cosmos.staking.v1beta1.query_pb2 import QueryValidatorsRequest
 
 req = QueryValidatorsRequest()
 resp = ledger.staking.Validators(req)
@@ -71,13 +71,13 @@ pct_delegated = initial_stake/total_stake
 We need to know an estimate of the transaction fees it will cost every time we claim rewards and delegate tokens. For that, both claim rewards and delegate tokens transactions were combined into a single multi-msg transaction to simulate the total fees.
 
 ```python
-from c4epy.aerial.client.distribution import create_withdraw_delegator_reward
-from c4epy.aerial.client.staking import create_delegate_msg
-from c4epy.aerial.tx import SigningCfg
-from c4epy.aerial.wallet import LocalWallet
-from c4epy.crypto.keypairs import PrivateKey
-from c4epy.crypto.address import Address
-from c4epy.aerial.tx import Transaction
+from kyvepy.aerial.client.distribution import create_withdraw_delegator_reward
+from kyvepy.aerial.client.staking import create_delegate_msg
+from kyvepy.aerial.tx import SigningCfg
+from kyvepy.aerial.wallet import LocalWallet
+from kyvepy.crypto.keypairs import PrivateKey
+from kyvepy.crypto.address import Address
+from kyvepy.aerial.tx import Transaction
 
 # Use any address with at least the amount of initial_stake available
 key = PrivateKey("XZ5BZQcr+FNl2usnSIQYpXsGWvBxKLRDkieUNIvMOV7=")

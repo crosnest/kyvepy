@@ -1,14 +1,14 @@
 [tool.poetry]
-name = "c4epy"
+name = "kyvepy"
 version = "1.2.0"
 description = "A library for interacting with the chain4energy network"
 authors = ["Fetch.AI Limited", "Cros Nest B.V."]
 readme = "README.md"
 license = "Apache-2.0"
-homepage = "https://github.com/crosnest/c4epy"
-repository = "https://github.com/crosnest/c4epy"
+homepage = "https://github.com/crosnest/kyvepy"
+repository = "https://github.com/crosnest/kyvepy"
 documentation = "https://docs.fetch.ai/CosmPy/"
-keywords = ["c4epy", "Cosmos-SDK", "Chain4Energy"]
+keywords = ["kyvepy", "Cosmos-SDK", "Chain4Energy"]
 classifiers=[
     "Environment :: Console",
     "Development Status :: 3 - Alpha",
@@ -88,7 +88,7 @@ exclude = "whitelist.py"
 
 [[tool.mypy.overrides]]
 module = [
-    "c4epy.protos.*",
+    "kyvepy.protos.*",
 ]
 ignore_errors = true
 
@@ -122,9 +122,9 @@ order_by_type = false
 case_sensitive = true
 lines_after_imports = 2
 skip = [
-    "c4epy/protos/",
+    "kyvepy/protos/",
     ]
-known_first_party = "c4epy"
+known_first_party = "kyvepy"
 known_local_folder = "tests"
 sections = ["FUTURE",'STDLIB',"THIRDPARTY","FIRSTPARTY","LOCALFOLDER"]
 
@@ -161,7 +161,7 @@ omit = [
     "*/.local/*",
     "tests/*",
     "*/.tox/*",
-    "c4epy/protos/*",
+    "kyvepy/protos/*",
 ]
 
 [tool.coverage.html]

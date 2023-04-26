@@ -22,9 +22,9 @@
 import json
 import unittest
 
-from c4epy.common.utils import json_encode
-from c4epy.crypto.address import Address
-from c4epy.crypto.keypairs import PublicKey
+from kyvepy.common.utils import json_encode
+from kyvepy.crypto.address import Address
+from kyvepy.crypto.keypairs import PublicKey
 
 
 class AddressTestCase(unittest.TestCase):
@@ -36,8 +36,8 @@ class AddressTestCase(unittest.TestCase):
             b"\x02W\xbe\xe2\x08\xdc\x80(\xd2\xd0C\xbe\xe0{\x02\x81\xa6\xf9Y\x19\x0e\xd1\x8a*\x99\x84\xd6e\x07\x99\x8d\x96h"
         )
         address = Address(pk)
-        self.assertEqual(str(address), "c4e12hyw0z8za0sc9wwfhkdz2qrc89a87z423p6ch6")
-        self.assertEqual(address, "c4e12hyw0z8za0sc9wwfhkdz2qrc89a87z423p6ch6")
+        self.assertEqual(str(address), "kyve12hyw0z8za0sc9wwfhkdz2qrc89a87z423p6ch6")
+        self.assertEqual(address, "kyve12hyw0z8za0sc9wwfhkdz2qrc89a87z423p6ch6")
         self.assertEqual(
             bytes(address),
             b"U\xc8\xe7\x88\xe2\xeb\xe1\x82\xb9\xc9\xbd\x9a%\x00x9z\x7f\n\xaa",
@@ -56,11 +56,11 @@ class AddressTestCase(unittest.TestCase):
         address = Address(
             b"U\xc8\xe7\x88\xe2\xeb\xe1\x82\xb9\xc9\xbd\x9a%\x00x9z\x7f\n\xaa"
         )
-        self.assertEqual(str(address), "c4e12hyw0z8za0sc9wwfhkdz2qrc89a87z423p6ch6")
+        self.assertEqual(str(address), "kyve12hyw0z8za0sc9wwfhkdz2qrc89a87z423p6ch6")
 
     def test_create_from_str(self):
         """Test create Address from string with positive result."""
-        address = Address("c4e12hyw0z8za0sc9wwfhkdz2qrc89a87z423p6ch6")
+        address = Address("kyve12hyw0z8za0sc9wwfhkdz2qrc89a87z423p6ch6")
         self.assertEqual(
             bytes(address),
             b"U\xc8\xe7\x88\xe2\xeb\xe1\x82\xb9\xc9\xbd\x9a%\x00x9z\x7f\n\xaa",

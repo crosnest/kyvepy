@@ -21,12 +21,12 @@
 """Test aerial ledger client."""
 
 
-from c4epy.aerial.client import (
+from kyvepy.aerial.client import (
     DEFAULT_QUERY_INTERVAL_SECS,
     DEFAULT_QUERY_TIMEOUT_SECS,
     LedgerClient,
 )
-from c4epy.aerial.config import NetworkConfig
+from kyvepy.aerial.config import NetworkConfig
 
 
 def test_ledger_client_timeouts():

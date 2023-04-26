@@ -22,13 +22,13 @@ from typing import Any
 
 import pytest
 
-from c4epy.aerial.gas import (
+from kyvepy.aerial.gas import (
     GasStrategy,
     OfflineMessageTableStrategy,
     SimulationGasStrategy,
 )
-from c4epy.aerial.tx import Transaction
-from c4epy.protos.cosmos.bank.v1beta1.tx_pb2 import MsgSend
+from kyvepy.aerial.tx import Transaction
+from kyvepy.protos.cosmos.bank.v1beta1.tx_pb2 import MsgSend
 
 
 @pytest.mark.parametrize(

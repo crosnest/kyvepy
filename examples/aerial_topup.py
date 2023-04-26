@@ -23,14 +23,14 @@ import time
 
 from google.protobuf import any_pb2
 
-from c4epy.aerial.client import LedgerClient, NetworkConfig
-from c4epy.aerial.client.utils import prepare_and_broadcast_basic_transaction
-from c4epy.aerial.faucet import FaucetApi
-from c4epy.aerial.tx import Transaction
-from c4epy.aerial.wallet import LocalWallet
-from c4epy.protos.cosmos.authz.v1beta1.tx_pb2 import MsgExec
-from c4epy.protos.cosmos.bank.v1beta1.tx_pb2 import MsgSend
-from c4epy.protos.cosmos.base.v1beta1.coin_pb2 import Coin
+from kyvepy.aerial.client import LedgerClient, NetworkConfig
+from kyvepy.aerial.client.utils import prepare_and_broadcast_basic_transaction
+from kyvepy.aerial.faucet import FaucetApi
+from kyvepy.aerial.tx import Transaction
+from kyvepy.aerial.wallet import LocalWallet
+from kyvepy.protos.cosmos.authz.v1beta1.tx_pb2 import MsgExec
+from kyvepy.protos.cosmos.bank.v1beta1.tx_pb2 import MsgSend
+from kyvepy.protos.cosmos.base.v1beta1.coin_pb2 import Coin
 
 
 def _parse_commandline():
@@ -81,14 +81,14 @@ def main():
 
     while wallet_balance < (10**18):
         print("Providing wealth to wallet...")
-        faucet_api.get_wealth(authz_wallet.address(), "100000000uc4e")
+        faucet_api.get_wealth(authz_wallet.address(), "100000000ukyve")
         wallet_balance = ledger.query_bank_balance(authz_wallet.address())
 
     ledger = LedgerClient(NetworkConfig.latest_stable_testnet())
 
     # Top-up amount
     amount = args.top_up_amount
-    top_up_amount = Coin(amount=str(amount), denom="uc4e")
+    top_up_amount = Coin(amount=str(amount), denom="ukyve")
 
     # Minimum balance for task_wallet
     minimum_balance = args.minimum_balance

@@ -21,10 +21,10 @@
 import argparse
 import time
 
-from c4epy.aerial.client import LedgerClient
-from c4epy.aerial.config import NetworkConfig
-from c4epy.aerial.faucet import FaucetApi
-from c4epy.aerial.wallet import LocalWallet
+from kyvepy.aerial.client import LedgerClient
+from kyvepy.aerial.config import NetworkConfig
+from kyvepy.aerial.faucet import FaucetApi
+from kyvepy.aerial.wallet import LocalWallet
 
 
 def _parse_commandline():
@@ -34,7 +34,7 @@ def _parse_commandline():
         type=int,
         nargs="?",
         default=9000000000000000000,
-        help="Initial amount of uc4e to delegate to validator",
+        help="Initial amount of ukyve to delegate to validator",
     )
     parser.add_argument(
         "time_limit",
@@ -74,7 +74,7 @@ def main():
 
     while wallet_balance < (initial_stake):
         print("Providing wealth to wallet...")
-        faucet_api.get_wealth(alice.address(), "100000000uc4e")
+        faucet_api.get_wealth(alice.address(), "100000000ukyve")
         wallet_balance = ledger.query_bank_balance(alice.address())
 
     # delegate some tokens to this validator

@@ -18,9 +18,9 @@
 #   limitations under the License.
 #
 # ------------------------------------------------------------------------------
-from c4epy.aerial.client import LedgerClient, NetworkConfig
-from c4epy.aerial.faucet import FaucetApi
-from c4epy.aerial.wallet import LocalWallet
+from kyvepy.aerial.client import LedgerClient, NetworkConfig
+from kyvepy.aerial.faucet import FaucetApi
+from kyvepy.aerial.wallet import LocalWallet
 
 
 def main():
@@ -35,7 +35,7 @@ def main():
 
     while alice_balance < (10**18):
         print("Providing wealth to alice...")
-        faucet_api.get_wealth(alice.address(), "100000000uc4e")
+        faucet_api.get_wealth(alice.address(), "100000000ukyve")
         alice_balance = ledger.query_bank_balance(alice.address())
 
     print(
@@ -45,7 +45,7 @@ def main():
         f"Bob   Address: {bob.address()} Balance: {ledger.query_bank_balance(bob.address())}"
     )
 
-    tx = ledger.send_tokens(bob.address(), 10, "uc4e", alice)
+    tx = ledger.send_tokens(bob.address(), 10, "ukyve", alice)
 
     print(f"TX {tx.tx_hash} waiting to complete...")
     tx.wait_to_complete()

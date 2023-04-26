@@ -1,10 +1,10 @@
 # Security Policy
 
-Security is very important for Fetch.ai, Cros Nest and its community. This document outlines security procedures and general policies for the `c4epy` project.
+Security is very important for Fetch.ai, Cros Nest and its community. This document outlines security procedures and general policies for the `kyvepy` project.
 
 ## Supported Versions
 
-The following table shows which versions of `c4epy` are currently being supported with security updates.
+The following table shows which versions of `kyvepy` are currently being supported with security updates.
 
 | Version  | Supported          |
 |----------| ------------------ |
@@ -12,7 +12,7 @@ The following table shows which versions of `c4epy` are currently being supporte
 
 ## Reporting a Vulnerability
 
-The `c4epy` team and community take all security bugs in `c4epy` seriously. We appreciate your efforts and responsible disclosure and will make every effort to acknowledge your contributions.
+The `kyvepy` team and community take all security bugs in `kyvepy` seriously. We appreciate your efforts and responsible disclosure and will make every effort to acknowledge your contributions.
 In case of the bug can be found in the `CosmPy` project, please report to `CosmPy` team first.
 
 Report security bugs by emailing `developer@cros-nest.com`.

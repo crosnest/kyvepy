@@ -111,10 +111,10 @@ Please follow the [Conventional Commits v1.0.0][convcommit]. The commit types mu
 - **refactor**: A code change that neither fixes a bug nor adds a feature
 - **test**: Adding missing tests or correcting existing tests
 
-[coc]: https://github.com/crosnest/c4epy/blob/master/CODE_OF_CONDUCT.md
-[developing]: https://github.com/crosnest/c4epy/blob/master/DEVELOPING.md
-[issues]: https://github.com/crosnest/c4epy/issues
-[new-issue]: https://github.com/crosnest/c4epy/issues/new/choose
-[prs]: https://github.com/crosnest/c4epy/pulls
+[coc]: https://github.com/crosnest/kyvepy/blob/master/CODE_OF_CONDUCT.md
+[developing]: https://github.com/crosnest/kyvepy/blob/master/DEVELOPING.md
+[issues]: https://github.com/crosnest/kyvepy/issues
+[new-issue]: https://github.com/crosnest/kyvepy/issues/new/choose
+[prs]: https://github.com/crosnest/kyvepy/pulls
 [convcommit]: https://www.conventionalcommits.org/en/v1.0.0/
-[github]: https://github.com/crosnest/c4epy
+[github]: https://github.com/crosnest/kyvepy

@@ -22,9 +22,9 @@ from unittest import TestCase
 
 from google.protobuf.json_format import ParseDict
 
-from c4epy.common.utils import json_encode
-from c4epy.evidence.rest_client import EvidenceRestClient
-from c4epy.protos.cosmos.evidence.v1beta1.query_pb2 import (
+from kyvepy.common.utils import json_encode
+from kyvepy.evidence.rest_client import EvidenceRestClient
+from kyvepy.protos.cosmos.evidence.v1beta1.query_pb2 import (
     QueryAllEvidenceRequest,
     QueryAllEvidenceResponse,
     QueryEvidenceRequest,

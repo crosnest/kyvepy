@@ -20,11 +20,11 @@
 # ------------------------------------------------------------------------------
 import random
 
-from c4epy.aerial.client import LedgerClient
-from c4epy.aerial.config import NetworkConfig
-from c4epy.aerial.faucet import FaucetApi
-from c4epy.aerial.tx_helpers import SubmittedTx
-from c4epy.aerial.wallet import LocalWallet
+from kyvepy.aerial.client import LedgerClient
+from kyvepy.aerial.config import NetworkConfig
+from kyvepy.aerial.faucet import FaucetApi
+from kyvepy.aerial.tx_helpers import SubmittedTx
+from kyvepy.aerial.wallet import LocalWallet
 
 
 def _wait_for_tx(operation: str, tx: SubmittedTx):
@@ -44,7 +44,7 @@ def main():
 
     while alice_balance < (10**6):
         print("Providing wealth to alice...")
-        faucet_api.get_wealth(alice.address(), "1000000uc4e")
+        faucet_api.get_wealth(alice.address(), "1000000ukyve")
         alice_balance = ledger.query_bank_balance(alice.address())
 
     # get all the active validators on the network

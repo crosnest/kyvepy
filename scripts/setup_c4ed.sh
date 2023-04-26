@@ -1,15 +1,15 @@
-# Install c4ed
-git clone https://github.com/chain4energy/c4e-chain
-cd c4e-chain
+# Install kyved
+git clone https://github.com/chain4energy/kyve-chain
+cd kyve-chain
 git checkout v1.2.0
 make install
 
-# Remove c4ed git folder
-cd .. && rm -rf c4e-chain
+# Remove kyved git folder
+cd .. && rm -rf kyve-chain
 
 
-# Add symlink of c4ed
-sudo ln -s ~/go/bin/ce4ed /usr/local/bin/c4ed
+# Add symlink of kyved
+sudo ln -s ~/go/bin/ce4ed /usr/local/bin/kyved
 
 # Export PATH
 if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -18,21 +18,21 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 
 # Clear the existing configuration
-rm -rf ~/.c4ed*
+rm -rf ~/.kyved*
 
 # Add keys
-echo "erase weekend bid boss knee vintage goat syrup use tumble device album fortune water sweet maple kind degree toss owner crane half useless sleep" |c4ed keys add validator --recover
+echo "erase weekend bid boss knee vintage goat syrup use tumble device album fortune water sweet maple kind degree toss owner crane half useless sleep" |kyved keys add validator --recover
 
-echo "account snack twist chef razor sing gain birth check identify unable vendor model utility fragile stadium turtle sun sail enemy violin either keep fiction" | c4ed keys add bob --recover
+echo "account snack twist chef razor sing gain birth check identify unable vendor model utility fragile stadium turtle sun sail enemy violin either keep fiction" | kyved keys add bob --recover
 
-# Start c4ed local node
+# Start kyved local node
 
 # Configure node
-c4ed init --chain-id=testing testing
-c4ed add-genesis-account $(c4ed keys show validator -a) 100000000000000000000000stake 
-c4ed add-genesis-account $(c4ed keys show bob -a) 100000000uc4e
-c4ed gentx validator 10000000000000000000000stake --chain-id testing
-c4ed collect-gentxs
+kyved init --chain-id=testing testing
+kyved add-genesis-account $(kyved keys show validator -a) 100000000000000000000000stake
+kyved add-genesis-account $(kyved keys show bob -a) 100000000ukyve
+kyved gentx validator 10000000000000000000000stake --chain-id testing
+kyved collect-gentxs
 
 # Enable rest-api
-sed -i '/^\[api\]$/,/^\[/ s/^enable = false/enable = true/' ~/.c4ed/config/app.toml
+sed -i '/^\[api\]$/,/^\[/ s/^enable = false/enable = true/' ~/.kyved/config/app.toml

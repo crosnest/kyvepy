@@ -21,10 +21,10 @@ from typing import Optional
 
 import pytest
 
-from c4epy.aerial.client import LedgerClient
-from c4epy.aerial.config import NetworkConfig
-from c4epy.aerial.faucet import FaucetApi
-from c4epy.aerial.wallet import LocalWallet
+from kyvepy.aerial.client import LedgerClient
+from kyvepy.aerial.config import NetworkConfig
+from kyvepy.aerial.faucet import FaucetApi
+from kyvepy.aerial.wallet import LocalWallet
 
 
 MAX_FLAKY_RERUNS = 3
@@ -34,7 +34,7 @@ RERUNS_DELAY = 10
 class TestTx:
     """Test Basic Transaction"""
 
-    COIN = "uc4e"
+    COIN = "ukyve"
     GAS_LIMIT: Optional[int] = None
 
     def _get_network_config(self):
@@ -49,7 +49,7 @@ class TestTx:
         """Get wallet 1."""
         faucet_api = FaucetApi(self._get_network_config())
         wallet1 = LocalWallet.generate()
-        faucet_api.get_wealth(wallet1.address(), "100000000uc4e")
+        faucet_api.get_wealth(wallet1.address(), "100000000ukyve")
         return wallet1
 
     def get_wallet_2(self):
@@ -84,15 +84,15 @@ class TestTx:
 
 
 class TestTxRestAPI(TestTx):
-    """Test c4echain rest api"""
+    """Test kyvechain rest api"""
 
     def _get_network_config(self):
         return NetworkConfig(
-            chain_id="c4echain",
+            chain_id="kyvechain",
             url="rest+http://127.0.0.1:1317",
             fee_minimum_gas_price=0.025,
-            fee_denomination="uc4e",
-            staking_denomination="uc4e",
+            fee_denomination="ukyve",
+            staking_denomination="ukyve",
             faucet_url="http://127.0.0.1:4500",
         )
 

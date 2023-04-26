@@ -18,7 +18,7 @@
 # ------------------------------------------------------------------------------
 
 """Tests for BLS KeyPair module of the Crypto Package."""
-from c4epy.crypto.keypairs_bls import (
+from kyvepy.crypto.keypairs_bls import (
     PrivateKey,
     PublicKey,
     aggregate_signatures,

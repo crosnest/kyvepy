@@ -21,10 +21,10 @@
 
 import unittest
 
-from c4epy.bank.rest_client import BankRestClient
-from c4epy.common.utils import json_encode
-from c4epy.protos.cosmos.bank.v1beta1.bank_pb2 import Metadata, Params
-from c4epy.protos.cosmos.bank.v1beta1.query_pb2 import (
+from kyvepy.bank.rest_client import BankRestClient
+from kyvepy.common.utils import json_encode
+from kyvepy.protos.cosmos.bank.v1beta1.bank_pb2 import Metadata, Params
+from kyvepy.protos.cosmos.bank.v1beta1.query_pb2 import (
     QueryAllBalancesRequest,
     QueryAllBalancesResponse,
     QueryBalanceRequest,
@@ -40,8 +40,8 @@ from c4epy.protos.cosmos.bank.v1beta1.query_pb2 import (
     QueryTotalSupplyRequest,
     QueryTotalSupplyResponse,
 )
-from c4epy.protos.cosmos.base.query.v1beta1.pagination_pb2 import PageResponse
-from c4epy.protos.cosmos.base.v1beta1.coin_pb2 import Coin
+from kyvepy.protos.cosmos.base.query.v1beta1.pagination_pb2 import PageResponse
+from kyvepy.protos.cosmos.base.v1beta1.coin_pb2 import Coin
 
 from tests.helpers import MockRestClient
 

@@ -5,10 +5,10 @@ First, perform all the necessary imports:
 
 ```python
 import base64
-from c4epy.aerial.client import LedgerClient, NetworkConfig
-from c4epy.aerial.contract import LedgerContract
-from c4epy.aerial.faucet import FaucetApi
-from c4epy.aerial.wallet import LocalWallet
+from kyvepy.aerial.client import LedgerClient, NetworkConfig
+from kyvepy.aerial.contract import LedgerContract
+from kyvepy.aerial.faucet import FaucetApi
+from kyvepy.aerial.wallet import LocalWallet
 ```
 Set the network configuration, define a local wallet and add some tokens to it using the FaucetApi
 

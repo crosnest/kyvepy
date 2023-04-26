@@ -21,7 +21,7 @@
 
 import unittest
 
-from c4epy.crypto.keypairs import PrivateKey, PublicKey
+from kyvepy.crypto.keypairs import PrivateKey, PublicKey
 
 
 class KeyPairTestCase(unittest.TestCase):

@@ -22,11 +22,11 @@ from unittest import TestCase
 
 from google.protobuf.json_format import ParseDict
 
-from c4epy.common.utils import json_encode
-from c4epy.ibc.applications.transfer.rest_client import (  # type: ignore
+from kyvepy.common.utils import json_encode
+from kyvepy.ibc.applications.transfer.rest_client import (  # type: ignore
     IBCApplicationsTransferRestClient,
 )
-from c4epy.protos.ibc.applications.transfer.v1.query_pb2 import (
+from kyvepy.protos.ibc.applications.transfer.v1.query_pb2 import (
     QueryDenomTraceRequest,
     QueryDenomTraceResponse,
     QueryDenomTracesRequest,

@@ -16,4 +16,4 @@
 #   limitations under the License.
 #
 # ------------------------------------------------------------------------------
-"""Test for c4epy aerial."""
+"""Test for kyvepy aerial."""

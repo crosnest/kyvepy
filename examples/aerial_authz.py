@@ -23,15 +23,15 @@ from datetime import datetime, timedelta
 
 from google.protobuf import any_pb2, timestamp_pb2
 
-from c4epy.aerial.client import LedgerClient, NetworkConfig
-from c4epy.aerial.client.utils import prepare_and_broadcast_basic_transaction
-from c4epy.aerial.faucet import FaucetApi
-from c4epy.aerial.tx import Transaction
-from c4epy.aerial.wallet import LocalWallet
-from c4epy.protos.cosmos.authz.v1beta1.authz_pb2 import Grant
-from c4epy.protos.cosmos.authz.v1beta1.tx_pb2 import MsgGrant
-from c4epy.protos.cosmos.bank.v1beta1.authz_pb2 import SendAuthorization
-from c4epy.protos.cosmos.base.v1beta1.coin_pb2 import Coin
+from kyvepy.aerial.client import LedgerClient, NetworkConfig
+from kyvepy.aerial.client.utils import prepare_and_broadcast_basic_transaction
+from kyvepy.aerial.faucet import FaucetApi
+from kyvepy.aerial.tx import Transaction
+from kyvepy.aerial.wallet import LocalWallet
+from kyvepy.protos.cosmos.authz.v1beta1.authz_pb2 import Grant
+from kyvepy.protos.cosmos.authz.v1beta1.tx_pb2 import MsgGrant
+from kyvepy.protos.cosmos.bank.v1beta1.authz_pb2 import SendAuthorization
+from kyvepy.protos.cosmos.base.v1beta1.coin_pb2 import Coin
 
 
 def _parse_commandline():
@@ -76,10 +76,10 @@ def main():
 
     while wallet_balance < (amount):
         print("Providing wealth to wallet...")
-        faucet_api.get_wealth(wallet.address(), "100000000uc4e")
+        faucet_api.get_wealth(wallet.address(), "100000000ukyve")
         wallet_balance = ledger.query_bank_balance(wallet.address())
 
-    spend_amount = Coin(amount=str(amount), denom="uc4e")
+    spend_amount = Coin(amount=str(amount), denom="ukyve")
 
     # Authorize authz_wallet to send tokens from wallet
     authz_any = any_pb2.Any()

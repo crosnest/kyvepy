@@ -77,13 +77,13 @@ def check_copyright(file: Path) -> bool:
 
 if __name__ == "__main__":
     python_files = itertools.chain(
-        Path("c4epy").glob("**/*.py"),
+        Path("kyvepy").glob("**/*.py"),
     )
 
-    # filter out protobuf files (*_pb2.py) and all files under c4epy/protos
+    # filter out protobuf files (*_pb2.py) and all files under kyvepy/protos
     python_files_filtered = filter(
         lambda x: not str(x).endswith("_pb2.py")
-        and str(x).find(os.path.join("c4epy", "protos")) == -1,
+        and str(x).find(os.path.join("kyvepy", "protos")) == -1,
         python_files,
     )
 

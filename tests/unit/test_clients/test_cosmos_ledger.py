@@ -30,23 +30,23 @@
 #
 # from google.protobuf.json_format import MessageToDict, ParseDict
 #
-# from c4epy.auth.interface import Auth
-# from c4epy.auth.rest_client import AuthRestClient
-# from c4epy.bank.rest_client import BankRestClient
-# from c4epy.clients.crypto import CosmosCrypto
-# from c4epy.cosmwasm.rest_client import CosmWasmRestClient
-# from c4epy.crypto.address import Address
-# from c4epy.crypto.keypairs import PrivateKey
-# from c4epy.protos.cosmos.auth.v1beta1.auth_pb2 import BaseAccount
-# from c4epy.protos.cosmos.auth.v1beta1.query_pb2 import (
+# from kyvepy.auth.interface import Auth
+# from kyvepy.auth.rest_client import AuthRestClient
+# from kyvepy.bank.rest_client import BankRestClient
+# from kyvepy.clients.crypto import CosmosCrypto
+# from kyvepy.cosmwasm.rest_client import CosmWasmRestClient
+# from kyvepy.crypto.address import Address
+# from kyvepy.crypto.keypairs import PrivateKey
+# from kyvepy.protos.cosmos.auth.v1beta1.auth_pb2 import BaseAccount
+# from kyvepy.protos.cosmos.auth.v1beta1.query_pb2 import (
 #     QueryAccountRequest,
 #     QueryAccountResponse,
 #     QueryParamsRequest,
 #     QueryParamsResponse,
 # )
-# from c4epy.protos.cosmos.base.abci.v1beta1.abci_pb2 import TxResponse
-# from c4epy.protos.cosmos.base.v1beta1.coin_pb2 import Coin
-# from c4epy.protos.cosmos.tx.v1beta1.service_pb2 import (
+# from kyvepy.protos.cosmos.base.abci.v1beta1.abci_pb2 import TxResponse
+# from kyvepy.protos.cosmos.base.v1beta1.coin_pb2 import Coin
+# from kyvepy.protos.cosmos.tx.v1beta1.service_pb2 import (
 #     BroadcastTxRequest,
 #     BroadcastTxResponse,
 #     GetTxRequest,
@@ -56,8 +56,8 @@
 #     SimulateRequest,
 #     SimulateResponse,
 # )
-# from c4epy.protos.cosmos.tx.v1beta1.tx_pb2 import Tx
-# from c4epy.tx.interface import TxInterface
+# from kyvepy.protos.cosmos.tx.v1beta1.tx_pb2 import Tx
+# from kyvepy.tx.interface import TxInterface
 # from tests.helpers import MockRestClient
 #
 # # Private key

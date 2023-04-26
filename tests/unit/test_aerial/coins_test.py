@@ -20,8 +20,8 @@
 # ------------------------------------------------------------------------------
 import pytest
 
-from c4epy.aerial.coins import parse_coins
-from c4epy.protos.cosmos.base.v1beta1.coin_pb2 import Coin
+from kyvepy.aerial.coins import parse_coins
+from kyvepy.protos.cosmos.base.v1beta1.coin_pb2 import Coin
 
 
 @pytest.mark.parametrize(
@@ -29,11 +29,11 @@ from c4epy.protos.cosmos.base.v1beta1.coin_pb2 import Coin
     [
         ("", []),
         ("          ", []),
-        ("50000uc4e", [Coin(amount="50000", denom="uc4e")]),
+        ("50000ukyve", [Coin(amount="50000", denom="ukyve")]),
         (
-            "50000uc4e,     200foobar",
+            "50000ukyve,     200foobar",
             [
-                Coin(amount="50000", denom="uc4e"),
+                Coin(amount="50000", denom="ukyve"),
                 Coin(amount="200", denom="foobar"),
             ],
         ),

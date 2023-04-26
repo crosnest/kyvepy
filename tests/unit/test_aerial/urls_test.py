@@ -21,7 +21,7 @@
 
 import pytest
 
-from c4epy.aerial.urls import ParsedUrl, Protocol, parse_url
+from kyvepy.aerial.urls import ParsedUrl, Protocol, parse_url
 
 
 @pytest.mark.parametrize(

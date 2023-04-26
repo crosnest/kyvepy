@@ -1,6 +1,6 @@
-# C4ePy Authors
+# kyvePy Authors
 
-This is the official list of C4ePy authors (the lists are in the alphabetical order:):
+This is the official list of kyvePy authors (the lists are in the alphabetical order:):
 
 ### Leads
 

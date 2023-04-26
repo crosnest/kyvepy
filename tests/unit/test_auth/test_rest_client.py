@@ -24,9 +24,9 @@ import unittest
 import pytest
 from google.protobuf.json_format import ParseDict
 
-from c4epy.auth.rest_client import AuthRestClient
-from c4epy.common.utils import json_encode
-from c4epy.protos.cosmos.auth.v1beta1.query_pb2 import (
+from kyvepy.auth.rest_client import AuthRestClient
+from kyvepy.common.utils import json_encode
+from kyvepy.protos.cosmos.auth.v1beta1.query_pb2 import (
     QueryAccountRequest,
     QueryAccountResponse,
     QueryParamsRequest,
@@ -46,7 +46,7 @@ class AuthRestClientTestCase(unittest.TestCase):
         content = {
             "account": {
                 "@type": "/cosmos.auth.v1beta1.BaseAccount",
-                "address": "c4e1t62t32vvkr78zdws3jvu9rxjkz3fy0ex4v7e7l",
+                "address": "kyve1t62t32vvkr78zdws3jvu9rxjkz3fy0ex4v7e7l",
                 "pub_key": {
                     "@type": "/cosmos.crypto.secp256k1.PubKey",
                     "key": "AkFO92OOwGUK+88iMsPrOgh8tqkIbiJMRpPz4ezzyd2q",

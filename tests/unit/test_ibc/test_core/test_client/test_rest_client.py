@@ -23,9 +23,9 @@ from unittest import TestCase
 from google.protobuf.json_format import ParseDict
 from google.protobuf.wrappers_pb2 import Int32Value  # noqa # needed for protobuf decode
 
-from c4epy.common.utils import json_encode
-from c4epy.ibc.core.client.rest_client import IBCCoreClientRestClient  # type: ignore
-from c4epy.protos.ibc.core.client.v1.query_pb2 import (
+from kyvepy.common.utils import json_encode
+from kyvepy.ibc.core.client.rest_client import IBCCoreClientRestClient  # type: ignore
+from kyvepy.protos.ibc.core.client.v1.query_pb2 import (
     QueryClientParamsRequest,
     QueryClientParamsResponse,
     QueryClientStateRequest,

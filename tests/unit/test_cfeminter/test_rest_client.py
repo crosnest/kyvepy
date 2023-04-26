@@ -24,9 +24,9 @@ import unittest
 import pytest
 from google.protobuf.json_format import ParseDict
 
-from c4epy.cfeminter.rest_client import CfeMinterRestClient
-from c4epy.common.utils import json_encode
-from c4epy.protos.c4echain.cfeminter.query_pb2 import (
+from kyvepy.cfeminter.rest_client import CfeMinterRestClient
+from kyvepy.common.utils import json_encode
+from kyvepy.protos.kyvechain.cfeminter.query_pb2 import (
     QueryInflationRequest,
     QueryInflationResponse,
     QueryParamsRequest,
@@ -52,7 +52,7 @@ class CfeMinterRestClientTestCase(unittest.TestCase):
         minter = CfeMinterRestClient(mock_client)
 
         assert minter.Inflation(QueryInflationRequest()) == expected_response
-        assert mock_client.last_base_url == "/c4e/minter/v1beta1/inflation"
+        assert mock_client.last_base_url == "/kyve/minter/v1beta1/inflation"
 
     @pytest.mark.skip()
     @staticmethod
@@ -74,21 +74,21 @@ class CfeMinterRestClientTestCase(unittest.TestCase):
         minter = CfeMinterRestClient(mock_client)
 
         assert minter.State(QueryStateRequest()) == expected_response
-        assert mock_client.last_base_url == "/c4e/minter/v1beta1/state"
+        assert mock_client.last_base_url == "/kyve/minter/v1beta1/state"
 
     @staticmethod
     def test_query_params():
         """Test query params for positive result."""
         content = {
             "params": {
-                "mint_denom": "uc4e",
+                "mint_denom": "ukyve",
                 "start_time": "2023-02-17T12:00:00Z",
                 "minters": [
                     {
                         "sequence_id": 1,
                         "end_time": None,
                         "config": {
-                            "@type": "/chain4energy.c4echain.cfeminter.ExponentialStepMinting",
+                            "@type": "/chain4energy.kyvechain.cfeminter.ExponentialStepMinting",
                             "step_duration": "126230400s",
                             "amount": "32000000000000",
                             "amount_multiplier": "0.500000000000000000",
@@ -103,4 +103,4 @@ class CfeMinterRestClientTestCase(unittest.TestCase):
         minter = CfeMinterRestClient(mock_client)
 
         assert minter.Params(QueryParamsRequest()) == expected_response
-        assert mock_client.last_base_url == "/c4e/minter/v1beta1/params"
+        assert mock_client.last_base_url == "/kyve/minter/v1beta1/params"

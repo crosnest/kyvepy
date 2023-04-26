@@ -24,9 +24,9 @@ import unittest
 import pytest
 from google.protobuf.json_format import ParseDict
 
-from c4epy.cfedistributor.rest_client import CfeDistributorRestClient
-from c4epy.common.utils import json_encode
-from c4epy.protos.c4echain.cfedistributor.query_pb2 import (
+from kyvepy.cfedistributor.rest_client import CfeDistributorRestClient
+from kyvepy.common.utils import json_encode
+from kyvepy.protos.kyvechain.cfedistributor.query_pb2 import (
     QueryParamsRequest,
     QueryParamsResponse,
     QueryStatesRequest,
@@ -47,14 +47,14 @@ class CfeDistributorRestClientTestCase(unittest.TestCase):
             "states": [
                 {
                     "account": {
-                        "id": "c4e10ep2sxpf2kj6j26w7f4uuafedkuf9sf9xqq3sl",
+                        "id": "kyve10ep2sxpf2kj6j26w7f4uuafedkuf9sf9xqq3sl",
                         "type": "BASE_ACCOUNT",
                     },
                     "burn": False,
-                    "remains": [{"denom": "uc4e", "amount": "0.650000000000000000"}],
+                    "remains": [{"denom": "ukyve", "amount": "0.650000000000000000"}],
                 }
             ],
-            "coins_on_distributor_account": [{"denom": "uc4e", "amount": "3"}],
+            "coins_on_distributor_account": [{"denom": "ukyve", "amount": "3"}],
         }
         expected_response = ParseDict(content, QueryStatesResponse())
 
@@ -62,7 +62,7 @@ class CfeDistributorRestClientTestCase(unittest.TestCase):
         distributor = CfeDistributorRestClient(mock_client)
 
         assert distributor.States(QueryStatesRequest()) == expected_response
-        assert mock_client.last_base_url == "/c4e/distributor/v1beta1/states"
+        assert mock_client.last_base_url == "/kyve/distributor/v1beta1/states"
 
     @staticmethod
     def test_query_params():
@@ -72,7 +72,7 @@ class CfeDistributorRestClientTestCase(unittest.TestCase):
                 "sub_distributors": [
                     {
                         "name": "inflation_and_fee_distributor",
-                        "sources": [{"id": "c4e_distributor", "type": "MAIN"}],
+                        "sources": [{"id": "kyve_distributor", "type": "MAIN"}],
                         "destinations": {
                             "primary_share": {
                                 "id": "validators_rewards_collector",
@@ -100,4 +100,4 @@ class CfeDistributorRestClientTestCase(unittest.TestCase):
         distributor = CfeDistributorRestClient(mock_client)
 
         assert distributor.Params(QueryParamsRequest()) == expected_response
-        assert mock_client.last_base_url == "/c4e/distributor/v1beta1/params"
+        assert mock_client.last_base_url == "/kyve/distributor/v1beta1/params"

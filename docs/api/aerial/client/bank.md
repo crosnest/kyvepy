@@ -1,10 +1,10 @@
-<a id="c4epy.aerial.client.bank"></a>
+<a id="kyvepy.aerial.client.bank"></a>
 
-# c4epy.aerial.client.bank
+# kyvepy.aerial.client.bank
 
 Bank send message.
 
-<a id="c4epy.aerial.client.bank.create_bank_send_msg"></a>
+<a id="kyvepy.aerial.client.bank.create_bank_send_msg"></a>
 
 #### create`_`bank`_`send`_`msg
 
